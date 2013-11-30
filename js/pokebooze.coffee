@@ -94,7 +94,7 @@ class @Pokebooze
   panToStart: =>
     @game.rotateToTile @game.board.tiles[0], =>
       @game.zoomToTile @game.board.tiles[0]
-      
+
   @tileCoords = [
     {
         x: 0.45666666666666667

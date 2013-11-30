@@ -71,10 +71,13 @@ class @Game
     @_rotateBoard({rotation: angle}, callback)
 
   zoomToTile: (tile, callback) ->
+    @zoomToPoint(tile.x, tile.y, callback)
+
+  zoomToPoint: (x, y, callback) ->
     tween = new Kinetic.Tween {
       node: @board.node
-      offsetX: tile.x * @board.edgeLength
-      offsetY: tile.y * @board.edgeLength
+      offsetX: x * @board.edgeLength
+      offsetY: y * @board.edgeLength
       scaleX: 5
       scaleY: 5
       duration: 0.3
