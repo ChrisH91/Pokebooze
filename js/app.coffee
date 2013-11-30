@@ -83,7 +83,7 @@ drawPlayers = (group, game) ->
   group.draw()
 
 panToStart = (game) ->
-  game.rotateToTile game.tiles[0], ->
-    game.zoomToTile game.tiles[0]
+  game.rotateToTile game.board.tiles[0], ->
+    game.zoomToTile game.board.tiles[0]
     
 

@@ -30,22 +30,25 @@ class @Game
     playerMove = =>
       tween = new Kinetic.Tween {
         node: player.node
-        x: @tiles[player.position].x * @board.edgeLength
-        y: @tiles[player.position].y * @board.edgeLength
+        x: @board.tiles[player.position].x * @board.edgeLength
+        y: @board.tiles[player.position].y * @board.edgeLength
         duration: 0.3
         onFinish: =>
           steps = steps - 1
-          @_movePlayer(player, steps)        
+          @_movePlayer(player, steps, callback)        
       }
       tween.play()
 
     @rotateToTile(tile)
     @zoomToTile(tile, playerMove)
 
-  _movePlayer: (player, steps) ->
-    return if steps is 0
+  _movePlayer: (player, steps, callback) ->
+    if steps is 0
+        callback()   
+        return  
+    
     position = player.move()
-    tile = @tiles[position]
+    tile = @board.tiles[position]
     tween = new Kinetic.Tween {
       node: player.node
       x: @board.tiles[player.position].x * @board.edgeLength
