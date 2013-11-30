@@ -8,6 +8,8 @@ class @Player
                 Math.round(Math.random()*255)-50, 
                 Math.round(Math.random()*255)-50
               ]
+    @dontMove = false
+    @missTurn = false
     Player.PLAYER_COUNT += 1
     @name = name
 
