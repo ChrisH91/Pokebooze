@@ -26,7 +26,7 @@ class @Painter
 
   paintPlayer: (player, transform) ->
     rect = new Kinetic.Circle($.extend({}, transform, {
-      fill: player.rgbaColor(0.4)
+      fill: player.rgbaColor(0.6)
       stroke: 'black'
       strokeWidth: 2
     }))
