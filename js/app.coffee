@@ -34,4 +34,36 @@ $(document).ready ->
     }
     boardLayer.add(board)
     stage.add(boardLayer)
+    boardLayer.moveToBottom()
+    boardLayer.draw()
+
   boardObj.src = "/images/game.jpg"
+
+  # Draw the map tiles on their own layer
+  tileLayer = new Kinetic.Layer
+  for tile in game.tiles
+    circle = new Kinetic.Circle {
+      x: stage.getWidth() * tile.x
+      y: stage.getHeight() * tile.y
+      radius: 5
+      fill: 'red'
+      stroke: 'black'
+      strokeWidth: 2
+    }
+    tileLayer.add(circle)
+  stage.add(tileLayer)
+
+  # Draw the players on their own layer
+  playerLayer = new Kinetic.Layer
+  for player in game.players
+    rect = new Kinetic.Rect {
+      x: stage.getWidth()   * game.tiles[player.position].x
+      y: stage.getHeight()  * game.tiles[player.position].y
+      width: 20
+      height: 20
+      fill: 'rgb('+player.color[0]+','+player.color[1]+','+player.color[2]+')'
+      stroke: 'black'
+      strokeWidth: 2
+    }
+    playerLayer.add(rect)
+  stage.add(playerLayer)
