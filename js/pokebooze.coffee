@@ -5,10 +5,11 @@ class @Pokebooze
     @setupStage()
     # @plotTiles()
     @baseGroup = @stage.children[0].children[0]
+    @painter = new Painter(@baseGroup)
+    @camera = new Camera(@game.board)
     @game.board.node = @baseGroup
-    window.game = @game
-    @drawBoard()
-    @drawTiles()
+    @painter.paintBoard($.extend({},@game.board.boardTransform(), @game.board.boardDimensions()))
+    @buildTiles()
 
   start: (playerNames) ->
     for name in playerNames
@@ -36,67 +37,33 @@ class @Pokebooze
     @stage.add(layer)
     @stage
 
-  drawBoard: ->
-    # Draw the board on its own layer
-    boardObj = new Image
-    boardObj.onload = =>
-      board = new Kinetic.Image {
-        x: @game.board.edgeLength/2
-        y: @game.board.edgeLength/2
-        offsetX: @game.board.edgeLength/2
-        offsetY: @game.board.edgeLength/2
-        image: boardObj
-        width: @game.board.edgeLength
-        height: @game.board.edgeLength
-      }
-      @baseGroup.add(board)
-      board.moveToBottom()
-      @baseGroup.draw()
-
-    boardObj.src = "/images/game.jpg"
-
 
   plotTiles: ->
     plotter = new Plotter $("#table"), @stage
 
 
-  drawTiles: ->
+  buildTiles: ->
     @game.board.build(Pokebooze.tileCoords)
-    for tile in @game.board.tiles
-      circle = new Kinetic.Circle {
-        x: @game.board.edgeLength * tile.x
-        y: @game.board.edgeLength * tile.y
-        # radius: 5
-        # fill: 'red'
-        # stroke: 'black'
-        # strokeWidth: 2
-      }
-      @baseGroup.add(circle)
-    @baseGroup.draw()
 
   drawPlayers: ->
     playersList = $('.players')
-    i = -2 * @game.board.playerLength
+    i = -2 * @game.board.playerSize
     for player in @game.players
-      rand = (Math.random()-0.5) * @game.board.playerLength
-      rect = new Kinetic.Circle {
-        x: @game.board.edgeLength * @game.board.tiles[player.position].x + i
-        y: @game.board.edgeLength * @game.board.tiles[player.position].y + rand
-        radius: @game.board.playerLength
-        fill: player.rgbColor()
-        stroke: 'black'
-        strokeWidth: 1
-      }
-      i += @game.board.playerLength
-      player.node = rect
-      @baseGroup.add(rect)
+      playerDimensions = @game.board.playerDimensions(player)
+      rand = (Math.random()-0.5) * @game.board.playerSize
+      @painter.paintPlayer(player,{
+        x: playerDimensions.x + i
+        y: playerDimensions.y + rand
+        radius: playerDimensions.radius
+        })
+      i += @game.board.playerSize
       playersList.append("<li style='background-color: "+player.rgbColor()+"' class='player' id='player-1'><span class='icon'></span><span class='name'>"+player.name+"</span></li>")
 
     @baseGroup.draw()
 
   panToStart: =>
-    @game.rotateToTile @game.board.tiles[0], =>
-      @game.zoomToTile @game.board.tiles[0]
+    @camera.rotateToPoint(@game.board.tileRotation(0), =>
+      @camera.zoomToPoint(@game.board.tilePosition(0)))
 
   @helpers = 
     # Logic
