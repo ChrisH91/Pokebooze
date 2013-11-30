@@ -8,7 +8,9 @@ tileCoords = [
 
 setupGame = (tileCoords) ->
   game = new Game
-  game.players.push(new Player)
+  for i in [0..3]
+    p = new Player
+    game.players.push(p)
 
   for pair in tileCoords
     tile = new Tile(pair[0], pair[1])
@@ -70,6 +72,7 @@ drawPlayers = (stage, game) ->
       stroke: 'black'
       strokeWidth: 2
     }
+    player.node = rect
     playerLayer.add(rect)
 
   stage.add(playerLayer)
