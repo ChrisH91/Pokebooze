@@ -1,3 +1,4 @@
 class @Board
-  constructor: (tiles) ->
-    @tiles = tiles
+  constructor: () ->
+    @edgeLength = Math.min(window.innerWidth,window.innerHeight)
+    @playerLength = @edgeLength/75

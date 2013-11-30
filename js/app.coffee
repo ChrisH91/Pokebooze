@@ -3,7 +3,7 @@ $(document).ready ->
   window.plotter = new Plotter $("#table"), stage
   game = setupGame(tileCoords)
   stage = setupStage()
-  drawBoard(stage)
+  drawBoard(stage, game)
   drawTiles(stage, game)
   drawPlayers(stage, game)
 
@@ -23,11 +23,11 @@ setupGame = (tileCoords) ->
 setupStage = ->
   new Kinetic.Stage {
           container: 'table'
-          width: 1200
-          height: 1200
+          width: window.innerWidth
+          height: window.innerHeight
         }
 
-drawBoard = (stage) ->
+drawBoard = (stage, game) ->
   # Draw the board on its own layer
   boardLayer = new Kinetic.Layer
   boardObj = new Image
@@ -36,8 +36,8 @@ drawBoard = (stage) ->
       x: 0
       y: 0
       image: boardObj
-      width: 1200
-      height: 1200
+      width: game.board.edgeLength
+      height: game.board.edgeLength
     }
     boardLayer.add(board)
     stage.add(boardLayer)
@@ -51,8 +51,8 @@ drawTiles = (stage, game) ->
   tileLayer = new Kinetic.Layer
   for tile in game.tiles
     circle = new Kinetic.Circle {
-      x: stage.getWidth() * tile.x
-      y: stage.getHeight() * tile.y
+      x: game.board.edgeLength * tile.x
+      y: game.board.edgeLength * tile.y
       # radius: 5
       # fill: 'red'
       # stroke: 'black'
@@ -66,10 +66,10 @@ drawPlayers = (stage, game) ->
   playerLayer = new Kinetic.Layer
   for player in game.players
     rect = new Kinetic.Rect {
-      x: stage.getWidth()   * game.tiles[player.position].x
-      y: stage.getHeight()  * game.tiles[player.position].y
-      width: 20
-      height: 20
+      x: game.board.edgeLength * game.tiles[player.position].x
+      y: game.board.edgeLength * game.tiles[player.position].y
+      width: game.board.playerLength
+      height: game.board.playerLength
       fill: 'rgb('+player.color[0]+','+player.color[1]+','+player.color[2]+')'
       stroke: 'black'
       strokeWidth: 2
