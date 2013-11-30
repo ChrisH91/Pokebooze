@@ -22,7 +22,7 @@ class @Game
 
   movePlayer: (player, steps, callback) ->
     if steps is 0
-        callback()   
+        callback()
         return    
 
     tile = @board.tiles[player.position]
