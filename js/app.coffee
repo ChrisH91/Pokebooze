@@ -17,10 +17,6 @@ setupGame = (tileCoords) ->
     p = new Player
     game.players.push(p)
 
-  for pair in window.tileCoords
-    tile = new Tile(pair.x, pair.y)
-    game.tiles.push tile
-
   return game
 
 setupStage = ->
@@ -55,7 +51,7 @@ drawBoard = (group, game) ->
   boardObj.src = "/images/game.jpg"
 
 drawTiles = (group, game) ->
-  for tile in game.tiles
+  for tile in game.board.tiles
     circle = new Kinetic.Circle {
       x: game.board.edgeLength * tile.x
       y: game.board.edgeLength * tile.y
@@ -70,8 +66,8 @@ drawTiles = (group, game) ->
 drawPlayers = (group, game) ->
   for player in game.players
     rect = new Kinetic.Rect {
-      x: game.board.edgeLength * game.tiles[player.position].x
-      y: game.board.edgeLength * game.tiles[player.position].y
+      x: game.board.edgeLength * game.board.tiles[player.position].x
+      y: game.board.edgeLength * game.board.tiles[player.position].y
       width: game.board.playerLength
       height: game.board.playerLength
       fill: 'rgb('+player.color[0]+','+player.color[1]+','+player.color[2]+')'
