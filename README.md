@@ -11,3 +11,17 @@ Development
 2. Run `rackup` or use [Pow](http://pow.cx/) if you prefer going to `http://pokebooze.dev/`
 
 Any asset changes will happen on page refresh. Changes to routes will require a server restart.
+
+
+To Do
+=====
+
+- Indicate current player in UI
+- Roll die without moving player
+- Handle ability to go twice
+- Issue: Can't read the current map tile
+- Pretty dice
+- LocalStorage of game state
+- ChromeCast compatibility
+
+Feel free to contribute!
