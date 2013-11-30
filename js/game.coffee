@@ -21,7 +21,10 @@ class @Game
 
   movePlayer: (player, steps) ->
     return if steps is 0
-    player.move()
+    position = player.move()
+    console.log position
+    tile = @tiles[position]
+    @rotateToTile(tile)
     tween = new Kinetic.Tween {
       node: player.node
       x: @tiles[player.position].x * @board.edgeLength
@@ -33,8 +36,16 @@ class @Game
     }
     tween.play()
 
-  tweenBoard: (transform) ->
-    console.log(offsetX, offsetY)
+  rotateToTile: (tile) ->
+    originX = 0.5
+    originY = 0.5
+    angle = Math.atan((tile.x-originX)/(tile.y-originY))
+    # Always stay below origin (text upright)
+    if originX < tile.x
+      angle += Math.PI
+    @_tweenBoard({rotation: angle})
+
+  _tweenBoard: (transform) ->
     tween = new Kinetic.Tween {
       node: @board.node
       x: @board.edgeLength/2

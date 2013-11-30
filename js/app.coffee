@@ -40,8 +40,10 @@ drawBoard = (group, game) ->
   boardObj = new Image
   boardObj.onload = =>
     board = new Kinetic.Image {
-      x: 0
-      y: 0
+      x: game.board.edgeLength/2
+      y: game.board.edgeLength/2
+      offsetX: game.board.edgeLength/2
+      offsetY: game.board.edgeLength/2
       image: boardObj
       width: game.board.edgeLength
       height: game.board.edgeLength
