@@ -25,44 +25,34 @@ class @Game
         callback()   
         return    
 
-    position = player.move()
-    tile = @board.tiles[position]
-    playerMove = =>
-      tween = new Kinetic.Tween {
-        node: player.node
-        x: @board.tiles[player.position].x * @board.edgeLength
-        y: @board.tiles[player.position].y * @board.edgeLength
-        duration: 0.3
-        onFinish: =>
-          steps = steps - 1
-          @_movePlayer(player, steps, callback)        
-      }
-      tween.play()
-
+    tile = @board.tiles[player.position]
     @rotateToTile(tile)
-    @zoomToTile(tile, playerMove)
+    @zoomToTile(tile, => @_playerMove(player, steps, callback))
+    position = player.move()
 
-  _movePlayer: (player, steps, callback) ->
+  _movePlayer: (player, steps, callback) =>
     if steps is 0
         callback()   
         return  
     
     position = player.move()
     tile = @board.tiles[position]
+    @_playerMove(player, steps, callback)
+
+    @rotateToTile(tile)
+    @zoomToTile(tile)
+
+  _playerMove: (player, steps, callback) ->
     tween = new Kinetic.Tween {
       node: player.node
       x: @board.tiles[player.position].x * @board.edgeLength
       y: @board.tiles[player.position].y * @board.edgeLength
-      easing: Kinetic.Easings.EaseInOut
       duration: 0.3
       onFinish: =>
         steps = steps - 1
-        @movePlayer(player, steps, callback)
+        @_movePlayer(player, steps, callback)        
     }
     tween.play()
-
-    @rotateToTile(tile)
-    @zoomToTile(tile)
 
   rotateToTile: (tile, callback) ->
     originX = 0.5
