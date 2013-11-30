@@ -31,7 +31,7 @@ class @Game
     @camera.zoomToPoint(@board.tilePosition(player.position))
 
   _playerMove: (player, steps, callback) ->
-    randomness = (Math.random()-0.5) * 2 * @board.playerLength
+    randomness = (Math.random()-0.5) * 2 * @board.playerSize
     tween = new Kinetic.Tween {
       node: player.node
       x: @board.tiles[player.position].x * @board.boardWidth + randomness

@@ -47,20 +47,16 @@ class @Pokebooze
 
   drawPlayers: ->
     playersList = $('.players')
-    i = -2 * @game.board.playerLength
+    i = -2 * @game.board.playerSize
     for player in @game.players
-      rand = (Math.random()-0.5) * @game.board.playerLength
-      rect = new Kinetic.Circle {
-        x: @game.board.boardWidth * @game.board.tiles[player.position].x + i
-        y: @game.board.boardWidth * @game.board.tiles[player.position].y + rand
-        radius: @game.board.playerLength
-        fill: player.rgbColor()
-        stroke: 'black'
-        strokeWidth: 1
-      }
-      i += @game.board.playerLength
-      player.node = rect
-      @baseGroup.add(rect)
+      playerDimensions = @game.board.playerDimensions(player)
+      rand = (Math.random()-0.5) * @game.board.playerSize
+      @painter.paintPlayer(player,{
+        x: playerDimensions.x + i
+        y: playerDimensions.y + rand
+        radius: playerDimensions.radius
+        })
+      i += @game.board.playerSize
       playersList.append("<li style='background-color: "+player.rgbColor()+"' class='player' id='player-1'><span class='icon'></span><span class='name'>"+player.name+"</span></li>")
 
     @baseGroup.draw()

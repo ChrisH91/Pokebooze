@@ -2,7 +2,7 @@ class @Board
   constructor: () ->
     @boardWidth = 2000
     @boardHeight = 2000
-    @playerLength = @boardWidth/100
+    @playerSize = @boardWidth/100
     @node = null
     @tiles = []
     @tableWidth = window.innerWidth
@@ -48,3 +48,11 @@ class @Board
       width: @boardWidth
       height: @boardWidth
     }
+
+  playerDimensions: (player) ->
+    {
+      x: @boardWidth * @tiles[player.position].x
+      y: @boardWidth * @tiles[player.position].y
+      radius: @playerSize
+    }
+

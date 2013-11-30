@@ -24,4 +24,11 @@ class @Painter
 
     boardObj.src = "/images/game.jpg"
 
-  paintPlayer: ->
+  paintPlayer: (player, transform) ->
+    rect = new Kinetic.Circle($.extend({}, transform, {
+      fill: player.rgbColor()
+      stroke: 'black'
+      strokeWidth: 1
+    }))
+    player.node = rect
+    @group.add(rect)
