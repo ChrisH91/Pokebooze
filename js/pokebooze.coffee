@@ -1,9 +1,107 @@
-window.tileCoords = [
+class @Pokebooze
+  constructor: ->
+    # Draw plotter helper points on their own layer
+    @setupGame()
+    @setupStage()
+    # @plotTiles()
+    @baseGroup = @stage.children[0].children[0]
+    @game.board.node = @baseGroup
+    window.game = @game
+    @drawBoard()
+    @drawTiles()
+
+  start: (playerNames) ->
+    for name in playerNames
+      @game.players.push(new Player name)
+    @drawPlayers()
+
+    setTimeout( => 
+      @panToStart()
+    , 1000)
+
+
+
+  setupGame: () ->
+    @game = new Game
+
+  setupStage: ->
+    @stage = new Kinetic.Stage {
+            container: 'table'
+            width: window.innerWidth
+            height: window.innerHeight
+          }
+    layer = new Kinetic.Layer
+    topGroup = new Kinetic.Group
+    layer.add(topGroup)
+    @stage.add(layer)
+    @stage
+
+  drawBoard: ->
+    # Draw the board on its own layer
+    boardObj = new Image
+    boardObj.onload = =>
+      board = new Kinetic.Image {
+        x: @game.board.edgeLength/2
+        y: @game.board.edgeLength/2
+        offsetX: @game.board.edgeLength/2
+        offsetY: @game.board.edgeLength/2
+        image: boardObj
+        width: @game.board.edgeLength
+        height: @game.board.edgeLength
+      }
+      @baseGroup.add(board)
+      board.moveToBottom()
+      @baseGroup.draw()
+
+    boardObj.src = "/images/game.jpg"
+
+
+  plotTiles: ->
+    plotter = new Plotter $("#table"), @stage
+
+
+  drawTiles: ->
+    @game.board.build(Pokebooze.tileCoords)
+    for tile in @game.board.tiles
+      circle = new Kinetic.Circle {
+        x: @game.board.edgeLength * tile.x
+        y: @game.board.edgeLength * tile.y
+        # radius: 5
+        # fill: 'red'
+        # stroke: 'black'
+        # strokeWidth: 2
+      }
+      @baseGroup.add(circle)
+    @baseGroup.draw()
+
+  drawPlayers: ->
+    playersList = $('.players')
+    for player in @game.players
+      rect = new Kinetic.Circle {
+        x: @game.board.edgeLength * @game.board.tiles[player.position].x
+        y: @game.board.edgeLength * @game.board.tiles[player.position].y
+        radius: @game.board.playerLength
+        fill: player.rgbColor()
+        stroke: 'black'
+        strokeWidth: 1
+      }
+      player.node = rect
+      @baseGroup.add(rect)
+      playersList.append("<li style='background-color: "+player.rgbColor()+"' class='player' id='player-1'><span class='icon'></span><span class='name'>"+player.name+"</span></li>")
+
+    @baseGroup.draw()
+
+  panToStart: =>
+    @game.rotateToTile @game.board.tiles[0], =>
+      @game.zoomToTile @game.board.tiles[0]
+      
+  @tileCoords = [
     {
         x: 0.45666666666666667
         y: 0.9358333333333333
         stop: false
         logic: (roll) ->
+
     }
     {
         x: 0.3775
@@ -18,7 +116,6 @@ window.tileCoords = [
         stop: false
         logic: (roll) ->
             new TileResult(false, true)
-
     }
     {
         x: 0.22416666666666665
@@ -1180,4 +1277,4 @@ window.tileCoords = [
         logic: (roll) ->
             new TileResult(false, false)
     }
-]
+  ]

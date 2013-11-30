@@ -27,7 +27,7 @@ class App < Sinatra::Base
       '/js/plotter.js',
       '/js/player.js',
       '/js/game.js',
-      '/js/pokeboard.js',
+      '/js/pokebooze.js',
       '/js/app.js',
     ]
 
