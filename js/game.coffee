@@ -5,6 +5,17 @@ class @Game
     @currPlayer = 0
     @rollOutput = $('#roll-output')
     @board = new Board
+    @boardTransform = {
+      transform: {
+        x: 0
+        y: 0
+      }
+      scale: {
+        x: 0
+        y: 0
+      }
+      rotation: 0
+    }
 
     $('#roll-button').on("click", @roll)
 
@@ -19,6 +30,18 @@ class @Game
       onFinish: =>
         steps = steps - 1
         @movePlayer(player, steps)        
+    }
+    tween.play()
+
+  tweenBoard: (transform) ->
+    console.log(offsetX, offsetY)
+    tween = new Kinetic.Tween {
+      node: @board.node
+      x: @board.edgeLength/2
+      y: @board.edgeLength/2
+      offsetX: @board.edgeLength/2
+      offsetY: @board.edgeLength/2
+      rotation: transform.rotation
     }
     tween.play()
 

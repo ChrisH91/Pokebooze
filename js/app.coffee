@@ -3,9 +3,12 @@ $(document).ready ->
   window.plotter = new Plotter $("#table"), stage
   game = setupGame(tileCoords)
   stage = setupStage()
-  drawBoard(stage, game)
-  drawTiles(stage, game)
-  drawPlayers(stage, game)
+  group = stage.children[0].children[0]
+  game.board.node = group
+  window.game = game
+  drawBoard(group, game)
+  drawTiles(group, game)
+  drawPlayers(group, game)
 
 
 setupGame = (tileCoords) ->
@@ -21,15 +24,19 @@ setupGame = (tileCoords) ->
   return game
 
 setupStage = ->
-  new Kinetic.Stage {
+  window.stage = new Kinetic.Stage {
           container: 'table'
           width: window.innerWidth
           height: window.innerHeight
         }
+  layer = new Kinetic.Layer
+  topGroup = new Kinetic.Group
+  layer.add(topGroup)
+  stage.add(layer)
+  stage
 
-drawBoard = (stage, game) ->
+drawBoard = (group, game) ->
   # Draw the board on its own layer
-  boardLayer = new Kinetic.Layer
   boardObj = new Image
   boardObj.onload = =>
     board = new Kinetic.Image {
@@ -39,16 +46,13 @@ drawBoard = (stage, game) ->
       width: game.board.edgeLength
       height: game.board.edgeLength
     }
-    boardLayer.add(board)
-    stage.add(boardLayer)
-    boardLayer.moveToBottom()
-    boardLayer.draw()
+    group.add(board)
+    board.moveToBottom()
+    group.draw()
 
   boardObj.src = "/images/game.jpg"
 
-drawTiles = (stage, game) ->
-  # Draw the map tiles on their own layer
-  tileLayer = new Kinetic.Layer
+drawTiles = (group, game) ->
   for tile in game.tiles
     circle = new Kinetic.Circle {
       x: game.board.edgeLength * tile.x
@@ -58,12 +62,10 @@ drawTiles = (stage, game) ->
       # stroke: 'black'
       # strokeWidth: 2
     }
-    tileLayer.add(circle)
-  stage.add(tileLayer)
+    group.add(circle)
+  group.draw()
 
-drawPlayers = (stage, game) ->
-  # Draw the players on their own layer
-  playerLayer = new Kinetic.Layer
+drawPlayers = (group, game) ->
   for player in game.players
     rect = new Kinetic.Rect {
       x: game.board.edgeLength * game.tiles[player.position].x
@@ -75,7 +77,7 @@ drawPlayers = (stage, game) ->
       strokeWidth: 2
     }
     player.node = rect
-    playerLayer.add(rect)
+    group.add(rect)
 
-  stage.add(playerLayer)
+  group.draw()
 
