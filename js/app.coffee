@@ -1,18 +1,10 @@
-tileCoords = [
-  [0.1, 0.1],
-  [0.2, 0.1],
-  [0.3, 0.1],
-  [0.4, 0.1],
-  [0.5, 0.1],
-]
-
 $(document).ready ->
 
   game = new Game
   game.players.push(new Player)
 
-  for pair in tileCoords
-    tile = new Tile(pair[0], pair[1])
+  for pair in window.tileCoords
+    tile = new Tile(pair.x, pair.y)
     game.tiles.push tile
 
   stage = new Kinetic.Stage {
@@ -67,3 +59,6 @@ $(document).ready ->
     }
     playerLayer.add(rect)
   stage.add(playerLayer)
+
+  # Draw plotter helper points on their own layer
+  window.plotter = new Plotter $("#table"), stage
