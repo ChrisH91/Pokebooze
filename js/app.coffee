@@ -73,14 +73,13 @@ drawTiles = (group, game) ->
 
 drawPlayers = (group, game) ->
   for player in game.players
-    rect = new Kinetic.Rect {
+    rect = new Kinetic.Circle {
       x: game.board.edgeLength * game.tiles[player.position].x
       y: game.board.edgeLength * game.tiles[player.position].y
-      width: game.board.playerLength
-      height: game.board.playerLength
+      radius: game.board.playerLength
       fill: 'rgb('+player.color[0]+','+player.color[1]+','+player.color[2]+')'
       stroke: 'black'
-      strokeWidth: 2
+      strokeWidth: 1
     }
     player.node = rect
     group.add(rect)
