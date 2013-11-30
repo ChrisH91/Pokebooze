@@ -1,5 +1,4 @@
-$(document).ready ->
-
+setupGame = (tileCoords) ->
   game = new Game
   game.players.push(new Player)
 
@@ -7,12 +6,16 @@ $(document).ready ->
     tile = new Tile(pair.x, pair.y)
     game.tiles.push tile
 
-  stage = new Kinetic.Stage {
+  return game
+
+setupStage = ->
+  new Kinetic.Stage {
           container: 'table'
           width: 1200
           height: 1200
         }
 
+drawBoard = (stage) ->
   # Draw the board on its own layer
   boardLayer = new Kinetic.Layer
   boardObj = new Image
@@ -31,6 +34,7 @@ $(document).ready ->
 
   boardObj.src = "/images/game.jpg"
 
+drawTiles = (stage, game) ->
   # Draw the map tiles on their own layer
   tileLayer = new Kinetic.Layer
   for tile in game.tiles
@@ -45,6 +49,7 @@ $(document).ready ->
     tileLayer.add(circle)
   stage.add(tileLayer)
 
+drawPlayers = (stage, game) ->
   # Draw the players on their own layer
   playerLayer = new Kinetic.Layer
   for player in game.players
@@ -58,7 +63,14 @@ $(document).ready ->
       strokeWidth: 2
     }
     playerLayer.add(rect)
+
   stage.add(playerLayer)
 
   # Draw plotter helper points on their own layer
   window.plotter = new Plotter $("#table"), stage
+  stage = setupStage()
+  drawBoard(stage)
+  drawTiles(stage, game)
+  drawPlayers(stage, game)
+
+
