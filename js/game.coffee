@@ -47,6 +47,7 @@ class @Game
       node: player.node
       x: @tiles[player.position].x * @board.edgeLength
       y: @tiles[player.position].y * @board.edgeLength
+      easing: Kinetic.Easings.EaseInOut
       duration: 0.3
       onFinish: =>
         steps = steps - 1
@@ -76,6 +77,7 @@ class @Game
       scaleX: 5
       scaleY: 5
       duration: 0.3
+      easing: Kinetic.Easings.EaseInOut
       onFinish: callback
     }
     tween.play()
@@ -88,7 +90,9 @@ class @Game
       offsetX: @tableWidth/2
       offsetY: @tableHeight/2
       rotation: transform.rotation
+      easing: Kinetic.Easings.EaseInOut
       onFinish: callback
+      duration: 0.3
     }
     tween.play()
 
