@@ -28,6 +28,8 @@ class App < Sinatra::Base
       '/js/player.js',
       '/js/game.js',
       '/js/pokebooze.js',
+      '/js/painter.js',
+      '/js/camera.js',
       '/js/app.js',
     ]
 

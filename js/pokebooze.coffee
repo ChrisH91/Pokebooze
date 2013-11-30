@@ -41,13 +41,13 @@ class @Pokebooze
     boardObj = new Image
     boardObj.onload = =>
       board = new Kinetic.Image {
-        x: @game.board.edgeLength/2
-        y: @game.board.edgeLength/2
-        offsetX: @game.board.edgeLength/2
-        offsetY: @game.board.edgeLength/2
+        x: @game.board.boardWidth/2
+        y: @game.board.boardWidth/2
+        offsetX: @game.board.boardWidth/2
+        offsetY: @game.board.boardWidth/2
         image: boardObj
-        width: @game.board.edgeLength
-        height: @game.board.edgeLength
+        width: @game.board.boardWidth
+        height: @game.board.boardWidth
       }
       @baseGroup.add(board)
       board.moveToBottom()
@@ -64,8 +64,8 @@ class @Pokebooze
     @game.board.build(Pokebooze.tileCoords)
     for tile in @game.board.tiles
       circle = new Kinetic.Circle {
-        x: @game.board.edgeLength * tile.x
-        y: @game.board.edgeLength * tile.y
+        x: @game.board.boardWidth * tile.x
+        y: @game.board.boardWidth * tile.y
         # radius: 5
         # fill: 'red'
         # stroke: 'black'
@@ -80,8 +80,8 @@ class @Pokebooze
     for player in @game.players
       rand = (Math.random()-0.5) * @game.board.playerLength
       rect = new Kinetic.Circle {
-        x: @game.board.edgeLength * @game.board.tiles[player.position].x + i
-        y: @game.board.edgeLength * @game.board.tiles[player.position].y + rand
+        x: @game.board.boardWidth * @game.board.tiles[player.position].x + i
+        y: @game.board.boardWidth * @game.board.tiles[player.position].y + rand
         radius: @game.board.playerLength
         fill: player.rgbColor()
         stroke: 'black'
@@ -95,8 +95,8 @@ class @Pokebooze
     @baseGroup.draw()
 
   panToStart: =>
-    @game.rotateToTile @game.board.tiles[0], =>
-      @game.zoomToTile @game.board.tiles[0]
+    # @game.rotateToTile @game.board.tiles[0], =>
+    #   @game.zoomToTile @game.board.tiles[0]
 
   @tileCoords = [
     {
