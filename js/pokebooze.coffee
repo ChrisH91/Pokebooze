@@ -6,10 +6,10 @@ class @Pokebooze
     # @plotTiles()
     @baseGroup = @stage.children[0].children[0]
     @painter = new Painter(@baseGroup)
+    @camera = new Camera(@game.board)
     @game.board.node = @baseGroup
-    window.game = @game
     @painter.paintBoard($.extend({},@game.board.boardTransform(), @game.board.boardDimensions()))
-    @drawTiles()
+    @buildTiles()
 
   start: (playerNames) ->
     for name in playerNames
@@ -42,19 +42,8 @@ class @Pokebooze
     plotter = new Plotter $("#table"), @stage
 
 
-  drawTiles: ->
+  buildTiles: ->
     @game.board.build(Pokebooze.tileCoords)
-    for tile in @game.board.tiles
-      circle = new Kinetic.Circle {
-        x: @game.board.boardWidth * tile.x
-        y: @game.board.boardWidth * tile.y
-        # radius: 5
-        # fill: 'red'
-        # stroke: 'black'
-        # strokeWidth: 2
-      }
-      @baseGroup.add(circle)
-    @baseGroup.draw()
 
   drawPlayers: ->
     playersList = $('.players')
@@ -77,8 +66,8 @@ class @Pokebooze
     @baseGroup.draw()
 
   panToStart: =>
-    # @game.rotateToTile @game.board.tiles[0], =>
-    #   @game.zoomToTile @game.board.tiles[0]
+    @camera.rotateToPoint(@game.board.tileRotation(0), =>
+      @camera.zoomToPoint(@game.board.tilePosition(0)))
 
   @tileCoords = [
     {

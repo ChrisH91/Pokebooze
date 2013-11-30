@@ -2,7 +2,14 @@ class @Painter
   constructor: (group) ->
     @group = group
 
-  paintTile: ->
+  paintTile: (transform) ->
+    circle = new Kinetic.Circle($.extend({}, transform, {
+      radius: 5
+      fill: 'red'
+      stroke: 'black'
+      strokeWidth: 2
+    }))
+    @group.add(circle)
 
   paintBoard: (transform) ->
     # Draw the board on its own layer
