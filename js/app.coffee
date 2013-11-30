@@ -17,9 +17,8 @@ $(document).ready ->
 
 setupGame = (tileCoords) ->
   game = new Game
-  for i in [0..3]
-    p = new Player
-    game.players.push(p)
+  game.players.push(new Player "Matthew")
+  game.players.push(new Player "Chris")
 
   return game
 
@@ -68,17 +67,19 @@ drawTiles = (group, game) ->
   group.draw()
 
 drawPlayers = (group, game) ->
+  playersList = $('.players')
   for player in game.players
     rect = new Kinetic.Circle {
       x: game.board.edgeLength * game.board.tiles[player.position].x
       y: game.board.edgeLength * game.board.tiles[player.position].y
       radius: game.board.playerLength
-      fill: 'rgb('+player.color[0]+','+player.color[1]+','+player.color[2]+')'
+      fill: player.rgbColor()
       stroke: 'black'
       strokeWidth: 1
     }
     player.node = rect
     group.add(rect)
+    playersList.append("<li style='background-color: "+player.rgbColor()+"' class='player' id='player-1'><span class='icon'></span><span class='name'>"+player.name+"</span></li>")
 
   group.draw()
 
