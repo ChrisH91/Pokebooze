@@ -9,21 +9,18 @@ class @Game
     $('#roll-button').on("click", @turn)
 
   movePlayer: (player, steps, callback) ->
-    if steps is 0
-        callback()
-        return    
-
     @camera.rotateToPoint(@board.tileRotation(player.position))
     @camera.zoomToPoint(@board.tilePosition(player.position), => @_playerMove(player, steps, callback))
-    position = player.move()
+    direction = steps > 0
+    position = player.move(direction)
 
   _movePlayer: (player, steps, callback) =>
-
     if steps is 0
-        callback()   
-        return  
+      callback()   
+      return  
     
-    position = player.move()
+    direction = steps > 0
+    position = player.move(direction)
     tile = @board.tiles[position]
     @_playerMove(player, steps, callback)
 
@@ -86,4 +83,4 @@ class @Game
       @players[@currPlayer].dontMove = false
       @currPlayer += 1
       if @currPlayer >= @players.length
-        @currPlayer = 0 ###     
+        @currPlayer = 0

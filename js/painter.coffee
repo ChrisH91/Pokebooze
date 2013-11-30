@@ -26,9 +26,11 @@ class @Painter
 
   paintPlayer: (player, transform) ->
     rect = new Kinetic.Circle($.extend({}, transform, {
-      fill: player.rgbColor()
+      fill: player.rgbaColor(0.6)
       stroke: 'black'
-      strokeWidth: 1
+      strokeWidth: 2
     }))
     player.node = rect
     @group.add(rect)
+
+

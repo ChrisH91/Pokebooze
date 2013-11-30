@@ -14,8 +14,14 @@ class @Player
     Player.PLAYER_COUNT += 1
     @name = name
 
-  move: () ->
-    @position += 1
+  move: (forwards = true) ->
+    if forwards
+      @position += 1
+    else
+      @position -= 1
 
   rgbColor: () ->
     'rgb('+@color[0]+','+@color[1]+','+@color[2]+')'
+
+  rgbaColor: (a) ->
+    'rgba('+@color[0]+','+@color[1]+','+@color[2]+','+a+')'
