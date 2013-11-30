@@ -16,13 +16,13 @@ class @Game
       }
       rotation: 0
     }
+    @tableWidth = window.innerWidth
+    @tableHeight = window.innerHeight
 
     $('#roll-button').on("click", @roll)
 
   movePlayer: (player, steps) ->
-    return if steps is 0
     position = player.move()
-    console.log position
     tile = @tiles[position]
     playerMove = =>
       tween = new Kinetic.Tween {
@@ -35,8 +35,14 @@ class @Game
           @_movePlayer(player, steps)        
       }
       tween.play()
+
     @rotateToTile(tile)
     @zoomToTile(tile, playerMove)
+
+  _movePlayer: (player, steps) ->
+    return if steps is 0
+    position = player.move()
+    tile = @tiles[position]
     tween = new Kinetic.Tween {
       node: player.node
       x: @tiles[player.position].x * @board.edgeLength
@@ -44,43 +50,50 @@ class @Game
       duration: 0.3
       onFinish: =>
         steps = steps - 1
-        @movePlayer(player, steps)        
+        @_movePlayer(player, steps)        
     }
     tween.play()
 
-  rotateToTile: (tile) ->
+    @rotateToTile(tile)
+    @zoomToTile(tile)
+
+  rotateToTile: (tile, callback) ->
     originX = 0.5
     originY = 0.5
     angle = Math.atan((tile.x-originX)/(tile.y-originY))
     # Always stay below origin (text upright)
-    if originX < tile.x
-      angle += Math.PI
-    @_tweenBoard({rotation: angle})
+    if originY > tile.y
+      angle -= Math.PI
+
+    # angle %= Math.PI
+    @_rotateBoard({rotation: angle}, callback)
+
   zoomToTile: (tile, callback) ->
     tween = new Kinetic.Tween {
       node: @board.node
       offsetX: tile.x * @board.edgeLength
       offsetY: tile.y * @board.edgeLength
+      scaleX: 5
       scaleY: 5
       duration: 0.3
       onFinish: callback
     }
     tween.play()
 
-  _tweenBoard: (transform) ->
+  _rotateBoard: (transform, callback) ->
     tween = new Kinetic.Tween {
       node: @board.node
-      x: @board.edgeLength/2
-      y: @board.edgeLength/2
-      offsetX: @board.edgeLength/2
-      offsetY: @board.edgeLength/2
+      x: @tableWidth/2
+      y: @tableHeight/2
+      offsetX: @tableWidth/2
+      offsetY: @tableHeight/2
       rotation: transform.rotation
+      onFinish: callback
     }
     tween.play()
 
   roll: =>
     roll = Math.ceil((Math.random())*6)
-    console.log @currPlayer
     @rollOutput.html(roll)
 
     @movePlayer(@players[@currPlayer], roll)

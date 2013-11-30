@@ -9,6 +9,7 @@ $(document).ready ->
   drawBoard(group, game)
   drawTiles(group, game)
   drawPlayers(group, game)
+  panToStart(game)
 
 
 setupGame = (tileCoords) ->
@@ -82,4 +83,9 @@ drawPlayers = (group, game) ->
     group.add(rect)
 
   group.draw()
+
+panToStart = (game) ->
+  game.rotateToTile game.tiles[0], ->
+    game.zoomToTile game.tiles[0]
+    
 
