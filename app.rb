@@ -23,8 +23,10 @@ class App < Sinatra::Base
       '/js/kinetic-v4.7.4.min.js',
       '/js/tile.js',
       '/js/board.js',
+      '/js/plotter.js',
       '/js/player.js',
       '/js/game.js',
+      '/js/pokeboard.js',
       '/js/app.js',
     ]
 

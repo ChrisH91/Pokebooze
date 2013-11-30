@@ -1,19 +1,11 @@
-tileCoords = [
-  [0.1, 0.1],
-  [0.2, 0.1],
-  [0.3, 0.1],
-  [0.4, 0.1],
-  [0.5, 0.1],
-]
-
 setupGame = (tileCoords) ->
   game = new Game
   for i in [0..3]
     p = new Player
     game.players.push(p)
 
-  for pair in tileCoords
-    tile = new Tile(pair[0], pair[1])
+  for pair in window.tileCoords
+    tile = new Tile(pair.x, pair.y)
     game.tiles.push tile
 
   return game
@@ -77,8 +69,8 @@ drawPlayers = (stage, game) ->
 
   stage.add(playerLayer)
 
-$(document).ready ->
-  game = setupGame(tileCoords)
+  # Draw plotter helper points on their own layer
+  window.plotter = new Plotter $("#table"), stage
   stage = setupStage()
   drawBoard(stage)
   drawTiles(stage, game)
