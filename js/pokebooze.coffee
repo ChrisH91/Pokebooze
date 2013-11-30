@@ -1,6 +1,5 @@
 class @Pokebooze
   constructor: ->
-    # Draw plotter helper points on their own layer
     @setupGame()
     @setupStage()
     # @plotTiles()
@@ -8,19 +7,18 @@ class @Pokebooze
     @painter = new Painter(@baseGroup)
     @camera = new Camera(@game.board)
     @game.board.node = @baseGroup
-    @painter.paintBoard($.extend({},@game.board.boardTransform(), @game.board.boardDimensions()))
+    boardTransform = $.extend({},@game.board.boardTransform(), @game.board.boardDimensions())
+    @painter.paintBoard(boardTransform)
     @buildTiles()
 
   start: (playerNames) ->
     for name in playerNames
       @game.players.push(new Player name)
-    @drawPlayers()
+    @initializePlayers()
 
     setTimeout( => 
       @panToStart()
     , 1000)
-
-
 
   setupGame: () ->
     @game = new Game
@@ -41,11 +39,10 @@ class @Pokebooze
   plotTiles: ->
     plotter = new Plotter $("#table"), @stage
 
-
   buildTiles: ->
     @game.board.build(Pokebooze.tileCoords)
 
-  drawPlayers: ->
+  initializePlayers: ->
     playersList = $('.players')
     i = -2 * @game.board.playerSize
     for player in @game.players

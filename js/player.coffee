@@ -18,3 +18,6 @@ class @Player
 
   rgbColor: () ->
     'rgb('+@color[0]+','+@color[1]+','+@color[2]+')'
+
+  rgbaColor: (a) ->
+    'rgba('+@color[0]+','+@color[1]+','+@color[2]+','+a+')'
