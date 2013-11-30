@@ -34,3 +34,17 @@ class @Board
       x: @tiles[tileIndex].x * @boardWidth
       y: @tiles[tileIndex].y * @boardWidth
     }
+
+  boardTransform: ->
+    {
+      x: @tableWidth/2
+      y: @tableHeight/2
+      offsetX: @tableWidth/2
+      offsetY: @tableHeight/2
+    }
+
+  boardDimensions: ->
+    {
+      width: @boardWidth
+      height: @boardWidth
+    }

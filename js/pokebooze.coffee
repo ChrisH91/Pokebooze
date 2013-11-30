@@ -5,9 +5,10 @@ class @Pokebooze
     @setupStage()
     # @plotTiles()
     @baseGroup = @stage.children[0].children[0]
+    @painter = new Painter(@baseGroup)
     @game.board.node = @baseGroup
     window.game = @game
-    @drawBoard()
+    @painter.paintBoard($.extend({},@game.board.boardTransform(), @game.board.boardDimensions()))
     @drawTiles()
 
   start: (playerNames) ->
@@ -35,25 +36,6 @@ class @Pokebooze
     layer.add(topGroup)
     @stage.add(layer)
     @stage
-
-  drawBoard: ->
-    # Draw the board on its own layer
-    boardObj = new Image
-    boardObj.onload = =>
-      board = new Kinetic.Image {
-        x: @game.board.boardWidth/2
-        y: @game.board.boardWidth/2
-        offsetX: @game.board.boardWidth/2
-        offsetY: @game.board.boardWidth/2
-        image: boardObj
-        width: @game.board.boardWidth
-        height: @game.board.boardWidth
-      }
-      @baseGroup.add(board)
-      board.moveToBottom()
-      @baseGroup.draw()
-
-    boardObj.src = "/images/game.jpg"
 
 
   plotTiles: ->
