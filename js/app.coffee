@@ -53,10 +53,10 @@ drawTiles = (stage, game) ->
     circle = new Kinetic.Circle {
       x: stage.getWidth() * tile.x
       y: stage.getHeight() * tile.y
-      radius: 5
-      fill: 'red'
-      stroke: 'black'
-      strokeWidth: 2
+      # radius: 5
+      # fill: 'red'
+      # stroke: 'black'
+      # strokeWidth: 2
     }
     tileLayer.add(circle)
   stage.add(tileLayer)
