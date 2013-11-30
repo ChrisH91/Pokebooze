@@ -1,7 +1,7 @@
 class @Player
   @PLAYER_COUNT = 0
   constructor: (name = "") ->
-    @position = 20
+    @position = 21
     @player_number = Player.PLAYER_COUNT
     @color =  [
                 Math.round(Math.random()*255)-50, 

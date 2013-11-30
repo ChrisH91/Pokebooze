@@ -295,8 +295,11 @@ class @Pokebooze
           currentTile = game.players[game.currPlayer].position
           playerMoveQueue = []
 
-          for(player in game.players)
-            
+          for player in game.players
+            noSpaces = player.position - currentTile
+            if Math.abs(noSpaces) > 0 and Math.abs(noSpaces) <= 2
+              game.movePlayer player, noSpaces, () =>
+                # Do nothing
 
         logic: @helpers.default
     }
@@ -313,7 +316,6 @@ class @Pokebooze
         stop: true
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
-
     }
     {
         x: 0.8841666666666667
@@ -325,7 +327,7 @@ class @Pokebooze
     {
         x: 0.835
         y: 0.7816666666666666
-         stop: false
+        stop: false
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
