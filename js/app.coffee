@@ -1,3 +1,13 @@
+$(document).ready ->
+  # Draw plotter helper points on their own layer
+  window.plotter = new Plotter $("#table"), stage
+  game = setupGame(tileCoords)
+  stage = setupStage()
+  drawBoard(stage)
+  drawTiles(stage, game)
+  drawPlayers(stage, game)
+
+
 setupGame = (tileCoords) ->
   game = new Game
   for i in [0..3]
@@ -68,12 +78,4 @@ drawPlayers = (stage, game) ->
     playerLayer.add(rect)
 
   stage.add(playerLayer)
-
-  # Draw plotter helper points on their own layer
-  window.plotter = new Plotter $("#table"), stage
-  stage = setupStage()
-  drawBoard(stage)
-  drawTiles(stage, game)
-  drawPlayers(stage, game)
-
 
