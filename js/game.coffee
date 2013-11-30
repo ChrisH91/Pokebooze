@@ -1,7 +1,6 @@
 class @Game
   constructor: () -> 
     @players = []
-    @tiles = []
     @currPlayer = 0
     @rollOutput = $('#roll-output')
     @board = new Board
@@ -19,39 +18,46 @@ class @Game
     @tableWidth = window.innerWidth
     @tableHeight = window.innerHeight
 
-    $('#roll-button').on("click", @roll)
+    $('#roll-button').on("click", @turn)
 
-  movePlayer: (player, steps) ->
+  movePlayer: (player, steps, callback) ->
+    if steps is 0
+        callback()   
+        return    
+
     position = player.move()
-    tile = @tiles[position]
+    tile = @board.tiles[position]
     playerMove = =>
       tween = new Kinetic.Tween {
         node: player.node
-        x: @tiles[player.position].x * @board.edgeLength
-        y: @tiles[player.position].y * @board.edgeLength
+        x: @board.tiles[player.position].x * @board.edgeLength
+        y: @board.tiles[player.position].y * @board.edgeLength
         duration: 0.3
         onFinish: =>
           steps = steps - 1
-          @_movePlayer(player, steps)        
+          @_movePlayer(player, steps, callback)        
       }
       tween.play()
 
     @rotateToTile(tile)
     @zoomToTile(tile, playerMove)
 
-  _movePlayer: (player, steps) ->
-    return if steps is 0
+  _movePlayer: (player, steps, callback) ->
+    if steps is 0
+        callback()   
+        return  
+    
     position = player.move()
-    tile = @tiles[position]
+    tile = @board.tiles[position]
     tween = new Kinetic.Tween {
       node: player.node
-      x: @tiles[player.position].x * @board.edgeLength
-      y: @tiles[player.position].y * @board.edgeLength
+      x: @board.tiles[player.position].x * @board.edgeLength
+      y: @board.tiles[player.position].y * @board.edgeLength
       easing: Kinetic.Easings.EaseInOut
       duration: 0.3
       onFinish: =>
         steps = steps - 1
-        @_movePlayer(player, steps)        
+        @movePlayer(player, steps, callback)
     }
     tween.play()
 
@@ -100,8 +106,17 @@ class @Game
     roll = Math.ceil((Math.random())*6)
     @rollOutput.html(roll)
 
-    @movePlayer(@players[@currPlayer], roll)
+    roll
 
-    @currPlayer += 1
-    if @currPlayer >= @players.length
-      @currPlayer = 0
+  turn: =>
+    playerRoll = @roll()
+    console.log playerRoll
+    # TODO: Run player callback from previous turn if it exists
+    @movePlayer @players[@currPlayer], playerRoll, () =>
+        # TODO: Add miss turn logic to player
+        tileResult = @board.tiles[@players[@currPlayer].position];
+        console.log tileResult
+
+        @currPlayer += 1
+        if @currPlayer >= @players.length
+          @currPlayer = 0
