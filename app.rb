@@ -21,6 +21,7 @@ class App < Sinatra::Base
     # (Note: that parameter is optional, AssetPack will figure it out.)
     js :app, [
       '/js/kinetic-v4.7.4.min.js',
+      '/js/tile_result.js',
       '/js/tile.js',
       '/js/board.js',
       '/js/plotter.js',
