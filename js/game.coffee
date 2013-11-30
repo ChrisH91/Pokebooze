@@ -44,10 +44,11 @@ class @Game
     @zoomToTile(tile)
 
   _playerMove: (player, steps, callback) ->
+    randomness = (Math.random()-0.5) * 2 * @board.playerLength
     tween = new Kinetic.Tween {
       node: player.node
-      x: @board.tiles[player.position].x * @board.edgeLength
-      y: @board.tiles[player.position].y * @board.edgeLength
+      x: @board.tiles[player.position].x * @board.edgeLength + randomness
+      y: @board.tiles[player.position].y * @board.edgeLength + randomness
       duration: 0.3
       onFinish: =>
         if @board.tiles[player.position].stop 
