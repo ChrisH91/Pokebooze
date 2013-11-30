@@ -3,6 +3,8 @@ class @Game
     @players = []
     @tiles = []
     @currPlayer = 0
+    @rollOutput = $('#roll-output')
+
     $('#roll-button').on("click", @roll)
 
   movePlayer: (player, steps) ->
@@ -22,7 +24,8 @@ class @Game
   roll: =>
     roll = Math.ceil((Math.random())*6)
     console.log @currPlayer
-
+    @rollOutput.html(roll)
+    
     @movePlayer(@players[@currPlayer], roll)
 
     @currPlayer += 1
