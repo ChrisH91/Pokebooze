@@ -22,6 +22,7 @@ class App < Sinatra::Base
     js :app, [
       '/js/tile.js',
       '/js/board.js',
+      '/js/plotter.js',
       '/js/player.js',
       '/js/painter.js',
       '/js/game.js',

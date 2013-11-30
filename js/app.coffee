@@ -13,7 +13,9 @@ for pair in tileCoords
   tile = new Tile(pair[0], pair[1])
   game.tiles.push tile
 
-$(document).ready ->
-  painter = new Painter(document.getElementById('table'), game)
-  painter.drawBoard("/images/game.jpg", 1200, 1200)
 
+$(document).ready ->
+  window.painter = new Painter(document.getElementById('table'), game)
+  window.painter.drawBoard("/images/game.jpg", 1200, 1200)
+
+  window.plotter = new Plotter $("#table"), painter
