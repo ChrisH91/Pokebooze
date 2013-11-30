@@ -31,6 +31,7 @@ class @Game
     position = player.move()
 
   _movePlayer: (player, steps, callback) =>
+
     if steps is 0
         callback()   
         return  
@@ -49,7 +50,11 @@ class @Game
       y: @board.tiles[player.position].y * @board.edgeLength
       duration: 0.3
       onFinish: =>
-        steps = steps - 1
+        if @board.tiles[player.position].stop 
+            steps = 0
+        else
+            steps = steps - 1
+
         @_movePlayer(player, steps, callback)        
     }
     tween.play()
@@ -100,12 +105,10 @@ class @Game
 
   turn: =>
     playerRoll = @roll()
-    console.log playerRoll
     # TODO: Run player callback from previous turn if it exists
     @movePlayer @players[@currPlayer], playerRoll, () =>
         # TODO: Add miss turn logic to player
         tileResult = @board.tiles[@players[@currPlayer].position];
-        console.log tileResult
 
         @currPlayer += 1
         if @currPlayer >= @players.length
