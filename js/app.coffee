@@ -9,7 +9,10 @@ $(document).ready ->
   drawBoard(group, game)
   drawTiles(group, game)
   drawPlayers(group, game)
-  panToStart(game)
+
+  setTimeout( -> 
+    panToStart(game)
+  , 1000)
 
 
 setupGame = (tileCoords) ->
