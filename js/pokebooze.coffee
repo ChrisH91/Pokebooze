@@ -108,7 +108,7 @@ class @Pokebooze
         y: 0.9175
         stop: false
         logic: (roll) ->
-            new TileResult(true, false)
+            new TileResult(true, false, true)
     }
     {
         x: 0.29333333333333333
@@ -325,6 +325,7 @@ class @Pokebooze
     {
         x: 0.5425
         y: 0.9366666666666666
+        stop: true
         logic: (roll) ->
             if roll % 2 == 0
                 miss = true
