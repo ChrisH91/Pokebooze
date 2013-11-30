@@ -6,6 +6,7 @@ class @Pokebooze
     @baseGroup = @stage.children[0].children[0]
     @painter = new Painter(@baseGroup)
     @camera = new Camera(@game.board)
+    @ui = new UI
     @game.board.node = @baseGroup
     boardTransform = $.extend({},@game.board.boardTransform(), @game.board.boardDimensions())
     @painter.paintBoard(boardTransform)

@@ -79,4 +79,4 @@ class @Game
       @players[@currPlayer].dontMove = false
       @currPlayer += 1
       if @currPlayer >= @players.length
-        @currPlayer = 0      
+        @currPlayer = 0

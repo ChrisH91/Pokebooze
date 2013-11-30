@@ -26,6 +26,4 @@ To Do
 Bugs
 ====
 
-- Can click roll before turn finished
-
 Feel free to contribute!
