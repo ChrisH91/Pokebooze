@@ -291,7 +291,13 @@ class @Pokebooze
         x: 0.9366666666666666
         y: 0.4533333333333333
         stop: false 
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+          currentTile = game.players[game.currPlayer].position
+          playerMoveQueue = []
+
+          for(player in game.players)
+            
+
         logic: @helpers.default
     }
     {
@@ -319,7 +325,7 @@ class @Pokebooze
     {
         x: 0.835
         y: 0.7816666666666666
-        stop: false
+         stop: false
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
