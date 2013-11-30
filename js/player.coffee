@@ -8,6 +8,8 @@ class @Player
                 Math.round(Math.random()*255), 
                 Math.round(Math.random()*255)
               ]
+    @dontMove = false
+    @missTurn = false
     Player.PLAYER_COUNT += 1
 
   move: () ->

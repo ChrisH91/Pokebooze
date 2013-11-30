@@ -104,12 +104,29 @@ class @Game
     roll
 
   turn: =>
-    playerRoll = @roll()
-    # TODO: Run player callback from previous turn if it exists
-    @movePlayer @players[@currPlayer], playerRoll, () =>
-        # TODO: Add miss turn logic to player
-        tileResult = @board.tiles[@players[@currPlayer].position];
+    while @players[@currPlayer].missTurn
+      @players[@currPlayer].missTurn = false
+      ++@currPlayer
+      if @currPlayer >= @players.length
+        @currPlayer = 0
 
-        @currPlayer += 1
-        if @currPlayer >= @players.length
-          @currPlayer = 0
+    playerRoll = @roll()
+
+    if not @players[@currPlayer].dontMove
+      # TODO: Run player callback from previous turn if it exists
+      @movePlayer @players[@currPlayer], playerRoll, () =>
+          # TODO: Add miss turn logic to player
+          tileResult = @board.tiles[@players[@currPlayer].position].logic playerRoll
+
+          if tileResult.rollAgain
+            if tileResult.dontMove 
+              @players[@currPlayer].dontMove = true
+          else
+             if tileResult.missTurn
+                @players[@currPlayer].missTurn = true  
+
+              @currPlayer += 1
+              if @currPlayer >= @players.length
+                @currPlayer = 0
+    else
+      @players[@currPlayer].dontMove = true
