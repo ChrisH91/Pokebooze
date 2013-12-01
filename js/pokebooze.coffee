@@ -599,11 +599,14 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Pokeflute
     {
         x: 0.10666666666666667
         y: 0.54
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+          game.players[game.currPlayer].pokeFlute = true
+          @helpers.defaultLandLogic game, roll
         logic: @helpers.default
     }
     {
@@ -687,12 +690,14 @@ class @Pokebooze
           # Roll Again
         logic: (game) =>
           if game.players[game.currPlayer].tileState == 1
+            game.players[game.currPlayer].tileState = 0
+            
             playerRoll = game.roll()
             @helpers.defaultLandLogic
           else
             @helpers.default game
     }
-    # Dodo
+    # Doduo
     {
         x: 0.235
         y: 0.7141666666666666
@@ -701,21 +706,32 @@ class @Pokebooze
           # Roll Again
         logic: @helpers.default
     }
+    # Snorlax
     {
         x: 0.19666666666666666
         y: 0.6616666666666666
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+          if not game.players[game.currPlayer].pokeFlute
+            game.players[game.currPlayer].missTurn = 3
+          @helpers.defaultLandLogic game, roll
+
         logic: @helpers.default
     }
+    # Weird black and white Ash on bike
     {
         x: 0.1675
         y: 0.5975
         stop: false
         landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        logic: (game) =>
+          playerRoll = game.roll()
+          noSpaces = playerRoll * 2
+
+          game.movePlayer game.players[game.currPlayer], noSpaces, () =>
+            game.board.tiles[game.players[game.currPlayer].position].landLogic game, noSpaces
     }
-    # TODO: Snorlax/Pokeflute logic
+    # Fearow (Should this mean moves?)
     {
         x: 0.15333333333333332
         y: 0.5308333333333334
@@ -723,7 +739,6 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: Weird Ash pic logic
     {
         x: 0.15416666666666667
         y: 0.4608333333333333
@@ -731,7 +746,6 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: Fearow logic
     {
         x: 0.165
         y: 0.3933333333333333
@@ -739,11 +753,14 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Weepinbell
     {
         x: 0.19583333333333333
         y: 0.325
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+          game.players[game.currPlayer].missTurn = 2
+          @helpers.defaultLandLogic
         logic: @helpers.default
     }
     {
@@ -753,7 +770,6 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: Weepinbell Logic
     {
         x: 0.28
         y: 0.2275
@@ -789,11 +805,25 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Shelldar
+    # Slowbro is 38 spaces ahead
     {
         x: 0.5983333333333334
         y: 0.165
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+          slowBroSpace = game.players[game.currPlayer].position + 38
+          shouldMove = false
+
+          for player in game.players
+            if player.position >= slowBroSpace
+              shouldMove = true
+
+          if shouldMove
+            tilesToMove = slowBroSpace - game.players[game.currPlayer].position
+            game.movePlayer game.players[game.currPlayer], tilesToMove, () =>
+              game.board.tiles[game.players[game.currPlayer].position].landLogic game, tilesToMove
+
         logic: @helpers.default
     }
     {
@@ -803,12 +833,13 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    #TODO: Shelldar Logic
+    # Pidgeotto
     {
         x: 0.7166666666666667
         y: 0.23166666666666666
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+          # Roll again
         logic: @helpers.default
     }
     {
@@ -818,10 +849,11 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Fuschia Gym
     {
         x: 0.8008333333333333
         y: 0.3383333333333333
-        stop: false
+        stop: true
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }

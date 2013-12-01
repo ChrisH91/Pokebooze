@@ -21,6 +21,7 @@ To Do
 - LocalStorage of game state
 - ChromeCast compatibility
 - S.S. Anne Logic and UI
+- Decide whether Fearow should mean dice rolls aswell
 
 Bugs
 ====
