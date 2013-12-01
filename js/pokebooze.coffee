@@ -914,7 +914,7 @@ class @Pokebooze
     }
     {
         x: 0.7591666666666667
-        y: 0.7933333333333333
+        y: 0.7141666666666666
         stop: false
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
