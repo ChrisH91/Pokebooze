@@ -24,8 +24,14 @@ To Do
 - Chansey UI element and logic
 - Gold Teeth UI element and logic
 - Kanghaskan UI element and logic
+- UI feedback for when people miss a turn
+- Color theory spacing of players
 
 Bugs
 ====
+- Second roll at first gym not firing
+- Dem scrollbars
+- Farfetched is bugged
+
 
 Feel free to contribute!
