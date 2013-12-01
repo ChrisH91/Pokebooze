@@ -3,6 +3,10 @@ html, body
   margin: 0
   background-color: black
 
+.pokeborder
+  border: 5px solid red
+  outline: 5px solid blue
+
 #title
   position: absolute
   z-index: 10
@@ -31,6 +35,24 @@ html, body
     list-style: none
     margin: 5px 0
     padding: 5px 0
+
+.new-game
+  @extend .pokeborder
+  $width: 310px
+  position: absolute
+  width: $width
+  padding: 30px
+  z-index: 10
+  top: 10%
+  left: 50%
+  margin-left: -$width/2
+  background-color: white
+  button
+    display: block
+    margin: auto
+
+.hidden
+  display: none !important
 
 #table
   position: relative
