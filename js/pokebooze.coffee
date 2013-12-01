@@ -484,7 +484,7 @@ class @Pokebooze
     {
         x: 0.7525
         y: 0.18916666666666668
-        stop: false
+        stop: true
         landLogic: (game, roll) =>
           game.players[game.currPlayer].tileState = 1
           # Roll Again
@@ -500,32 +500,41 @@ class @Pokebooze
           else
             @helpers.default game
     }
+    # Team Rocket Hideout
     {
         x: 0.6825
         y: 0.14583333333333334
-        stop: true
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        stop: false
+        landLogic: (game, roll) =>
+          game.players[game.currPlayer].tileState = 1
+          # Roll again
+        logic: (game) =>
+          if game.players[game.currPlayer].tileState == 1
+            game.players[game.currPlayer].tileState = 0
+            playerRoll = game.roll()
+
+            if playerRoll == 1
+              game.players[game.currPlayer].missTurn = 3
+
+            @helpers.defaultLandLogic()
+          else
+            @helpers.default game
     }
+    # Rare Candy
     {
         x: 0.6083333333333333
         y: 0.115
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+          # Roll again
         logic: @helpers.default
     }
-    # TODO: Rocket Hideout logic
     {
         x: 0.5341666666666667
         y: 0.1025
         stop: false
-        logic: (roll) ->
-            if roll is 1
-                miss = true
-            else
-                miss = false
-
-            new TileResult(false, miss)
+        landLogic: @helpers.defaultLandLogic
+        logic: @helpers.default
     }
     {
         x: 0.46166666666666667
@@ -541,12 +550,19 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Gastly
     {
         x: 0.31083333333333335
         y: 0.14833333333333334
         stop: false
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        landLogic: (game, roll) =>
+          # Roll again
+        logic: (game) =>
+          playerRoll = game.roll()
+          noSpaces = playerRoll * -1
+
+          game.movePlayer game.players[game.currPlayer], noSpaces, () =>
+            game.board.tiles[game.players[game.currPlayer].position].landLogic game, noSpaces
     }
     {
         x: 0.24583333333333332
