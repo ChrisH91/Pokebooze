@@ -20,6 +20,10 @@ To Do
 - Pretty dice
 - LocalStorage of game state
 - ChromeCast compatibility
+- Safari Zone UI element and logic
+- Chansey UI element and logic
+- Gold Teeth UI element and logic
+- Kanghaskan UI element and logic
 
 Bugs
 ====
