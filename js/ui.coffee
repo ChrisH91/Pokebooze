@@ -1,5 +1,7 @@
 class @UI
   constructor: ->
+    @playerMenuCount = 1
+
     @rollButton = $('#roll-button')
     @playerInput = $('.player-input')
     @startButton = $('#start-game')
@@ -12,9 +14,12 @@ class @UI
       _disableButton(@)
     )
     @startButton.on("click", =>
-      _startGame(@playerInput)
+      _startGame()
     )
-    # @playerInput.focus(_duplicateInput)
+
+    @playerInput.on "focus", (event) =>
+      _duplicateInput event, @
+
 
   flash: (title, message="") ->
     contents = "<h1>"+title+"</h1>"
@@ -39,23 +44,25 @@ class @UI
     $(button).prop('disabled', false)
     $(button).removeClass('disabled')
 
-  _duplicateInput = (event) ->
-    console.log @
-    if @dirty?
+  _duplicateInput = (event, ui) =>
+    el = event.currentTarget
+    if el.dirty?
       return
     else
-      clone = $(@).clone()
-      $(clone).focus(_duplicateInput)
+      clone = $(el).clone()
+      ++ ui.playerMenuCount
+      $(clone).attr("placeholder", "Player " + ui.playerMenuCount + "'s Name")
+      clone.on "focus", (event) =>
+        _duplicateInput event, ui
       $('#players-input').append(clone)
-      @dirty = true
+      el.dirty = true
 
-  _startGame = (playerInputs) ->
+  _startGame = ->
     names = []
-    for input in playerInputs
+    for input in $(".player-input")
       name = $(input).val()
       if name.trim().length > 0
         names.push(name)
 
     $('.new-game').hide()
     window.pokebooze.start(names)
-

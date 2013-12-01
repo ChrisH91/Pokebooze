@@ -32,5 +32,3 @@ class @Painter
     }))
     player.node = rect
     @group.add(rect)
-
-
