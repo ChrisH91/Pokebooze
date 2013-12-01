@@ -37,7 +37,7 @@ class @Game
         if @board.tiles[player.position].stop 
           steps = 0
         else
-          steps = steps > 0 ? steps - 1 : steps + 1
+          steps = if steps > 0 then steps - 1 else steps + 1
 
         @_movePlayer(player, steps, callback)        
     }
