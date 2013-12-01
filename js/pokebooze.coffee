@@ -124,10 +124,10 @@ class @Pokebooze
 
         logic: (game) =>
           if game.players[game.currPlayer].tileState == 1
-            console.log "Re-rolling player " + game.currPlayer
             game.players[game.currPlayer].tileState = 0
-            game.roll()
-            game.nextPlayer()
+            
+            playerRoll = game.roll()
+            @helpers.defaultLandLogic game
           else
             @helpers.default game
     }
