@@ -78,6 +78,16 @@ class @Pokebooze
       else
         game.board.tiles[game.players[game.currPlayer].position].landLogic game, playerRoll
 
+    tentacool: (game) =>
+      console.log "Tentacool"
+      playerRoll = game.roll()
+
+      if playerRoll isnt 1 and playerRoll isnt 6
+        console.log "Move"
+        @helpers.default game
+
+      @helpers.defaultLandLogic game, playerRoll      
+
     # Land Logic
     defaultLandLogic: (game, roll) ->
       game.nextPlayer()
@@ -924,7 +934,6 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: Gold Teeth Logic
     {
         x: 0.53
         y: 0.835
@@ -932,22 +941,23 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: Kangaskhan Logic
+    # Tentacool
     {
         x: 0.525
         y: 0.7816666666666666
         stop: false
         landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        logic: @helpers.tentacool
     }
+    # Raticate
     {
         x: 0.5766666666666667
         y: 0.7733333333333333
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+          # Roll again
         logic: @helpers.default
     }
-    # TODO: Sewaeed like one logic
     {
         x: 0.6308333333333334
         y: 0.7483333333333333
@@ -955,12 +965,13 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Tentacool
     {
         x: 0.6775
         y: 0.7191666666666666
         stop: false
         landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        logic: @helpers.tentacool
     }
     {
         x: 0.7208333333333333
@@ -969,7 +980,6 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: Seaweed like one logic
     {
         x: 0.7508333333333334
         y: 0.6408333333333334
