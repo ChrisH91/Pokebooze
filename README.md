@@ -33,7 +33,6 @@ To Do
 
 Bugs
 ====
-- Second roll at first gym not firing
 - Dem scrollbars
 - Farfetched is bugged
 
