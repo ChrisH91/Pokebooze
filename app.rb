@@ -3,6 +3,7 @@ require 'sinatra/assetpack'
 require 'sass'
 require 'coffee_script'
 
+
 class App < Sinatra::Base
 
   get "/" do
