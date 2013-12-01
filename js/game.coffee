@@ -44,7 +44,7 @@ class @Game
     tween.play()
 
   roll: =>
-    roll = Math.ceil((Math.random()) * 1)
+    roll = Math.ceil((Math.random()) * 6)
     @rollOutput.html(roll)
 
     roll

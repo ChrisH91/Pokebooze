@@ -27,6 +27,7 @@ To Do
 - Gold Teeth UI element and logic
 - Kanghaskan UI element and logic
 - Tentacruel Logic
+- Hypno UI element and logic
 
 Bugs
 ====

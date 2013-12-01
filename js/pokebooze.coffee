@@ -987,7 +987,6 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: How the fuck are we gonna do this one
     {
         x: 0.775
         y: 0.5875
@@ -1023,12 +1022,20 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Omastar
     {
         x: 0.7225
         y: 0.3125
         stop: false
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        landLogic: (game, roll) =>
+          game.players[game.currPlayer].tileState = 1
+          # Roll Again
+        logic: (game) =>
+          if game.players[game.currPlayer].tileState is 1
+            game.players[game.currPlayer].tileState = 0
+            @helpers.defaultLandLogic game, roll
+          else
+            @helpers.default game
     }
     {
         x: 0.6841666666666667
@@ -1037,12 +1044,23 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Cinnabar Gym
     {
         x: 0.6333333333333333
         y: 0.23833333333333334
-        stop: false
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        stop: true
+        landLogic: (game, roll) =>
+          game.players[game.currPlayer].tileState = 1
+          # Roll again
+        logic: (game) =>
+          if game.players[game.currPlayer].tileState is 1
+              playerRoll = game.roll()
+
+              if playerRoll % 2 isnt 0
+                game.players[game.currPlayer].tileState = 0
+                @helpers.defaultLandLogic game, playerRoll
+          else
+            @helpers.default game
     }
     {
         x: 0.5816666666666667
@@ -1051,8 +1069,6 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # Cinabar Gym
-    # TODO: Cinabar Gym Logic
     {
         x: 0.5266666666666666
         y: 0.205
@@ -1067,29 +1083,42 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Magneton Logic
     {
         x: 0.41833333333333333
         y: 0.21583333333333332
         stop: false
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        landLogic: (game, roll) =>
+          # Roll Again
+        logic: (game) =>
+          playerRoll = game.roll()
+          noSpaces = playerRoll * -2
+
+          game.movePlayer game.players[game.currPlayer], noSpaces, () =>
+            game.board.tiles[game.players[game.currPlayer].position].landLogic game, noSpaces
     }
-    # TODO: Magneton Logic
     {
         x: 0.3616666666666667
         y: 0.23583333333333334
         stop: false
         landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        logic: @helpers.tentacool
     }
+    # Golbat
     {
         x: 0.31416666666666665
         y: 0.2683333333333333
         stop: false
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        landLogic: (game, roll) =>
+          game.players[game.currPlayer].tileState = 1
+          # Roll again
+        logic: (game) =>
+          if game.players[game.currPlayer].tileState is 1
+            game.players[game.currPlayer].tileState = 0
+            @helpers.defaultLandLogic game, roll
+          else
+            @helpers.default
     }
-    # TODO: Tentacool logic
     {
         x: 0.2725
         y: 0.3125
@@ -1097,7 +1126,6 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # Golbat Logic
     {
         x: 0.24416666666666667
         y: 0.35583333333333333
@@ -1140,10 +1168,11 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Viridian Gym
     {
         x: 0.2758333333333333
         y: 0.6816666666666666
-        stop: false
+        stop: true
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
@@ -1154,13 +1183,19 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # Viridian Gym
+    # Seaking
     {
         x: 0.365
         y: 0.7466666666666667
-        stop: true
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        stop: false
+        landLogic: (game, roll) =>
+          # Roll again
+        logic: (game) =>
+          playerRoll = game.roll()
+          noSpaces = playerRoll * -2
+
+          game.movePlayer game.players[game.currPlayer], noSpaces, () =>
+            game.board.tiles[game.players[game.currPlayer].position].landLogic game, noSpaces
     }
     {
         x: 0.4191666666666667
@@ -1169,7 +1204,6 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: Seaking Logic
     {
         x: 0.47
         y: 0.7883333333333333
@@ -1184,12 +1218,13 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Zubat
     {
         x: 0.3675
         y: 0.6991666666666667
         stop: false
         landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        logic: @helpers.zubat
     }
     {
         x: 0.30333333333333334
@@ -1198,22 +1233,29 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: Zubat Logic
+    # Zubat
     {
         x: 0.2658333333333333
         y: 0.5483333333333333
         stop: false
         landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        logic: @helpers.zubat
     }
+    # Graveler
     {
         x: 0.26416666666666666
         y: 0.4525
         stop: false
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        landLogic: (game, roll) =>
+          game.players[game.currPlay].tileState = 1
+          # Roll again
+        logic: (game) =>
+          if game.players[game.currPlay].tileState is 1
+            game.players[game.currPlay].tileState = 0
+            @helpers.defaultLandLogic()
+          else
+            @helpers.default
     }
-    # TODO: Zubat Logic
     {
         x: 0.29833333333333334
         y: 0.3625
@@ -1221,6 +1263,7 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Indigo Plateau
     {
         x: 0.36916666666666664
         y: 0.29583333333333334
@@ -1228,6 +1271,7 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Lorelei
     {
         x: 0.45416666666666666
         y: 0.26
@@ -1235,7 +1279,7 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # Indigo Plateau
+    # Bruno
     {
         x: 0.5433333333333333
         y: 0.26166666666666666
@@ -1243,6 +1287,7 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Agatha
     {
         x: 0.6283333333333333
         y: 0.29583333333333334
@@ -1250,6 +1295,7 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Lance
     {
         x: 0.6958333333333333
         y: 0.3641666666666667
@@ -1257,6 +1303,7 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Rival
     {
         x: 0.7341666666666666
         y: 0.4475
@@ -1285,6 +1332,7 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Hypno
     {
         x: 0.5491666666666667
         y: 0.7283333333333334
@@ -1299,12 +1347,13 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: Hypno Logic
+    # Rare Candy
     {
         x: 0.5841666666666666
         y: 0.625
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+          # Extra turn
         logic: @helpers.default
     }
     {
@@ -1321,6 +1370,7 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Exeggutor
     {
         x: 0.6616666666666666
         y: 0.465
@@ -1335,7 +1385,7 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: Exxegutor Logic
+    # Ninetales
     {
         x: 0.5933333333333334
         y: 0.3525
@@ -1371,6 +1421,7 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Full Restore
     {
         x: 0.3358333333333333
         y: 0.46166666666666667
@@ -1378,7 +1429,6 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: Full Restore Logic
     {
         x: 0.3283333333333333
         y: 0.5341666666666667
@@ -1404,7 +1454,8 @@ class @Pokebooze
         x: 0.4691666666666667
         y: 0.66
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+          console.log "Last square"
         logic: @helpers.default
     }
   ]
