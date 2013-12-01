@@ -516,7 +516,7 @@ class @Pokebooze
             if playerRoll == 1
               game.players[game.currPlayer].missTurn = 3
 
-            @helpers.defaultLandLogic()
+            @helpers.defaultLandLogic game, playerRoll
           else
             @helpers.default game
     }
@@ -571,7 +571,6 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: Gastly logic
     {
         x: 0.19333333333333333
         y: 0.24166666666666667
@@ -642,10 +641,11 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Rival
     {
         x: 0.39
         y: 0.8733333333333333
-        stop: false
+        stop: true
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
@@ -659,7 +659,7 @@ class @Pokebooze
     {
         x: 0.4675
         y: 0.8341666666666666
-        stop: true
+        stop: false
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
@@ -677,25 +677,34 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Saffron Gym
     {
         x: 0.2816666666666667
         y: 0.7558333333333334
-        stop: false
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        stop: true
+        landLogic: (game, roll) =>
+          game.players[game.currPlayer].tileState = 1
+          # Roll Again
+        logic: (game) =>
+          if game.players[game.currPlayer].tileState == 1
+            playerRoll = game.roll()
+            @helpers.defaultLandLogic
+          else
+            @helpers.default game
     }
+    # Dodo
     {
         x: 0.235
         y: 0.7141666666666666
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+          # Roll Again
         logic: @helpers.default
     }
-    # Saffron Gym
     {
         x: 0.19666666666666666
         y: 0.6616666666666666
-        stop: true
+        stop: false
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
