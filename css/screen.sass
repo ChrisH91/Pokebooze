@@ -2,10 +2,23 @@ html, body
   padding: 0
   margin: 0
   background-color: black
+  font-family: "Times New Roman", serif
 
-.pokeborder
+h1, h2, h3, h4, h5, button
+  font-family: "Comic Sans MS", cursive
+
+.pokeBorderBox
   border: 5px solid red
   outline: 5px solid blue
+  background-color: white
+  $width: 310px
+  position: absolute
+  width: $width
+  padding: 30px
+  z-index: 10
+  top: 10%
+  left: 50%
+  margin-left: -$width/2
 
 #title
   position: absolute
@@ -37,22 +50,17 @@ html, body
     padding: 5px 0
 
 .new-game
-  @extend .pokeborder
-  $width: 310px
-  position: absolute
-  width: $width
-  padding: 30px
-  z-index: 10
-  top: 10%
-  left: 50%
-  margin-left: -$width/2
-  background-color: white
+  @extend .pokeBorderBox
   button
     display: block
     margin: auto
 
 .hidden
   display: none !important
+
+#flash
+  @extend .pokeBorderBox
+
 
 #table
   position: relative

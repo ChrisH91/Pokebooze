@@ -3,6 +3,8 @@ class @UI
     @rollButton = $('#roll-button')
     @playerInput = $('.player-input')
     @startButton = $('#start-game')
+    @flashDiv = $('#flash')
+    @flashLength = 3000
     @bindings()
 
   bindings: ->
@@ -13,6 +15,18 @@ class @UI
       _startGame(@playerInput)
     )
     # @playerInput.focus(_duplicateInput)
+
+  flash: (title, message="") ->
+    contents = "<h1>"+title+"</h1>"
+    if message.length > 0
+      contents += "\n<p>"+message+"</p>"
+    @flashDiv.hide()
+    @flashDiv.removeClass("hidden")
+    @flashDiv.fadeIn(100)
+    @flashDiv.html(contents)
+    setTimeout(=>
+      $(@flashDiv).fadeOut(500)
+    , @flashLength)
 
   _disableButton = (button) ->
     $(button).prop('disabled', true)
@@ -44,3 +58,4 @@ class @UI
 
     $('.new-game').hide()
     window.pokebooze.start(names)
+
