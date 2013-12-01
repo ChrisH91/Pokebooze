@@ -7,6 +7,24 @@
     Roll
   %ul.players
 
+.new-game
+  %h2
+    New Game
+  %P
+    Enter the names of each drinker.
+  %form#players-input
+    %input.player-input{type: "text", placeholder: "Player 1's Name"}
+    %input.player-input{type: "text", placeholder: "Player 2's Name"}
+    %input.player-input{type: "text", placeholder: "Player 3's Name"}
+    %input.player-input{type: "text", placeholder: "Player 4's Name"}
+    %input.player-input{type: "text", placeholder: "Player 5's Name"}
+    %input.player-input{type: "text", placeholder: "Player 6's Name"}
+    %input.player-input{type: "text", placeholder: "Player 7's Name"}
+    %input.player-input{type: "text", placeholder: "Player 8's Name"}
+    %input.player-input.hidden{type: "text", placeholder: "Name"}
+
+  %button#start-game
+    Lets Get Drunk!
 
 #table
   
