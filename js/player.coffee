@@ -9,7 +9,9 @@ class @Player
                 Math.round(Math.random()*255)-50
               ]
     @dontMove = false
-    @missTurn = false
+    @pokeFlute = false
+    @missTurn = 0
+    @tileState = 0
     Player.PLAYER_COUNT += 1
     @name = name
 

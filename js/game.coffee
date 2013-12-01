@@ -44,21 +44,27 @@ class @Game
     tween.play()
 
   roll: =>
-    roll = Math.ceil((Math.random())*6)
+    roll = Math.ceil((Math.random()) * 6)
     @rollOutput.html(roll)
 
     roll
 
+  nextPlayer: =>
+    @currPlayer += 1
+    if @currPlayer >= @players.length
+      @currPlayer = 0   
+  
   turn: =>
-    while @players[@currPlayer].missTurn
-      @players[@currPlayer].missTurn = false
+    while @players[@currPlayer].missTurn > 0
+      console.log "Skipping player: " + @currPlayer
+      @players[@currPlayer].missTurn -= 1
       ++@currPlayer
       if @currPlayer >= @players.length
-        @currPlayer = 0
+        @currPlayer = 0 
 
-    playerRoll = @roll()
-
-    if not @players[@currPlayer].dontMove
+    result = @board.tiles[@players[@currPlayer].position].logic this
+ 
+    ###if not @players[@currPlayer].dontMove
       # TODO: Run player callback from previous turn if it exists
       @movePlayer @players[@currPlayer], playerRoll, () =>
           # TODO: Add miss turn logic to player
@@ -71,9 +77,7 @@ class @Game
              if tileResult.missTurn
                 @players[@currPlayer].missTurn = true  
 
-              @currPlayer += 1
-              if @currPlayer >= @players.length
-                @currPlayer = 0
+
     else
       @players[@currPlayer].dontMove = false
       @currPlayer += 1

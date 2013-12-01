@@ -15,6 +15,7 @@ class @Board
         tileCoord.y,
         tileCoord.stop,
         tileCoord.logic,
+        tileCoord.landLogic
       )
 
   tileRotation: (tileIndex) ->
