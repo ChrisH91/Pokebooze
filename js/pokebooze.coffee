@@ -857,6 +857,7 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Safari Zone
     {
         x: 0.8258333333333333
         y: 0.3958333333333333
@@ -864,7 +865,6 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # Fuschia Gym
     {
         x: 0.8391666666666666
         y: 0.465
@@ -872,7 +872,6 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: Safari Zone
     {
         x: 0.835
         y: 0.5316666666666666
@@ -887,6 +886,7 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Chansey
     {
         x: 0.7975
         y: 0.6633333333333333
@@ -901,7 +901,6 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # Chansey Logic
     {
         x: 0.7108333333333333
         y: 0.7616666666666667
@@ -909,6 +908,7 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Gold Teeth
     {
         x: 0.6558333333333334
         y: 0.7933333333333333
@@ -916,6 +916,7 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Kanghaskan
     {
         x: 0.5958333333333333
         y: 0.8208333333333333
