@@ -22,6 +22,10 @@ To Do
 - ChromeCast compatibility
 - S.S. Anne Logic and UI
 - Decide whether Fearow should mean dice rolls aswell
+- Safari Zone UI element and logic
+- Chansey UI element and logic
+- Gold Teeth UI element and logic
+- Kanghaskan UI element and logic
 
 Bugs
 ====
