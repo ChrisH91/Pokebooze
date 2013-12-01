@@ -9,15 +9,14 @@ class @Game
     $('#roll-button').on("click", @turn)
 
   movePlayer: (player, steps, callback) ->
-    @camera.rotateToPoint(@board.tileRotation(player.position))
-    @camera.zoomToPoint(@board.tilePosition(player.position), => @_playerMove(player, steps, callback))
     direction = steps > 0
     position = player.move(direction)
-
+    @camera.rotateToPoint(@board.tileRotation(player.position))
+    @camera.zoomToPoint(@board.tilePosition(player.position), => @_playerMove(player, steps, callback))
+  
   _movePlayer: (player, steps, callback) =>
     if steps is 0
-      callback()   
-      return  
+      return callback()
     
     direction = steps > 0
     position = player.move(direction)
@@ -36,9 +35,9 @@ class @Game
       duration: 0.3
       onFinish: =>
         if @board.tiles[player.position].stop 
-            steps = 0
+          steps = 0
         else
-            steps = steps - 1
+          steps = steps > 0 ? steps - 1 : steps + 1
 
         @_movePlayer(player, steps, callback)        
     }
