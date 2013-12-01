@@ -284,7 +284,7 @@ class @Pokebooze
             game.movePlayer game.players[game.currPlayer], -2, () =>
               game.board.tiles[game.players[game.currPlayer].position].landLogic game, -2
     }
-    # TODO: Oddish Logic
+    # Oddish
     {
         x: 0.9366666666666666
         y: 0.4533333333333333
@@ -294,7 +294,7 @@ class @Pokebooze
           playerMoveQueue = []
 
           for player in game.players
-            noSpaces = player.position - currentTile
+            noSpaces = currentTile - player.position
             if Math.abs(noSpaces) > 0 and Math.abs(noSpaces) <= 2
               game.movePlayer player, noSpaces, () =>
                 # Do nothing
@@ -308,6 +308,7 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Rival
     {
         x: 0.9175
         y: 0.6366666666666667
@@ -329,11 +330,12 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Mankee
     {
         x: 0.7775
         y: 0.8358333333333333
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: @helpers.missTurn
         logic: @helpers.default
     }
     {
@@ -343,26 +345,33 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Vermillion Gym
     {
         x: 0.6191666666666666
         y: 0.92
         stop: false
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        landLogic: (game, roll) =>
+          game.players[game.currPlayer].tileState = 1
+          # Roll Again
+        logic: (game) =>
+          playerRoll = game.roll()
+
+          if game.players[game.currPlayer].tileState == 1
+            game.players[game.currPlayer].tileState = 0
+
+            if playerRoll % 2 == 0
+              game.players[game.currPlayer].missTurn = 1
+          else
+            @helpers.default game
     }
-    # Vermillion Gym
     {
         x: 0.5425
         y: 0.9366666666666666
-        stop: true
-        logic: (roll) ->
-            if roll % 2 == 0
-                miss = true
-            else
-                miss = false
-
-            new TileResult(false, true)
+        stop: false
+        landLogic: @helpers.defaultLandLogic
+        logic: @helpers.default
     }
+    # TODO: S.S. Anne
     {
         x: 0.5358333333333334
         y: 0.8875
@@ -370,7 +379,6 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: S.S. Anne Logic
     {
         x: 0.6091666666666666
         y: 0.8741666666666666
@@ -385,11 +393,12 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Diglet
     {
         x: 0.7475
         y: 0.7983333333333333
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: @helpers.missTurn
         logic: @helpers.default
     }
     {
@@ -399,14 +408,20 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Magnemite
     {
         x: 0.845
         y: 0.685
         stop: false
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        landLogic: (game, roll) =>
+          # Roll again
+        logic: (game) =>
+          playerRoll = game.roll()
+          noSpaces = playerRoll * -1
+          console.log noSpaces
+          game.movePlayer game.players[game.currPlayer], noSpaces, () =>
+            game.board.tiles[game.players[game.currPlayer].position].landLogic game, noSpaces
     }
-    # TODO: Magnemite Logic
     {
         x: 0.87
         y: 0.615
@@ -421,11 +436,14 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Celadon Department Store
     {
         x: 0.8908333333333334
         y: 0.4583333333333333
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+          game.players[game.currPlayer].missTurn = 2
+          @helpers.defaultLandLogic game, roll          
         logic: @helpers.default
     }
     {
@@ -435,45 +453,59 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
+    # Game Corner
     {
         x: 0.8466666666666667
         y: 0.3016666666666667
         stop: false
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        landLogic: (game, roll) =>
+          game.players[game.currPlayer].tileState = 1
+          # Roll again
+        logic: (game) =>
+          if game.players[game.currPlayer].tileState == 1
+            playerRoll = game.roll()
+
+            game.players[game.currPlayer].tileState = 0
+            if playerRoll isnt 3 and playerRoll isnt 5
+              game.players[game.currPlayer].missTurn = 2
+              @helpers.defaultLandLogic game, playerRoll
+          else
+              @helpers.default game
     }
     {
         x: 0.8033333333333333
         y: 0.245
         stop: false
-        logic: (roll) ->
-            if roll isnt 3 or roll isnt 5
-                miss = true
-            else
-                miss = false
-
-            new TileResult(false, miss)
+        landLogic: @helpers.defaultLandLogic
+        logic: @helpers.default
                 
     }
+    # Celadon Gym
     {
         x: 0.7525
         y: 0.18916666666666668
         stop: false
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        landLogic: (game, roll) =>
+          game.players[game.currPlayer].tileState = 1
+          # Roll Again
+        logic: (game) =>
+          if game.players[game.currPlayer].tileState == 1
+            game.players[game.currPlayer].tileState = 0
+            playerRoll = game.roll()
+            
+            if playerRoll > 4
+              game.players[game.currPlayer].missTurn = 1
+
+            @helpers.defaultLandLogic game, playerRoll
+          else
+            @helpers.default game
     }
-    # Celadan Gym
-    # TODO: Celadon Gym Logic
     {
         x: 0.6825
         y: 0.14583333333333334
         stop: true
-        logic: (roll) ->
-            if roll >= 4
-                miss = true
-            else miss = false
-
-            new TileResult(false, miss)
+        landLogic: @helpers.defaultLandLogic
+        logic: @helpers.default
     }
     {
         x: 0.6083333333333333

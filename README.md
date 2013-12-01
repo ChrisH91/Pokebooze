@@ -22,6 +22,7 @@ To Do
 - Pretty dice
 - LocalStorage of game state
 - ChromeCast compatibility
+- S.S. Anne Logic and UI
 
 Bugs
 ====
