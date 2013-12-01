@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/assetpack'
 require 'sass'
+require 'coffee_script'
 
 class App < Sinatra::Base
 
@@ -12,7 +13,7 @@ class App < Sinatra::Base
 
   register Sinatra::AssetPack
 
-  assets {
+  assets do
     serve '/js',     from: 'js'        # Default
     serve '/css',    from: 'css'       # Default
     serve '/images', from: 'images'    # Default
@@ -40,6 +41,6 @@ class App < Sinatra::Base
 
     js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify
     css_compression :simple   # :simple | :sass | :yui | :sqwish
-  }
+  end
 
 end
