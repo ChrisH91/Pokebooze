@@ -1,5 +1,6 @@
 class @Game
-  constructor: () -> 
+  constructor: (ui) -> 
+    @ui = ui
     @players = []
     @currPlayer = 0
     @rollOutput = $('#roll-output')
@@ -55,6 +56,8 @@ class @Game
       @currPlayer = 0   
   
   turn: =>
+    @ui._disableButton(@ui.rollButton)
+
     while @players[@currPlayer].missTurn > 0
       console.log "Skipping player: " + @currPlayer
       @players[@currPlayer].missTurn -= 1
