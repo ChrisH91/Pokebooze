@@ -1,6 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.6.3)
+    execjs (2.0.2)
+    haml (4.0.4)
+      tilt
     jsmin (1.0.1)
     rack (1.5.2)
     rack-protection (1.5.1)
@@ -23,6 +30,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  coffee-script
+  haml
   sass
   sinatra
   sinatra-assetpack
