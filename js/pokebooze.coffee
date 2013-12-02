@@ -11,6 +11,8 @@ class @Pokebooze
       @game.players.push(new Player({name: name}))
     @initializePlayers()
 
+    @ui.populatePlayerSelectMenu @game.players
+
     $('.controls').removeClass('hidden')
     @panToStart()
 
@@ -31,6 +33,9 @@ class @Pokebooze
     for player in serializedGame.players
       @game.players.push(new Player(player))
     @initializePlayers({resuming: true})
+
+    @ui.populatePlayerSelectMenu @game.players
+
     $('.controls').removeClass('hidden')
     $('.new-game').hide()
 
@@ -843,7 +848,7 @@ class @Pokebooze
             game.movePlayer game.players[game.currPlayer], tilesToMove, () =>
               game.board.tiles[game.players[game.currPlayer].position].landLogic game, tilesToMove
           else
-            @helpers.rollAgain
+            @helpers.defaultLandLogic game, roll
 
         logic: @helpers.default
     }
@@ -882,7 +887,10 @@ class @Pokebooze
         x: 0.8258333333333333
         y: 0.3958333333333333
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+          game.playerSelectionDialogue (player) =>
+            game.players[player].missTurn += 1
+            @helpers.defaultLandLogic game, roll
         logic: @helpers.default
     }
     {

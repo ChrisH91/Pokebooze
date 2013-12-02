@@ -93,14 +93,23 @@ h1, h2, h3, h4, h5, h6
   @include poke-border-box($width)
 
 #player-select
-  input[type=button]
+  button
     margin-top: 1em
     display: block
     width: 100%
     padding: 10px
+    border: 0
 
     &:first-child
       margin-top: 2em
+
+    &.disabled
+      opacity: .25
+
+    &:not(.disabled)
+      &:active
+        position: relative
+        top: 1px
 
 .hidden
   display: none !important
