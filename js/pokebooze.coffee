@@ -935,7 +935,10 @@ class @Pokebooze
         x: 0.7975
         y: 0.6633333333333333
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>          
+            game.playerSelectionDialogue (player) =>
+                game.players[player].missTurn += 1
+                @helpers.defaultLandLogic game, roll  
         logic: @helpers.default
     }
     {
@@ -957,7 +960,10 @@ class @Pokebooze
         x: 0.6558333333333334
         y: 0.7933333333333333
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+          game.playerSelectionDialogue (player) =>
+            game.players[player].missTurn += 1
+            @helpers.defaultLandLogic game, roll            
         logic: @helpers.default
     }
     # Kanghaskan
