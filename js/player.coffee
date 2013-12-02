@@ -19,16 +19,12 @@ class @Player
     "#705746" # Dark Type
     "#B7B7CE" # Steel Type
   ]
-  constructor: (name = "") ->
-    @position = 0
-    @player_number = Player.PLAYER_COUNT
-    @color = Player.COLORS[@player_number]
-    @dontMove = false
-    @pokeFlute = false
-    @missTurn = 0
-    @tileState = 0
+  constructor: (opts = {}) ->
+    opts = $.extend({},@_defaultOptions(), opts)
+    for key, val of opts
+      @[key] = val
+
     Player.PLAYER_COUNT += 1
-    @name = name
 
   move: (forwards = true) ->
     if forwards
@@ -49,4 +45,16 @@ class @Player
         r: parseInt(result[1], 16)
         g: parseInt(result[2], 16)
         b: parseInt(result[3], 16)
+    }
+
+  _defaultOptions: () ->
+    {  
+      position: 0
+      name: 'Test'
+      dontMove: false
+      pokeFlute: false
+      missTurn: 0
+      tileState: 0
+      color: Player.COLORS[Player.PLAYER_COUNT]
+      playerNumber: Player.PLAYER_COUNT
     }
