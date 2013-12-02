@@ -865,7 +865,10 @@ class @Pokebooze
         x: 0.8258333333333333
         y: 0.3958333333333333
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) ->
+          game.playerSelectionDialogue (player) ->
+            game.players[player].missTurn += 1
+            @helpers.defaultLandLogic game, roll
         logic: @helpers.default
     }
     {

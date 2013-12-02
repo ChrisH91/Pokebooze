@@ -20,9 +20,9 @@ class @Player
     "#B7B7CE" # Steel Type
   ]
   constructor: (name = "") ->
-    @position = 0
+    @position = 80
     @player_number = Player.PLAYER_COUNT
-    @color = Player.COLORS[@player_number]
+    @color = Player.COLORS[@player_number % Player.COLORS.length]
     @dontMove = false
     @pokeFlute = false
     @missTurn = 0

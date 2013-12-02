@@ -18,9 +18,10 @@ class @UI
       _duplicateInput event, @
 
   
-  _addPlayerSelectButton = (name, color) ->
-    $("#player-select").append(
-      "<input type='button' class='select_player' value='" + name + "' />")
+  _addPlayerSelectButton = (name, playerNo) ->
+    button = $("<button type='button' class='select_player' data-player='" + playerNo + "'
+                 style='background-color: " + Player.COLORS[playerNo % Player.COLORS.length] + "'>" + name + "</button>")
+    $("#player-select").append button
 
 
   flash: (title, message="") ->
@@ -62,7 +63,7 @@ class @UI
       name = $(input).val()
       if name.trim().length > 0
         names.push(name)
-        _addPlayerSelectButton name, "test"
+        _addPlayerSelectButton name, names.length - 1
 
     $('.new-game').hide()
     window.pokebooze.start(names)

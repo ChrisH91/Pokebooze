@@ -44,6 +44,15 @@ class @Game
     }
     tween.play()
 
+  playerSelectionDialogue: (callback) ->
+    console.log 
+    $(".choose-player").show()
+    $(".select_player").unbind "click"
+    $(".select_player").click (e) ->
+      playerNo = $(@).data "player"
+      $(".choose-player").hide()
+      callback playerNo
+
   roll: (callback) =>
     setTimeout(=>
       roll = Math.ceil((Math.random()) * 6)
