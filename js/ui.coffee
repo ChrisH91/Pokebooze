@@ -10,9 +10,6 @@ class @UI
     @bindings()
 
   bindings: ->
-    @rollButton.on("click", ->
-      _disableButton(@)
-    )
     @startButton.on("click", =>
       _startGame()
     )
@@ -33,14 +30,11 @@ class @UI
       $(@flashDiv).fadeOut(500)
     , @flashLength)
 
-  _disableButton = (button) ->
+  _disableButton: (button) ->
     $(button).prop('disabled', true)
     $(button).addClass('disabled')
-    setTimeout(=>
-      _enableButton(button)
-    , 2000)
 
-  _enableButton = (button) ->
+  _enableButton: (button) ->
     $(button).prop('disabled', false)
     $(button).removeClass('disabled')
 
