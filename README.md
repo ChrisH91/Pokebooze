@@ -13,27 +13,9 @@ Development
 Any asset changes will happen on page refresh. Changes to routes will require a server restart.
 
 
-Backlog
+Bugs
 =====
 
-- BUG: Zubat goes backwards?
-- BUG: Farfetched is bugged
-- S.S. Anne Logic and UI
-- Chansey UI element and logic
-- Gold Teeth UI element and logic
-- Kanghaskan UI element and logic
-- Tentacruel Logic
-- Elite Four element and logic
-- Rules indicated at start of the game
-- Indicate current player in UI
-- UI feedback for when people miss a turn
-- Hypno UI element and logic
-- Pretty dice
-- LocalStorage of game state
-- ChromeCast compatibility; phone as remote
-- Favicon
-- Resizeable without refresh
-- Pressing Enter starts new game
-- Pressing Spacebar rolls die
+Bugs and features are logged at [Trello](https://trello.com/b/iTAHV6TF/pokebooze)
 
 Feel free to contribute!
