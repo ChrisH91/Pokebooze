@@ -11,6 +11,7 @@ class @Pokebooze
     boardTransform = $.extend({},@game.board.boardTransform(), @game.board.boardDimensions())
     @painter.paintBoard(boardTransform)
     @buildTiles()
+    Music.bindings()
 
   start: (playerNames) ->
     for name in playerNames
