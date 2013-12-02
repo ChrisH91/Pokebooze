@@ -97,9 +97,9 @@ class @Pokebooze
 
     zubat: (game, playerRoll) =>
       if playerRoll isnt 1 and playerRoll isnt 2
-        @helpers.default game
+        @helpers.default game, playerRoll
       else
-        game.board.tiles[game.players[game.currPlayer].position].landLogic game, playerRoll
+        @helpers.defaultLandLogic game, playerRoll
 
     tentacool: (game, playerRoll) =>
       console.log "Tentacool"
