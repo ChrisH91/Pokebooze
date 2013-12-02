@@ -1,4 +1,5 @@
 class @Game
+  @RIGGED_ROLL = null
   constructor: (ui) -> 
     @ui = ui
     @players = []
@@ -55,7 +56,11 @@ class @Game
 
   roll: (callback) =>
     setTimeout(=>
-      roll = Math.ceil((Math.random()) * 6)
+      if Game.RIGGED_ROLL?
+        roll = Game.RIGGED_ROLL
+        Game.RIGGED_ROLL = null
+      else
+        roll = Math.ceil((Math.random()) * 6)
       @rollOutput.html(roll)
 
       callback(roll)

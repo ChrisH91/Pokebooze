@@ -16,7 +16,7 @@ class @Pokebooze
 
   start: (playerNames) ->
     for name in playerNames
-      @game.players.push(new Player name)
+      @game.players.push(new Player({name: name}))
     @initializePlayers()
 
     $('.controls').removeClass('hidden')
@@ -24,6 +24,25 @@ class @Pokebooze
     setTimeout( => 
       @panToStart()
     , 1000)
+
+  ### 
+    Expects serialized format of:
+    {
+      players: {
+        name: "Matt"
+        position: 4
+        ..
+        color: "#DEADBEEF"
+      }
+    }
+    All parameters are optional.
+  ###
+  loadGame: (serializedGame) ->
+    for player in serializedGame.players
+      @game.players.push(new Player(player))
+    @initializePlayers({resuming: true})
+    $('.controls').removeClass('hidden')
+    $('.new-game').hide()
 
   setupGame: (ui) ->
     @game = new Game ui
@@ -47,7 +66,7 @@ class @Pokebooze
   buildTiles: ->
     @game.board.build(Pokebooze.tileCoords)
 
-  initializePlayers: ->
+  initializePlayers: (opts = {resuming: false}) ->
     playersList = $('.players')
     i = -2 * @game.board.playerSize
     for player in @game.players
@@ -58,10 +77,8 @@ class @Pokebooze
         y: playerDimensions.y + rand
         radius: playerDimensions.radius
         })
-      i += @game.board.playerSize
+      i += @game.board.playerSize unless opts.resuming
       playersList.append("<li style='background-color: "+player.rgbColor()+"' class='player' id='player-1'><span class='icon'></span><span class='name'>"+player.name+"</span></li>")
-
-    @baseGroup.draw()
 
   panToStart: =>
     @camera.rotateToPoint(@game.board.tileRotation(0), =>

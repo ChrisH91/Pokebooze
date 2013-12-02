@@ -32,5 +32,7 @@ Backlog
 - Pretty dice
 - LocalStorage of game state
 - ChromeCast compatibility; phone as remote
+- Favicon
+- Resizeable without refresh
 
 Feel free to contribute!

@@ -1,3 +1,15 @@
 $(document).ready ->
   window.pokebooze = new Pokebooze
-# $(document).foundation()
+  ### 
+  EXAMPLE OF LOAD GAME:
+  pokebooze.loadGame {
+    players: [{
+      name: "Matt"
+      position: 40
+    }
+    {
+      name: "Kris"
+      position: 39
+    }]
+  }
+  ###
