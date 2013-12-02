@@ -19,7 +19,6 @@ Backlog
 - BUG: Zubat goes backwards?
 - BUG: Farfetched is bugged
 - S.S. Anne Logic and UI
-- Safari Zone UI element and logic
 - Chansey UI element and logic
 - Gold Teeth UI element and logic
 - Kanghaskan UI element and logic
