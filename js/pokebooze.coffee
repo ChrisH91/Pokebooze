@@ -971,7 +971,12 @@ class @Pokebooze
         x: 0.5958333333333333
         y: 0.8208333333333333
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+            game.playerSelectionDialogue (player) =>
+                game.roll (roll) =>
+                    noSpaces = roll * -1
+                    game.movePlayer game.players[player], noSpaces, () =>
+                        @helpers.defaultLandLogic game, roll 
         logic: @helpers.default
     }
     {
