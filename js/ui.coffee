@@ -17,9 +17,13 @@ class @UI
     @playerInput.on "focus", (event) =>
       _duplicateInput event, @
 
+  populatePlayerSelectMenu: (players) ->
+    console.log @
+    for player, key in players
+      @_addPlayerSelectButton player.name, key
   
-  _addPlayerSelectButton = (name, playerNo) ->
-    button = $("<button type='button' class='select_player' data-player='" + playerNo + "'
+  _addPlayerSelectButton: (name, playerNo) ->
+    button = $("<button id='player-select-" + playerNo + "' type='button' class='select_player' data-player='" + playerNo + "'
                  style='background-color: " + Player.COLORS[playerNo % Player.COLORS.length] + "'>" + name + "</button>")
     $("#player-select").append button
 
@@ -63,7 +67,6 @@ class @UI
       name = $(input).val()
       if name.trim().length > 0
         names.push(name)
-        _addPlayerSelectButton name, names.length - 1
 
     $('.new-game').hide()
     window.pokebooze.start(names)

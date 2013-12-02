@@ -90,14 +90,16 @@ h1, h2, h3, h4, h5, h6
     padding: 10px
     border: 0
 
-    &:hover
-      cursor: pointer
-    &:active
-      position: relative
-      top: 1px
-
     &:first-child
       margin-top: 2em
+
+    &.disabled
+      opacity: .25
+
+    &:not(.disabled)
+      &:active
+        position: relative
+        top: 1px
 
 .hidden
   display: none !important

@@ -5,11 +5,11 @@ $(document).ready ->
   pokebooze.loadGame {
     players: [{
       name: "Matt"
-      position: 40
+      position: 80
     }
     {
       name: "Kris"
-      position: 39
+      position: 80
     }]
   }
   ###

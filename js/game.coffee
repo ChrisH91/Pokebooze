@@ -46,7 +46,11 @@ class @Game
     tween.play()
 
   playerSelectionDialogue: (callback) ->
-    console.log 
+    $(".select_player").prop "disabled", false
+    $(".select_player").removeClass("disabled")
+    $("#player-select-" + @currPlayer).prop "disabled", true
+    $("#player-select-" + @currPlayer).addClass("disabled")
+
     $(".choose-player").show()
     $(".select_player").unbind "click"
     $(".select_player").click (e) ->
