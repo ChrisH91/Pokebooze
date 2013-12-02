@@ -1,6 +1,5 @@
 @import css/settings
 @import css/foundation
-// @import compass
 
 html, body
   padding: 0
@@ -8,7 +7,10 @@ html, body
   background-color: black
   overflow: hidden
 
-.pokeBorderBox
+.drop-shadow
+  box-shadow: 0 2px 6px black
+
+.poke-border-box
   border: 5px solid red
   outline: 5px solid blue
   background-color: white
@@ -28,6 +30,7 @@ html, body
   left: 50px
   top: 50px
 #roll-output
+  @extend .drop-shadow
   background-color: white
   border: 3px solid $primary-color
 
@@ -36,8 +39,10 @@ html, body
   position: absolute
   z-index: 10
   right: 50px
+  top: 50px
   text-align: center
   button
+    @extend .drop-shadow
     display: block
     width: 100%
 
@@ -51,7 +56,8 @@ html, body
     padding: 5px 0
 
 .new-game
-  @extend .pokeBorderBox
+  @extend .poke-border-box
+  box-shadow: 0 5px 15px black
   button
     display: block
     margin: auto
@@ -60,7 +66,8 @@ html, body
   display: none !important
 
 #flash
-  @extend .pokeBorderBox
+  @extend .poke-border-box
+  @extend .drop-shadow
 
 
 #table
