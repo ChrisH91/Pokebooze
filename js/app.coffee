@@ -13,4 +13,3 @@ $(document).ready ->
     }]
   }
   ###
-# $(document).foundation()
