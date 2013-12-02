@@ -44,11 +44,13 @@ class @Game
     }
     tween.play()
 
-  roll: =>
-    roll = Math.ceil((Math.random()) * 6)
-    @rollOutput.html(roll)
+  roll: (callback) =>
+    setTimeout(=>
+      roll = Math.ceil((Math.random()) * 6)
+      @rollOutput.html(roll)
 
-    roll
+      callback(roll)
+    , 1000)
 
   nextPlayer: =>
     @currPlayer += 1
@@ -65,4 +67,5 @@ class @Game
       if @currPlayer >= @players.length
         @currPlayer = 0 
 
-    result = @board.tiles[@players[@currPlayer].position].logic this
+    @roll (playerRoll) =>
+      @board.tiles[@players[@currPlayer].position].logic this, playerRoll

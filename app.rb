@@ -6,11 +6,12 @@ require 'coffee_script'
 
 class App < Sinatra::Base
 
+  set :root, File.dirname(__FILE__) # You must set app root
+  set :public_folder, File.dirname(__FILE__) + '/public'
+
   get "/" do
     haml :index
   end
-
-  set :root, File.dirname(__FILE__) # You must set app root
 
   register Sinatra::AssetPack
 
@@ -22,24 +23,9 @@ class App < Sinatra::Base
 
     # The second parameter defines where the compressed version will be served.
     # (Note: that parameter is optional, AssetPack will figure it out.)
-    js :app, [
-      '/js/kinetic-v4.7.4.min.js',
-      '/js/tile_result.js',
-      '/js/tile.js',
-      '/js/board.js',
-      '/js/plotter.js',
-      '/js/player.js',
-      '/js/game.js',
-      '/js/pokebooze.js',
-      '/js/painter.js',
-      '/js/camera.js',
-      '/js/ui.js',
-      '/js/app.js',
-    ]
+    js :app, ['/js/*.js']
 
-    css :application, '/css/application.css', [
-      '/css/screen.css'
-    ]
+    css :application, '/css/application.css', ['/css/screen.css']
 
     js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify
     css_compression :simple   # :simple | :sass | :yui | :sqwish
