@@ -111,6 +111,27 @@ h1, h2, h3, h4, h5, h6
         position: relative
         top: 1px
 
+#ss-anne
+  display: none
+  $width: 400px
+  @include poke-border-box($width)
+  button
+    margin-top: 1em
+    display: block
+    width: 100%
+    padding: 10px
+    border: 0
+
+    &.opt1
+      background-color: #EE8130
+    
+    &.opt2
+      background-color: #6390F0
+
+    &:first-child
+      margin-top: 2em
+
+
 .hidden
   display: none !important
 

@@ -374,12 +374,20 @@ class @Pokebooze
         landLogic: @helpers.missTurn
         logic: @helpers.default
     }
+    # Farfetch'd
     {
         x: 0.7066666666666667
         y: 0.885
         stop: false
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
+        landLogic: (game, roll) =>
+            game.players[game.currPlayer].tileState = 1
+            @helpers.rollAgain game, roll
+        logic: (game, playerRoll) =>
+            if game.players[game.currPlayer].tileState == 1
+                game.players[game.currPlayer].tileState = 0
+                @helpers.defaultLandLogic game, playerRoll
+            else
+                @helpers.default game, playerRoll
     }
     # Vermillion Gym
     {
@@ -407,12 +415,20 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.default
     }
-    # TODO: S.S. Anne
+    # S.S. Anne
     {
         x: 0.5358333333333334
         y: 0.8875
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+            game.ssAnneDialogue (option) =>
+                if option is 1
+                    game.players[game.currPlayer].missTurn = 1
+                else if option is 2
+                    game.players[game.currPlayer].missTurn = 2
+                @helpers.defaultLandLogic game, roll
+
+
         logic: @helpers.default
     }
     {

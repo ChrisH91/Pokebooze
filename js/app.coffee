@@ -2,14 +2,14 @@ $(document).ready ->
   window.pokebooze = new Pokebooze
   ### 
   EXAMPLE OF LOAD GAME:
+  ###
   pokebooze.loadGame {
     players: [{
       name: "Matt"
-      position: 80
+      position: 28
     }
     {
       name: "Kris"
-      position: 80
+      position: 28
     }]
   }
-  ###

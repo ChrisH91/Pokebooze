@@ -58,6 +58,14 @@ class @Game
       $(".choose-player").hide()
       callback playerNo
 
+  ssAnneDialogue: (callback) ->
+    $("#ss-anne").show()
+    $(".ssanne").unbind "click"
+    $(".ssanne").click (e) ->
+      option = $(@).data "option"
+      $("#ss-anne").hide()
+      callback option
+
   roll: (callback) =>
     setTimeout(=>
       if Game.RIGGED_ROLL?
