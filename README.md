@@ -34,5 +34,7 @@ Backlog
 - ChromeCast compatibility; phone as remote
 - Favicon
 - Resizeable without refresh
+- Pressing Enter starts new game
+- Pressing Spacebar rolls die
 
 Feel free to contribute!
