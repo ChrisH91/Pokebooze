@@ -1,29 +1,18 @@
 class @Pokebooze
   constructor: ->
     @ui = new UI
-
     @setupGame(@ui)
     @setupStage()
-    # @plotTiles()
-    @baseGroup = @stage.children[0].children[0]
-    @painter = new Painter(@baseGroup)
-    @camera = new Camera(@game.board)
-    @game.board.node = @baseGroup
-    boardTransform = $.extend({},@game.board.boardTransform(), @game.board.boardDimensions())
-    @painter.paintBoard(boardTransform)
-    @buildTiles()
     Music.bindings()
 
   start: (playerNames) ->
+    @beginGame()
     for name in playerNames
       @game.players.push(new Player({name: name}))
     @initializePlayers()
 
     $('.controls').removeClass('hidden')
-
-    setTimeout( => 
-      @panToStart()
-    , 1000)
+    @panToStart()
 
   ### 
     Expects serialized format of:
@@ -38,11 +27,22 @@ class @Pokebooze
     All parameters are optional.
   ###
   loadGame: (serializedGame) ->
+    @beginGame()
     for player in serializedGame.players
       @game.players.push(new Player(player))
     @initializePlayers({resuming: true})
     $('.controls').removeClass('hidden')
     $('.new-game').hide()
+
+  beginGame: () ->
+    # @plotTiles()
+    @baseGroup = @stage.children[0].children[0]
+    @painter = new Painter(@baseGroup)
+    @camera = new Camera(@game.board)
+    @game.board.node = @baseGroup
+    boardTransform = $.extend({},@game.board.boardTransform(), @game.board.boardDimensions())
+    @painter.paintBoard(boardTransform)
+    @buildTiles()
 
   setupGame: (ui) ->
     @game = new Game ui
@@ -81,8 +81,8 @@ class @Pokebooze
       playersList.append("<li style='background-color: "+player.rgbColor()+"' class='player' id='player-1'><span class='icon'></span><span class='name'>"+player.name+"</span></li>")
 
   panToStart: =>
-    @camera.rotateToPoint(@game.board.tileRotation(0), =>
-      @camera.zoomToPoint(@game.board.tilePosition(0)))
+    @camera.rotateToPoint($.extend({},@game.board.tileRotation(0),{duration: 0.0000001, easing: null}), =>
+      @camera.zoomToPoint($.extend({},@game.board.tilePosition(0),{duration: 0.0000001, easing: null})))
 
   @helpers = 
     # Logic

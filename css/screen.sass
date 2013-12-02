@@ -11,6 +11,7 @@ html, body
   margin: 0
   background-color: black
   overflow: hidden
+  min-width: 1100px
 
 .drop-shadow
   box-shadow: 0 2px 6px black
@@ -23,11 +24,10 @@ h1, h2, h3, h4, h5, h6
   text-shadow: 2px 2px 0 blue, -2px -2px 0 blue, -2px 2px 0 blue, 2px -2px 0 blue
   letter-spacing: 5px
 
-.poke-border-box
+@mixin poke-border-box($width)
   border: 5px solid red
   outline: 5px solid blue
   background-color: white
-  $width: 400px
   position: absolute
   width: $width
   padding: 30px
@@ -72,15 +72,25 @@ h1, h2, h3, h4, h5, h6
     padding: 5px 0
 
 .new-game
-  @extend .poke-border-box
+  $width: 1100px
+  height: 600px
+  @include poke-border-box($width)
   box-shadow: 0 5px 15px black
   button
     display: block
     margin: auto
+  #players
+    overflow: scroll
+  #rules
+    width: 600px
+    height: 100%
+    background-image: url(/images/game.jpg)
+    background-position: -1052px -1065px
 
 .choose-player
   display: none
-  @extend .pokeBorderBox
+  $width: 400px
+  @include poke-border-box($width)
 
 #player-select
   input[type=button]
@@ -96,7 +106,7 @@ h1, h2, h3, h4, h5, h6
   display: none !important
 
 #flash
-  @extend .poke-border-box
+  @include poke-border-box(400px)
   @extend .drop-shadow
 
 

@@ -10,7 +10,7 @@ class @Camera
       offsetY: transform.y
       scaleX: @scaleFactor
       scaleY: @scaleFactor
-      duration: 0.3
+      duration: (transform.duration or 0.3)
       easing: Kinetic.Easings.EaseInOut
       onFinish: callback
     }
@@ -21,6 +21,6 @@ class @Camera
       node: @board.node
       easing: Kinetic.Easings.EaseInOut
       onFinish: callback
-      duration: 0.3
+      duration: (transform.duration or 0.3)
     }))
     tween.play()
