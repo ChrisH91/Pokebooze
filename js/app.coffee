@@ -11,5 +11,5 @@ $(document).ready ->
       name: "Kris"
       position: 28
     }]
-  ###
   }
+  ###
