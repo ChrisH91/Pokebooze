@@ -13,28 +13,24 @@ Development
 Any asset changes will happen on page refresh. Changes to routes will require a server restart.
 
 
-To Do
+Backlog
 =====
 
-- Indicate current player in UI
-- Pretty dice
-- LocalStorage of game state
-- ChromeCast compatibility
+- BUG: Zubat goes backwards?
+- BUG: Farfetched is bugged
 - S.S. Anne Logic and UI
-- Decide whether Fearow should mean dice rolls aswell
 - Safari Zone UI element and logic
 - Chansey UI element and logic
 - Gold Teeth UI element and logic
 - Kanghaskan UI element and logic
-- UI feedback for when people miss a turn
-- Color theory spacing of players
 - Tentacruel Logic
+- Elite Four element and logic
+- Rules indicated at start of the game
+- Indicate current player in UI
+- UI feedback for when people miss a turn
 - Hypno UI element and logic
-
-Bugs
-====
-- Dem scrollbars
-- Farfetched is bugged
-
+- Pretty dice
+- LocalStorage of game state
+- ChromeCast compatibility; phone as remote
 
 Feel free to contribute!
