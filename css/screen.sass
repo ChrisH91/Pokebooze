@@ -2,17 +2,30 @@
 @import css/foundation
 // @import compass
 
+@font-face
+  font-family: "Pokemon"
+  src: url('../fonts/pokemon.eot')
+  src: url('../fonts/pokemon.ttf') format('truetype') 
+
 html, body
   padding: 0
   margin: 0
   background-color: black
   overflow: hidden
 
+h1, h2, h3, h4, h5, h6
+  text-align: center
+  font-family: Pokemon
+  color: yellow
+  position: relative
+  text-shadow: 2px 2px 0 blue, -2px -2px 0 blue, -2px 2px 0 blue, 2px -2px 0 blue
+
+
 .pokeBorderBox
   border: 5px solid red
   outline: 5px solid blue
   background-color: white
-  $width: 310px
+  $width: 400px
   position: absolute
   width: $width
   padding: 30px
@@ -27,8 +40,10 @@ html, body
   color: red
   left: 50px
   top: 50px
+
 #roll-output
   background-color: white
+  padding-top: 8px
   border: 3px solid $primary-color
 
 .controls
@@ -55,6 +70,20 @@ html, body
   button
     display: block
     margin: auto
+
+.choose-player
+  display: none
+  @extend .pokeBorderBox
+
+#player-select
+  input[type=button]
+    margin-top: 1em
+    display: block
+    width: 100%
+    padding: 10px
+
+    &:first-child
+      margin-top: 2em
 
 .hidden
   display: none !important

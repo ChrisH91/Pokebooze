@@ -17,6 +17,11 @@ class @UI
     @playerInput.on "focus", (event) =>
       _duplicateInput event, @
 
+  
+  _addPlayerSelectButton = (name, color) ->
+    $("#player-select").append(
+      "<input type='button' class='select_player' value='" + name + "' />")
+
 
   flash: (title, message="") ->
     contents = "<h1>"+title+"</h1>"
@@ -51,12 +56,13 @@ class @UI
       $('#players-input').append(clone)
       el.dirty = true
 
-  _startGame = ->
+  _startGame = =>
     names = []
     for input in $(".player-input")
       name = $(input).val()
       if name.trim().length > 0
         names.push(name)
+        _addPlayerSelectButton name, "test"
 
     $('.new-game').hide()
     window.pokebooze.start(names)

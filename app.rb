@@ -18,6 +18,7 @@ class App < Sinatra::Base
     serve '/js',     from: 'js'        # Default
     serve '/css',    from: 'css'       # Default
     serve '/images', from: 'images'    # Default
+    serve '/fonts',  from: 'fonts'
 
     # The second parameter defines where the compressed version will be served.
     # (Note: that parameter is optional, AssetPack will figure it out.)
