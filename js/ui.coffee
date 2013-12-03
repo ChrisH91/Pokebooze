@@ -17,8 +17,15 @@ class @UI
     @playerInput.on "focus", (event) =>
       _duplicateInput event, @
 
+    @_bindNewPlayerKey()
+
+  _bindNewPlayerKey: ->
+    $('.player-input').unbind "keypress"
+    $('.player-input').keypress (event) =>
+      if event.which is 13
+        _startGame()
+
   populatePlayerSelectMenu: (players) ->
-    console.log @
     for player, key in players
       @_addPlayerSelectButton player.name, key
 
@@ -64,6 +71,7 @@ class @UI
       clone.on "focus", (event) =>
         _duplicateInput event, ui
       $('#players-input').append(clone)
+      ui._bindNewPlayerKey()
       el.dirty = true
 
   _startGame = =>
