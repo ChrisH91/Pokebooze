@@ -1,7 +1,6 @@
 class @Game
   @RIGGED_ROLL = null
-  constructor: (ui) -> 
-    @ui = ui
+  constructor: (@ui) -> 
     @players = []
     @currPlayer = 0
     @rollOutput = $('#roll-output')
@@ -85,6 +84,7 @@ class @Game
       @currPlayer = 0   
   
   turn: =>
+    @ui.indicatePlayer(@currPlayer)
     @ui._disableButton(@ui.rollButton)
 
     while @players[@currPlayer].missTurn > 0

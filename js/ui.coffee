@@ -21,6 +21,11 @@ class @UI
     console.log @
     for player, key in players
       @_addPlayerSelectButton player.name, key
+
+  indicatePlayer: (playerId) ->
+    $('.players li').removeClass("current", {duration: 500})
+    $('#player-'+playerId).addClass("current", {duration: 500})
+
   
   _addPlayerSelectButton: (name, playerNo) ->
     button = $("<button id='player-select-" + playerNo + "' type='button' class='select_player' data-player='" + playerNo + "'
