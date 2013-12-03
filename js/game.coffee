@@ -72,7 +72,8 @@ class @Game
         roll = Game.RIGGED_ROLL
         Game.RIGGED_ROLL = null
       else
-        roll = Math.ceil((Math.random()) * 6)
+        roll = Math.ceil((Math.random()) * 6 * @players[@currPlayer].rollMultiplier)
+        @players[@currPlayer].rollMultiplier = 1
       @rollOutput.html(roll)
 
       callback(roll)

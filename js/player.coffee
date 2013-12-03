@@ -53,6 +53,7 @@ class @Player
       name: 'Test'
       dontMove: false
       pokeFlute: false
+      rollMultiplier: 1
       missTurn: 0
       tileState: 0
       color: Player.COLORS[Player.PLAYER_COUNT]

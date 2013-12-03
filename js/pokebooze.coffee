@@ -1017,11 +1017,26 @@ class @Pokebooze
         landLogic: @helpers.defaultLandLogic
         logic: @helpers.tentacool
     }
+    # Tentacruel
     {
         x: 0.7208333333333333
         y: 0.6816666666666666
         stop: false
-        landLogic: @helpers.defaultLandLogic
+        landLogic: (game, roll) =>
+            # Find out who goes next
+            while true
+                iterator = game.currPlayer + 1
+                if iterator >= game.players.length
+                    iterator = 0
+
+                if game.players[iterator].missTurn <= 0
+                    game.players[iterator].roleMultiplier = .5
+                    break
+
+                ++iterator
+            @helpers.defaultLandLogic game, roll
+
+
         logic: @helpers.default
     }
     {
