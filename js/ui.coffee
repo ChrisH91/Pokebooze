@@ -6,7 +6,7 @@ class @UI
     @playerInput = $('.player-input')
     @startButton = $('#start-game')
     @flashDiv = $('#flash')
-    @flashLength = 3000
+    @flashLength = 500
     @bindings()
 
   bindings: ->

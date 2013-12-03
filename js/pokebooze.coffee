@@ -116,6 +116,7 @@ class @Pokebooze
 
     rollAgain: (game, roll) ->
       game.ui._enableButton game.ui.rollButton
+      game.ui.flash "Roll Again"
 
     missTurn: (game, roll) =>
       game.players[game.currPlayer].missTurn = 1
