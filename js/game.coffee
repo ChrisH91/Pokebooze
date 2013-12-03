@@ -3,7 +3,6 @@ class @Game
   constructor: (@ui) -> 
     @players = []
     @currPlayer = 0
-    @rollOutput = $('#roll-output')
     @board = new Board
     @camera = new Camera(@board)
 
@@ -66,6 +65,8 @@ class @Game
       callback option
 
   roll: (callback) =>
+    @ui.animateRoll()
+
     setTimeout(=>
       if Game.RIGGED_ROLL?
         roll = Game.RIGGED_ROLL
@@ -73,7 +74,7 @@ class @Game
       else
         roll = Math.ceil((Math.random()) * 6 * @players[@currPlayer].rollMultiplier)
         @players[@currPlayer].rollMultiplier = 1
-      @rollOutput.html(roll)
+      @ui.displayRoll(roll)
 
       callback(roll)
     , 1000)
@@ -85,14 +86,12 @@ class @Game
   
   turn: =>
     @ui.indicatePlayer(@currPlayer)
-    @ui._disableButton(@ui.rollButton)
+    @ui.disableRoll()
 
     while @players[@currPlayer].missTurn > 0
       console.log "Skipping player: " + @currPlayer
       @players[@currPlayer].missTurn -= 1
-      ++@currPlayer
-      if @currPlayer >= @players.length
-        @currPlayer = 0 
+      @nextPlayer()
 
     @roll (playerRoll) =>
       @board.tiles[@players[@currPlayer].position].logic this, playerRoll
