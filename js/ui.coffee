@@ -52,7 +52,7 @@ class @UI
     @_enableButton @_rollButton
 
   disableRoll: ->
-    @_disableButton @ui_rollButton
+    @_disableButton @_rollButton
 
   populatePlayerSelectMenu: (players) ->
     for player, key in players
