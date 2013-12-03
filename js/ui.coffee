@@ -8,6 +8,9 @@ class @UI
     @_flashDiv = $('#flash')
     @_rollOutput = $('#roll-output')
     @_flashLength = 500
+
+    @_rollEnabled = true
+
     @bindings()
 
   bindings: ->
@@ -21,6 +24,14 @@ class @UI
       _duplicateInput event, @
 
     @_bindNewPlayerKey()
+
+    $('#roll-button').on("click", @_triggerTurn)
+    $('body').keyup (e) =>
+      if e.keyCode == 32 and @_rollEnabled #spacebar
+        @_triggerTurn()
+
+  _triggerTurn: ->
+    $(window).trigger "turn"
 
   _bindNewPlayerKey: ->
     $('.player-input').unbind "keypress"
@@ -49,9 +60,11 @@ class @UI
     @_rollOutput.html number
 
   enableRoll: ->
+    @_rollEnabled = true
     @_enableButton @_rollButton
 
   disableRoll: ->
+    @_rollEnabled = false
     @_disableButton @_rollButton
 
   populatePlayerSelectMenu: (players) ->
