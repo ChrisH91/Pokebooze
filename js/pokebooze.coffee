@@ -83,7 +83,8 @@ class @Pokebooze
         radius: playerDimensions.radius
         })
       i += @game.board.playerSize unless opts.resuming
-      playersList.append("<li style='background-color: "+player.rgbColor()+"' class='player' id='player-1'><span class='icon'></span><span class='name'>"+player.name+"</span></li>")
+      playersList.append("<li style='background-color: "+player.rgbColor()+"' class='player' id='player-"+player.playerNumber+"'><span class='icon'></span><span class='name'>"+player.name+"</span></li>")
+    playersList.children().first().addClass('current')
 
   panToStart: =>
     @camera.rotateToPoint($.extend({},@game.board.tileRotation(0),{duration: 0.0000001, easing: null}), =>
