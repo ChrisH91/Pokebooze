@@ -10,6 +10,8 @@ class @UI
     @bindings()
 
   bindings: ->
+    window.onbeforeunload = ->
+      "Woah, if you refresh the page you'll lose all your 'progress'!"
     @startButton.on("click", =>
       _startGame()
     )
