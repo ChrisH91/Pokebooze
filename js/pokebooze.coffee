@@ -113,11 +113,11 @@ class @Pokebooze
     # Land Logic
     defaultLandLogic: (game, roll) ->
       game.nextPlayer()
-      game.ui._enableButton game.ui.rollButton
+      game.ui.enableRoll()
 
     rollAgain: (game, roll) ->
-      game.ui._enableButton game.ui.rollButton
       game.ui.flash "Roll Again"
+      game.ui.enableRoll()
 
     missTurn: (game, roll) =>
       game.players[game.currPlayer].missTurn = 1
