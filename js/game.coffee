@@ -7,6 +7,9 @@ class @Game
     @camera = new Camera(@board)
 
     $('#roll-button').on("click", @turn)
+    $('body').keyup (e) =>
+      if e.keyCode == 32 #spacebar
+        @turn()
 
   movePlayer: (player, steps, callback) ->
     direction = steps > 0
