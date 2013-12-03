@@ -83,16 +83,17 @@ class @Game
   nextPlayer: =>
     @currPlayer += 1
     if @currPlayer >= @players.length
-      @currPlayer = 0   
+      @currPlayer = 0
   
   turn: =>
     @ui.indicatePlayer(@currPlayer)
     @ui.disableRoll()
 
-    while @players[@currPlayer].missTurn > 0
+    if @players[@currPlayer].missTurn > 0
       console.log "Skipping player: " + @currPlayer
+      @ui.flash "Skipped turn!", "Skipping #{@players[@currPlayer].name}'s turn!", 3000
       @players[@currPlayer].missTurn -= 1
       @nextPlayer()
-
-    @roll (playerRoll) =>
-      @board.tiles[@players[@currPlayer].position].logic this, playerRoll
+    else
+      @roll (playerRoll) =>
+        @board.tiles[@players[@currPlayer].position].logic this, playerRoll

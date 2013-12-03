@@ -82,7 +82,11 @@ class @UI
     $("#player-select").append button
 
 
-  flash: (title, message="") ->
+  flash: (title, message="", length) ->
+    if not length?
+      length = @_flashLength
+
+    @disableRoll()
     contents = "<h1>"+title+"</h1>"
     if message.length > 0
       contents += "\n<p>"+message+"</p>"
@@ -92,7 +96,8 @@ class @UI
     @_flashDiv.html(contents)
     setTimeout(=>
       $(@_flashDiv).fadeOut(500)
-    , @_flashLength)
+      @enableRoll()
+    , length)
 
   _disableButton: (button) ->
     $(button).prop('disabled', true)
