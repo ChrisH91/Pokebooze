@@ -84,6 +84,9 @@ h1, h2, h3, h4, h5, h6
   right: 0
   -webkit-filter: blur(2px)
 
+.title
+  font-size: 5.75rem
+
 .new-game
   background: black url(/images/game.jpg) center
   background-size: 100%
@@ -94,19 +97,19 @@ h1, h2, h3, h4, h5, h6
   right: 0
   .content
     $width: 1100px
-    height: 600px
     @include poke-border-box($width)
     box-shadow: 0 5px 15px black
-    overflow: auto
     button
       display: block
       margin: auto
   #players
+    height: 500px
+    overflow: auto
   #rules
-    width: 600px
-    height: 100%
-    background-image: url(/images/game.jpg)
-    background-position: -1052px -1065px
+    p
+      font-size: 130%
+    .footnote
+      font-size: 100%
 
 .choose-player
   display: none
