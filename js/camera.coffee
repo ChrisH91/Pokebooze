@@ -11,7 +11,7 @@ class @Camera
       scaleX: @scaleFactor
       scaleY: @scaleFactor
       duration: (transform.duration or 0.3)
-      easing: Kinetic.Easings.EaseInOut
+      easing: @_easing(transform)
       onFinish: callback
     }
     tween.play()
@@ -19,8 +19,11 @@ class @Camera
   rotateToPoint: (transform, callback) ->
     tween = new Kinetic.Tween($.extend({}, transform, @board.boardTransform(), {
       node: @board.node
-      easing: Kinetic.Easings.EaseInOut
+      easing: @_easing(transform)
       onFinish: callback
       duration: (transform.duration or 0.3)
     }))
     tween.play()
+
+  _easing: (transform) ->
+    Kinetic.Easings.EaseInOut unless !transform.duration? or transform.duration < 0.01
