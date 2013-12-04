@@ -82,7 +82,7 @@ class @UI
     $("#player-select").append button
 
 
-  flash: (title, message="", length) ->
+  flash: (title, message="", length=500) ->
     if not length?
       length = @_flashLength
 
@@ -95,7 +95,7 @@ class @UI
     @_flashDiv.fadeIn(100)
     @_flashDiv.html(contents)
     setTimeout(=>
-      $(@_flashDiv).fadeOut(500)
+      $(@_flashDiv).fadeOut(300)
       @enableRoll()
     , length)
 
