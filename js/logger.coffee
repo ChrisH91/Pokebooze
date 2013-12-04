@@ -3,3 +3,6 @@ class @Logger
 
   @log: (message) ->
     console.log("[#{new Date().toLocaleTimeString()}] #{message}") if Logger.LOG_ON
+
+  @logRaw: (obj) ->
+    console.log obj

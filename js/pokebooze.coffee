@@ -6,6 +6,7 @@ class @Pokebooze
     Music.bindings()
 
   start: (playerNames) ->
+    Logger.log("Starting game for players: #{playerNames}")
     @beginGame()
     for name in playerNames
       @game.players.push(new Player({name: name}))
@@ -29,6 +30,7 @@ class @Pokebooze
     All parameters are optional.
   ###
   loadGame: (serializedGame) ->
+    Logger.log("Starting serialized game for players: #{serializedGame}")
     @beginGame()
     for player in serializedGame.players
       @game.players.push(new Player(player))
@@ -38,6 +40,7 @@ class @Pokebooze
 
     $('.controls').removeClass('hidden')
     $('.new-game').hide()
+    @panToStart()
 
   beginGame: () ->
     # @plotTiles()
@@ -1027,9 +1030,7 @@ class @Pokebooze
         landLogic: (game, roll) =>
             # Find out who goes next
             while true
-                iterator = game.currPlayer + 1
-                if iterator >= game.players.length
-                    iterator = 0
+                iterator = (game.currPlayer + 1) % game.players.length
 
                 if game.players[iterator].missTurn <= 0
                     game.players[iterator].roleMultiplier = .5

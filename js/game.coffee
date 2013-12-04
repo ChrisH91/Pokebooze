@@ -9,7 +9,7 @@ class @Game
     $(window).on "turn", @turn
 
 
-  movePlayer: (player, steps, callback) ->
+  movePlayer: (player, steps, callback) =>
     direction = steps > 0
     position = player.move(direction)
     @camera.rotateToPoint(@board.tileRotation(player.position))
@@ -27,7 +27,7 @@ class @Game
     @camera.rotateToPoint(@board.tileRotation(player.position))
     @camera.zoomToPoint(@board.tilePosition(player.position))
 
-  _playerMove: (player, steps, callback) ->
+  _playerMove: (player, steps, callback) =>
     randomness = (Math.random()-0.5) * 2 * @board.playerSize
     tween = new Kinetic.Tween {
       node: player.node
@@ -44,7 +44,7 @@ class @Game
     }
     tween.play()
 
-  playerSelectionDialogue: (callback) ->
+  playerSelectionDialogue: (callback) =>
     $(".select_player").prop "disabled", false
     $(".select_player").removeClass("disabled")
     $("#player-select-" + @currPlayer).prop "disabled", true
@@ -57,7 +57,7 @@ class @Game
       $(".choose-player").hide()
       callback playerNo
 
-  ssAnneDialogue: (callback) ->
+  ssAnneDialogue: (callback) =>
     $("#ss-anne").show()
     $(".ssanne").unbind "click"
     $(".ssanne").click (e) ->
@@ -68,32 +68,34 @@ class @Game
   roll: (callback) =>
     @ui.animateRoll()
 
-    setTimeout(=>
+    setTimeout( =>
       if Game.RIGGED_ROLL?
         roll = Game.RIGGED_ROLL
+        Logger.log("Rolled a #{roll} rigged roll for player #{@players[@currPlayer].name}")
         Game.RIGGED_ROLL = null
       else
         roll = Math.ceil((Math.random()) * 6 * @players[@currPlayer].rollMultiplier)
+        Logger.log("Rolled a #{roll} for player #{@players[@currPlayer].name}")
         @players[@currPlayer].rollMultiplier = 1
       @ui.displayRoll(roll)
-
       callback(roll)
     , 1000)
 
   nextPlayer: =>
-    @currPlayer += 1
-    if @currPlayer >= @players.length
-      @currPlayer = 0
+    @currPlayer = (@currPlayer + 1) % @players.length
+    Logger.log("Player incremented to #{@currPlayer}")
   
   turn: =>
     @ui.indicatePlayer(@currPlayer)
     @ui.disableRoll()
 
+    Logger.log "Start of turn for #{@currPlayer} - #{@players[@currPlayer].name}"
     if @players[@currPlayer].missTurn > 0
-      console.log "Skipping player: " + @currPlayer
+      Logger.log "Skipping player: #{@currPlayer} - #{@players[@currPlayer].name}"
       @ui.flash "Skipped turn!", "Skipping #{@players[@currPlayer].name}'s turn!", 3000
       @players[@currPlayer].missTurn -= 1
       @nextPlayer()
     else
       @roll (playerRoll) =>
+        Logger.log "Firing logic for tile #{@players[@currPlayer].position} with roll #{playerRoll}"
         @board.tiles[@players[@currPlayer].position].logic this, playerRoll
