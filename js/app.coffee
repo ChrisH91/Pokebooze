@@ -1,4 +1,5 @@
 $(document).ready ->
+  Logger.LOG_ON = true
   window.pokebooze = new Pokebooze
 ###  EXAMPLE OF LOAD GAME:
   pokebooze.loadGame {
