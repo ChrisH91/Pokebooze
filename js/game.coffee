@@ -2,11 +2,14 @@ class @Game
   @RIGGED_ROLL = null
   constructor: (@ui) -> 
     @players = []
-    @currPlayer = 0
+    @currPlayerIndex = 0
     @board = new Board
     @camera = new Camera(@board)
 
     $(window).on "turn", @turn
+
+  currPlayer: ->
+    @players[@currPlayerIndex]
 
   lookAtPlayer: (player, callback) =>
     @camera.rotateToPoint(@board.tileRotation(player.position))
@@ -48,8 +51,8 @@ class @Game
   playerSelectionDialogue: (callback) =>
     $(".select_player").prop "disabled", false
     $(".select_player").removeClass("disabled")
-    $("#player-select-" + @currPlayer).prop "disabled", true
-    $("#player-select-" + @currPlayer).addClass("disabled")
+    $("#player-select-" + @currPlayerIndex).prop "disabled", true
+    $("#player-select-" + @currPlayerIndex).addClass("disabled")
 
     $(".choose-player").show()
     $(".select_player").unbind "click"
@@ -72,31 +75,31 @@ class @Game
     setTimeout( =>
       if Game.RIGGED_ROLL?
         roll = Game.RIGGED_ROLL
-        Logger.log("Rolled a #{roll} rigged roll for player #{@players[@currPlayer].name}")
+        Logger.log("Rolled a #{roll} rigged roll for player #{@currPlayer().name}")
         Game.RIGGED_ROLL = null
       else
-        roll = Math.ceil((Math.random()) * 6 * @players[@currPlayer].rollMultiplier)
-        Logger.log("Rolled a #{roll} for player #{@players[@currPlayer].name}")
-        @players[@currPlayer].rollMultiplier = 1
+        roll = Math.ceil((Math.random()) * 6 * @currPlayer().rollMultiplier)
+        Logger.log("Rolled a #{roll} for player #{@currPlayer().name}")
+        @currPlayer().rollMultiplier = 1
       @ui.displayRoll(roll)
       callback(roll)
     , 1000)
 
   nextPlayer: =>
-    @currPlayer = (@currPlayer + 1) % @players.length
-    Logger.log("Player incremented to #{@currPlayer}")
+    @currPlayerIndex = (@currPlayerIndex + 1) % @players.length
+    Logger.log("Player incremented to #{@currPlayerIndex}")
   
   turn: =>
-    @ui.indicatePlayer(@currPlayer)
+    @ui.indicatePlayer(@currPlayerIndex)
     @ui.disableRoll()
 
-    Logger.log "Start of turn for #{@currPlayer} - #{@players[@currPlayer].name}"
-    if @players[@currPlayer].missTurn > 0
-      Logger.log "Skipping player: #{@currPlayer} - #{@players[@currPlayer].name}"
-      @ui.flash "Skipped turn!", "Skipping #{@players[@currPlayer].name}'s turn!", 2000
-      @players[@currPlayer].missTurn -= 1
+    Logger.log "Start of turn for #{@currPlayerIndex} - #{@currPlayer().name}"
+    if @currPlayer().missTurn > 0
+      Logger.log "Skipping player: #{@currPlayerIndex} - #{@currPlayer().name}"
+      @ui.flash "Skipped turn!", "Skipping #{@currPlayer().name}'s turn!", 2000
+      @currPlayer().missTurn -= 1
       @nextPlayer()
     else
       @roll (playerRoll) =>
-        Logger.log "Firing logic for tile #{@players[@currPlayer].position} with roll #{playerRoll}"
-        @board.tiles[@players[@currPlayer].position].logic this, playerRoll
+        Logger.log "Firing logic for tile #{@currPlayer().position} with roll #{playerRoll}"
+        @board.tiles[@currPlayer().position].logic this, playerRoll

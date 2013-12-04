@@ -102,8 +102,8 @@ class @Pokebooze
   @helpers = 
     # Logic
     default: (game, playerRoll) ->
-      game.movePlayer game.players[game.currPlayer], playerRoll, () =>
-        game.board.tiles[game.players[game.currPlayer].position].landLogic game, playerRoll
+      game.movePlayer game.currPlayer(), playerRoll, () =>
+        game.board.tiles[game.currPlayer().position].landLogic game, playerRoll
 
     zubat: (game, playerRoll) =>
       if playerRoll isnt 1 and playerRoll isnt 2
@@ -119,8 +119,8 @@ class @Pokebooze
       @helpers.doNothing game
 
     doNothing: (game) ->
-      game.ui.flash "#{game.players[game.currPlayer].name} is Stuck!", "", 1000
-      game.lookAtPlayer(game.players[game.currPlayer])
+      game.ui.flash "#{game.currPlayer().name} is Stuck!", "", 1000
+      game.lookAtPlayer(game.currPlayer())
       game.nextPlayer()
       game.ui.enableRoll()
 
@@ -134,7 +134,7 @@ class @Pokebooze
       game.ui.enableRoll()
 
     missTurn: (game, roll) =>
-      game.players[game.currPlayer].missTurn = 1
+      game.currPlayer().missTurn = 1
       @helpers.defaultLandLogic game, roll
 
 
@@ -149,14 +149,14 @@ class @Pokebooze
         y: 0.9175
         landLogic: (game, roll) =>
           if roll == 1
-            game.players[game.currPlayer].tileState = 1
+            game.currPlayer().tileState = 1
             @helpers.rollAgain game
           else
             @helpers.defaultLandLogic game, roll
 
         logic: (game, playerRoll) =>
-          if game.players[game.currPlayer].tileState == 1
-            game.players[game.currPlayer].tileState = 0
+          if game.currPlayer().tileState == 1
+            game.currPlayer().tileState = 0
             @helpers.defaultLandLogic game, playerRoll
           else
             @helpers.default game, playerRoll
@@ -213,11 +213,11 @@ class @Pokebooze
         y: 0.2775
         stop: true
         landLogic: (game, roll) =>
-          game.players[game.currPlayer].tileState = 1
+          game.currPlayer().tileState = 1
           @helpers.rollAgain game, roll
         logic: (game, playerRoll) =>
-          if game.players[game.currPlayer].tileState is 1
-            game.players[game.currPlayer].tileState = 0
+          if game.currPlayer().tileState is 1
+            game.currPlayer().tileState = 0
             @helpers.defaultLandLogic game, playerRoll
           else
             @helpers.default game, playerRoll
@@ -287,11 +287,11 @@ class @Pokebooze
         landLogic: @helpers.rollAgain
         logic: (game, playerRoll) =>
           if playerRoll % 2 == 0
-            game.movePlayer game.players[game.currPlayer], 2, () =>
-              game.board.tiles[game.players[game.currPlayer].position].landLogic game, 2
+            game.movePlayer game.currPlayer(), 2, () =>
+              game.board.tiles[game.currPlayer().position].landLogic game, 2
           else
-            game.movePlayer game.players[game.currPlayer], -2, () =>
-              game.board.tiles[game.players[game.currPlayer].position].landLogic game, -2
+            game.movePlayer game.currPlayer(), -2, () =>
+              game.board.tiles[game.currPlayer().position].landLogic game, -2
     }
     # Oddish
     {
@@ -299,7 +299,7 @@ class @Pokebooze
         y: 0.4533333333333333
         stop: false 
         landLogic: (game, roll) =>
-          currentTile = game.players[game.currPlayer].position
+          currentTile = game.currPlayer().position
           playerMoveQueue = []
 
           for player in game.players
@@ -342,11 +342,11 @@ class @Pokebooze
         x: 0.7066666666666667
         y: 0.885
         landLogic: (game, roll) =>
-            game.players[game.currPlayer].tileState = 1
+            game.currPlayer().tileState = 1
             @helpers.rollAgain game, roll
         logic: (game, playerRoll) =>
-            if game.players[game.currPlayer].tileState == 1
-                game.players[game.currPlayer].tileState = 0
+            if game.currPlayer().tileState == 1
+                game.currPlayer().tileState = 0
                 @helpers.defaultLandLogic game, playerRoll
             else
                 @helpers.default game, playerRoll
@@ -357,14 +357,14 @@ class @Pokebooze
         y: 0.92
         stop: true
         landLogic: (game, roll) =>
-          game.players[game.currPlayer].tileState = 1
+          game.currPlayer().tileState = 1
           @helpers.rollAgain game, roll
         logic: (game, playerRoll) =>
-          if game.players[game.currPlayer].tileState == 1
-            game.players[game.currPlayer].tileState = 0
+          if game.currPlayer().tileState == 1
+            game.currPlayer().tileState = 0
 
             if playerRoll % 2 == 0
-              game.players[game.currPlayer].missTurn = 1
+              game.currPlayer().missTurn = 1
 
             @helpers.defaultLandLogic game, playerRoll
           else
@@ -381,9 +381,9 @@ class @Pokebooze
         landLogic: (game, roll) =>
             game.ssAnneDialogue (option) =>
                 if option is 1
-                    game.players[game.currPlayer].missTurn = 1
+                    game.currPlayer().missTurn = 1
                 else if option is 2
-                    game.players[game.currPlayer].missTurn = 2
+                    game.currPlayer().missTurn = 2
                 @helpers.defaultLandLogic game, roll
 
 
@@ -416,8 +416,8 @@ class @Pokebooze
         logic: (game, playerRoll) =>
           noSpaces = playerRoll * -1
           console.log noSpaces
-          game.movePlayer game.players[game.currPlayer], noSpaces, () =>
-            game.board.tiles[game.players[game.currPlayer].position].landLogic game, noSpaces
+          game.movePlayer game.currPlayer(), noSpaces, () =>
+            game.board.tiles[game.currPlayer().position].landLogic game, noSpaces
     }
     {
         x: 0.87
@@ -432,7 +432,7 @@ class @Pokebooze
         x: 0.8908333333333334
         y: 0.4583333333333333
         landLogic: (game, roll) =>
-          game.players[game.currPlayer].missTurn = 2
+          game.currPlayer().missTurn = 2
           @helpers.defaultLandLogic game, roll          
         logic: @helpers.default
     }
@@ -445,13 +445,13 @@ class @Pokebooze
         x: 0.8466666666666667
         y: 0.3016666666666667
         landLogic: (game, roll) =>
-          game.players[game.currPlayer].tileState = 1
+          game.currPlayer().tileState = 1
           @helpers.rollAgain game, roll
         logic: (game, playerRoll) =>
-          if game.players[game.currPlayer].tileState == 1
-            game.players[game.currPlayer].tileState = 0
+          if game.currPlayer().tileState == 1
+            game.currPlayer().tileState = 0
             if playerRoll isnt 3 and playerRoll isnt 5
-              game.players[game.currPlayer].missTurn = 2
+              game.currPlayer().missTurn = 2
               @helpers.defaultLandLogic game, playerRoll
           else
               @helpers.default game, playerRoll
@@ -467,14 +467,14 @@ class @Pokebooze
         y: 0.18916666666666668
         stop: true
         landLogic: (game, roll) =>
-          game.players[game.currPlayer].tileState = 1
+          game.currPlayer().tileState = 1
           @helpers.rollAgain game, roll
         logic: (game, playerRoll) =>
-          if game.players[game.currPlayer].tileState == 1
-            game.players[game.currPlayer].tileState = 0
+          if game.currPlayer().tileState == 1
+            game.currPlayer().tileState = 0
             
             if playerRoll > 4
-              game.players[game.currPlayer].missTurn = 1
+              game.currPlayer().missTurn = 1
 
             @helpers.defaultLandLogic game, playerRoll
           else
@@ -485,14 +485,14 @@ class @Pokebooze
         x: 0.6825
         y: 0.14583333333333334
         landLogic: (game, roll) =>
-          game.players[game.currPlayer].tileState = 1
+          game.currPlayer().tileState = 1
           @helpers.rollAgain game, roll
         logic: (game, playerRoll) =>
-          if game.players[game.currPlayer].tileState == 1
-            game.players[game.currPlayer].tileState = 0
+          if game.currPlayer().tileState == 1
+            game.currPlayer().tileState = 0
 
             if playerRoll == 1
-              game.players[game.currPlayer].missTurn = 3
+              game.currPlayer().missTurn = 3
 
             @helpers.defaultLandLogic game, playerRoll
           else
@@ -525,8 +525,8 @@ class @Pokebooze
         logic: (game, playerRoll) =>
           noSpaces = playerRoll * -1
 
-          game.movePlayer game.players[game.currPlayer], noSpaces, () =>
-            game.board.tiles[game.players[game.currPlayer].position].landLogic game, noSpaces
+          game.movePlayer game.currPlayer(), noSpaces, () =>
+            game.board.tiles[game.currPlayer().position].landLogic game, noSpaces
     }
     {
         x: 0.24583333333333332
@@ -553,7 +553,7 @@ class @Pokebooze
         x: 0.10666666666666667
         y: 0.54
         landLogic: (game, roll) =>
-          game.players[game.currPlayer].pokeFlute = true
+          game.currPlayer().pokeFlute = true
           @helpers.defaultLandLogic game, roll
         logic: @helpers.default
     }
@@ -607,11 +607,11 @@ class @Pokebooze
         y: 0.7558333333333334
         stop: true
         landLogic: (game, roll) =>
-          game.players[game.currPlayer].tileState = 1
+          game.currPlayer().tileState = 1
           @helpers.rollAgain game, roll
         logic: (game, playerRoll) =>
-          if game.players[game.currPlayer].tileState == 1
-            game.players[game.currPlayer].tileState = 0
+          if game.currPlayer().tileState == 1
+            game.currPlayer().tileState = 0
             
             @helpers.defaultLandLogic game, playerRoll
           else
@@ -629,8 +629,8 @@ class @Pokebooze
         x: 0.19666666666666666
         y: 0.6616666666666666
         landLogic: (game, roll) =>
-          if not game.players[game.currPlayer].pokeFlute
-            game.players[game.currPlayer].missTurn = 3
+          if not game.currPlayer().pokeFlute
+            game.currPlayer().missTurn = 3
           @helpers.defaultLandLogic game, roll
 
         logic: @helpers.default
@@ -643,8 +643,8 @@ class @Pokebooze
         logic: (game, playerRoll) =>
           noSpaces = playerRoll * 2
 
-          game.movePlayer game.players[game.currPlayer], noSpaces, () =>
-            game.board.tiles[game.players[game.currPlayer].position].landLogic game, noSpaces
+          game.movePlayer game.currPlayer(), noSpaces, () =>
+            game.board.tiles[game.currPlayer().position].landLogic game, noSpaces
     }
     # Fearow (Should this mean moves?)
     {
@@ -664,7 +664,7 @@ class @Pokebooze
         x: 0.19583333333333333
         y: 0.325
         landLogic: (game, roll) =>
-          game.players[game.currPlayer].missTurn = 2
+          game.currPlayer().missTurn = 2
           @helpers.defaultLandLogic game, roll
         logic: @helpers.default
     }
@@ -698,7 +698,7 @@ class @Pokebooze
         x: 0.5983333333333334
         y: 0.165
         landLogic: (game, roll) =>
-          slowBroSpace = game.players[game.currPlayer].position + 38
+          slowBroSpace = game.currPlayer().position + 38
           shouldMove = false
 
           for player in game.players
@@ -706,9 +706,9 @@ class @Pokebooze
               shouldMove = true
 
           if shouldMove
-            tilesToMove = slowBroSpace - game.players[game.currPlayer].position
-            game.movePlayer game.players[game.currPlayer], tilesToMove, () =>
-              game.board.tiles[game.players[game.currPlayer].position].landLogic game, tilesToMove
+            tilesToMove = slowBroSpace - game.currPlayer().position
+            game.movePlayer game.currPlayer(), tilesToMove, () =>
+              game.board.tiles[game.currPlayer().position].landLogic game, tilesToMove
           else
             @helpers.defaultLandLogic game, roll
 
@@ -835,7 +835,7 @@ class @Pokebooze
         landLogic: (game, roll) =>
             # Find out who goes next
             while true
-                iterator = (game.currPlayer + 1) % game.players.length
+                iterator = (game.currPlayerIndex + 1) % game.players.length
 
                 if game.players[iterator].missTurn <= 0
                     game.players[iterator].roleMultiplier = .5
@@ -876,11 +876,11 @@ class @Pokebooze
         x: 0.7225
         y: 0.3125
         landLogic: (game, roll) =>
-          game.players[game.currPlayer].tileState = 1
+          game.currPlayer().tileState = 1
           @helpers.rollAgain game, roll
         logic: (game, playerRoll) =>
-          if game.players[game.currPlayer].tileState is 1
-            game.players[game.currPlayer].tileState = 0
+          if game.currPlayer().tileState is 1
+            game.currPlayer().tileState = 0
             @helpers.defaultLandLogic game, playerRoll
           else
             @helpers.default game
@@ -895,12 +895,12 @@ class @Pokebooze
         y: 0.23833333333333334
         stop: true
         landLogic: (game, roll) =>
-          game.players[game.currPlayer].tileState = 1
+          game.currPlayer().tileState = 1
           @helpers.rollAgain game, roll
         logic: (game, playerRoll) =>
-          if game.players[game.currPlayer].tileState is 1
+          if game.currPlayer().tileState is 1
               if playerRoll % 2 isnt 0
-                game.players[game.currPlayer].tileState = 0
+                game.currPlayer().tileState = 0
                 @helpers.defaultLandLogic game, playerRoll
           else
             @helpers.default game, playerRoll
@@ -925,8 +925,8 @@ class @Pokebooze
         logic: (game, playerRoll) =>
           noSpaces = playerRoll * -2
 
-          game.movePlayer game.players[game.currPlayer], noSpaces, () =>
-            game.board.tiles[game.players[game.currPlayer].position].landLogic game, noSpaces
+          game.movePlayer game.currPlayer(), noSpaces, () =>
+            game.board.tiles[game.currPlayer().position].landLogic game, noSpaces
     }
     {
         x: 0.3616666666666667
@@ -939,11 +939,11 @@ class @Pokebooze
         x: 0.31416666666666665
         y: 0.2683333333333333
         landLogic: (game, roll) =>
-          game.players[game.currPlayer].tileState = 1
+          game.currPlayer().tileState = 1
           @helpers.rollAgain game, roll
         logic: (game, playerRoll) =>
-          if game.players[game.currPlayer].tileState is 1
-            game.players[game.currPlayer].tileState = 0
+          if game.currPlayer().tileState is 1
+            game.currPlayer().tileState = 0
             @helpers.defaultLandLogic game, playerRoll
           else
             @helpers.default game, playerRoll
@@ -996,8 +996,8 @@ class @Pokebooze
         logic: (game, playerRoll) =>
           noSpaces = playerRoll * -2
 
-          game.movePlayer game.players[game.currPlayer], noSpaces, () =>
-            game.board.tiles[game.players[game.currPlayer].position].landLogic game, noSpaces
+          game.movePlayer game.currPlayer(), noSpaces, () =>
+            game.board.tiles[game.currPlayer().position].landLogic game, noSpaces
     }
     {
         x: 0.4191666666666667
@@ -1034,11 +1034,11 @@ class @Pokebooze
         x: 0.26416666666666666
         y: 0.4525
         landLogic: (game, roll) =>
-          game.players[game.currPlay].tileState = 1
+          game.currPlayer().tileState = 1
           @helpers.rollAgain game, roll
         logic: (game, playerRoll) =>
-          if game.players[game.currPlay].tileState is 1
-            game.players[game.currPlay].tileState = 0
+          if game.currPlayer().tileState is 1
+            game.currPlayer().tileState = 0
             @helpers.defaultLandLogic game, playerRoll
           else
             @helpers.default game, playerRoll
