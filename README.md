@@ -12,6 +12,8 @@ Development
 
 Any asset changes will happen on page refresh. Changes to routes will require a server restart.
 
+To test the servers production behaviour set the environment variable `RACK_ENV=production`
+
 
 Bugs
 =====
