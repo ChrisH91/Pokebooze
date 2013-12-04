@@ -270,8 +270,6 @@ class @Pokebooze
         x: 0.8375
         y: 0.21916666666666668
         stop: true
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
     }
     # Bellsprout
     {
@@ -319,8 +317,6 @@ class @Pokebooze
         x: 0.9175
         y: 0.6366666666666667
         stop: true
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
     }
     {
         x: 0.8841666666666667
@@ -582,8 +578,6 @@ class @Pokebooze
         x: 0.39
         y: 0.8733333333333333
         stop: true
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
     }
     {
         x: 0.4658333333333333
@@ -734,8 +728,6 @@ class @Pokebooze
         x: 0.8008333333333333
         y: 0.3383333333333333
         stop: true
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
     }
     # Safari Zone
     {
@@ -981,8 +973,6 @@ class @Pokebooze
         x: 0.2758333333333333
         y: 0.6816666666666666
         stop: true
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.default
     }
     {
         x: 0.3175
