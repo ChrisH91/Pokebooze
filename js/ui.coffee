@@ -14,10 +14,10 @@ class @UI
     @bindings()
 
   bindings: ->
-    window.onbeforeunload = ->
-      "Woah, if you refresh the page you'll lose all your 'progress'!"
     @_startButton.on("click", =>
       _startGame()
+      window.onbeforeunload = ->
+        "Woah, if you refresh the page you'll lose all your 'progress'!"
     )
 
     @_playerInput.on "focus", (event) =>
