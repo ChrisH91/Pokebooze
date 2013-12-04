@@ -40,7 +40,8 @@ class @Pokebooze
 
     $('.controls').removeClass('hidden')
     $('.new-game').hide()
-    @panToStart()
+    first_player = @game.players[0]
+    @game.lookAtPlayer(first_player)
 
   beginGame: () ->
     # @plotTiles()
@@ -103,15 +104,20 @@ class @Pokebooze
       if playerRoll isnt 1 and playerRoll isnt 2
         @helpers.default game, playerRoll
       else
-        @helpers.defaultLandLogic game, playerRoll
+        @helpers.doNothing game
 
     tentacool: (game, playerRoll) =>
       console.log "Tentacool"
       if playerRoll isnt 1 and playerRoll isnt 6
         console.log "Move"
         @helpers.default game
+      @helpers.doNothing game
 
-      @helpers.defaultLandLogic game, playerRoll      
+    doNothing: (game) ->
+      game.ui.flash "#{game.players[game.currPlayer].name} is Stuck!", "", 1000
+      game.lookAtPlayer(game.players[game.currPlayer])
+      game.nextPlayer()
+      game.ui.enableRoll()
 
     # Land Logic
     defaultLandLogic: (game, roll) ->
