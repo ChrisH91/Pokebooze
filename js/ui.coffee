@@ -20,12 +20,12 @@ class @UI
         "Woah, if you refresh the page you'll lose all your 'progress'!"
     )
 
-    @_playerInput.on "focus", (event) =>
+    @_playerInput.on "keyup", (event) =>
       _duplicateInput event, @
 
     @_bindNewPlayerKey()
 
-    $('#roll-button').on("click", @_triggerTurn)
+    $('#roll-button').click @_triggerTurn
     $('body').keyup (e) =>
       if e.keyCode == 32 and @_rollEnabled #spacebar
         @_triggerTurn()
@@ -36,7 +36,7 @@ class @UI
   _bindNewPlayerKey: ->
     $('.player-input').unbind "keypress"
     $('.player-input').keypress (event) =>
-      if event.which is 13
+      if event.which is 13 #enter
         _startGame()
 
   animateRoll: ->
@@ -111,11 +111,12 @@ class @UI
     el = event.currentTarget
     if el.dirty?
       return
-    else
+    else if $(el).val() isnt ""
       clone = $(el).clone()
+      clone.val("")
       ++ ui.playerMenuCount
       $(clone).attr("placeholder", "Player " + ui.playerMenuCount + "'s Name")
-      clone.on "focus", (event) =>
+      clone.on "keyup", (event) =>
         _duplicateInput event, ui
       $('#players-input').append(clone)
       ui._bindNewPlayerKey()
