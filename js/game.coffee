@@ -93,7 +93,7 @@ class @Game
     Logger.log "Start of turn for #{@currPlayer} - #{@players[@currPlayer].name}"
     if @players[@currPlayer].missTurn > 0
       Logger.log "Skipping player: #{@currPlayer} - #{@players[@currPlayer].name}"
-      @ui.flash "Skipped turn!", "Skipping #{@players[@currPlayer].name}'s turn!", 3000
+      @ui.flash "Skipped turn!", "Skipping #{@players[@currPlayer].name}'s turn!", 2000
       @players[@currPlayer].missTurn -= 1
       @nextPlayer()
     else
