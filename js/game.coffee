@@ -8,12 +8,14 @@ class @Game
 
     $(window).on "turn", @turn
 
+  lookAtPlayer: (player, callback) =>
+    @camera.rotateToPoint(@board.tileRotation(player.position))
+    @camera.zoomToPoint(@board.tilePosition(player.position), callback)
 
   movePlayer: (player, steps, callback) =>
     direction = steps > 0
     position = player.move(direction)
-    @camera.rotateToPoint(@board.tileRotation(player.position))
-    @camera.zoomToPoint(@board.tilePosition(player.position), => @_playerMove(player, steps, callback))
+    @lookAtPlayer(player, => @_playerMove(player, steps, callback))
   
   _movePlayer: (player, steps, callback) =>
     if steps is 0
@@ -24,8 +26,7 @@ class @Game
     tile = @board.tiles[position]
     @_playerMove(player, steps, callback)
 
-    @camera.rotateToPoint(@board.tileRotation(player.position))
-    @camera.zoomToPoint(@board.tilePosition(player.position))
+    @lookAtPlayer(player)
 
   _playerMove: (player, steps, callback) =>
     randomness = (Math.random()-0.5) * 2 * @board.playerSize
