@@ -11,7 +11,7 @@ html, body
   margin: 0
   background-color: black
   overflow: hidden
-  min-width: 1100px
+  min-width: 1000px
 
 .drop-shadow
   box-shadow: 0 2px 6px black
@@ -24,10 +24,13 @@ h1, h2, h3, h4, h5, h6
   text-shadow: 2px 2px 0 blue, -2px -2px 0 blue, -2px 2px 0 blue, 2px -2px 0 blue
   letter-spacing: 5px
 
-@mixin poke-border-box($width)
+@mixin poke-border
   border: 5px solid red
   outline: 5px solid blue
   background-color: white
+
+@mixin poke-border-box($width)
+  @include poke-border
   position: absolute
   width: $width
   padding: 30px
@@ -95,9 +98,13 @@ h1, h2, h3, h4, h5, h6
   left: 0
   bottom: 0 
   right: 0
+  .row
+    margin-top: 50px
   .content
-    $width: 1100px
-    @include poke-border-box($width)
+    @include poke-border
+    position: relative
+    z-index: 10
+    padding: 10px
     box-shadow: 0 5px 15px black
     button
       display: block
