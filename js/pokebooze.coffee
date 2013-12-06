@@ -890,9 +890,11 @@ class @Pokebooze
           @helpers.rollAgain game, roll
         logic: (game, playerRoll) =>
           if game.currPlayer().tileState is 1
-              if playerRoll % 2 isnt 0
-                game.currPlayer().tileState = 0
-                @helpers.defaultLandLogic game, playerRoll
+            if playerRoll % 2 isnt 0
+              game.currPlayer().tileState = 0
+              @helpers.defaultLandLogic game, playerRoll
+            else
+              @helpers.rollAgain game, roll
           else
             @helpers.default game, playerRoll
     }
@@ -1046,26 +1048,31 @@ class @Pokebooze
     {
         x: 0.45416666666666666
         y: 0.26
+        stop: true
     }
     # Bruno
     {
         x: 0.5433333333333333
         y: 0.26166666666666666
+        stop: true
     }
     # Agatha
     {
         x: 0.6283333333333333
         y: 0.29583333333333334
+        stop: true
     }
     # Lance
     {
         x: 0.6958333333333333
         y: 0.3641666666666667
+        stop: true
     }
     # Rival
     {
         x: 0.7341666666666666
         y: 0.4475
+        stop: true
     }
     {
         x: 0.7333333333333333
