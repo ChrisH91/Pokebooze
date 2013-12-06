@@ -828,7 +828,6 @@ class @Pokebooze
             # Find out who goes next
             iterator = (game.currPlayerIndex + 1) % game.players.length
             while true
-
                 if game.players[iterator].missTurn <= 0
                     game.players[iterator].roleMultiplier = .5
                     break
@@ -905,14 +904,10 @@ class @Pokebooze
         x: 0.5266666666666666
         y: 0.205
     }
+    # Magneton Logic
     {
         x: 0.4716666666666667
         y: 0.2025
-    }
-    # Magneton Logic
-    {
-        x: 0.41833333333333333
-        y: 0.21583333333333332
         landLogic: @helpers.rollAgain
         logic: (game, playerRoll) =>
           noSpaces = playerRoll * -2
@@ -920,6 +915,11 @@ class @Pokebooze
           game.movePlayer game.currPlayer(), noSpaces, () =>
             game.board.tiles[game.currPlayer().position].landLogic game, noSpaces
     }
+    {
+        x: 0.41833333333333333
+        y: 0.21583333333333332
+    }
+    # Tentacool
     {
         x: 0.3616666666666667
         y: 0.23583333333333334
