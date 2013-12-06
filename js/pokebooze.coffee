@@ -826,8 +826,8 @@ class @Pokebooze
         y: 0.6816666666666666
         landLogic: (game, roll) =>
             # Find out who goes next
+            iterator = (game.currPlayerIndex + 1) % game.players.length
             while true
-                iterator = (game.currPlayerIndex + 1) % game.players.length
 
                 if game.players[iterator].missTurn <= 0
                     game.players[iterator].roleMultiplier = .5
