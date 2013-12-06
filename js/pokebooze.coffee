@@ -444,11 +444,11 @@ class @Pokebooze
           game.currPlayer().tileState = 1
           @helpers.rollAgain game, roll
         logic: (game, playerRoll) =>
-          if game.currPlayer().tileState == 1
+          if game.currPlayer().tileState is 1
             game.currPlayer().tileState = 0
             if playerRoll isnt 3 and playerRoll isnt 5
               game.currPlayer().missTurn = 2
-              @helpers.defaultLandLogic game, playerRoll
+            @helpers.defaultLandLogic game, playerRoll
           else
               @helpers.default game, playerRoll
     }
@@ -466,7 +466,7 @@ class @Pokebooze
           game.currPlayer().tileState = 1
           @helpers.rollAgain game, roll
         logic: (game, playerRoll) =>
-          if game.currPlayer().tileState == 1
+          if game.currPlayer().tileState is 1
             game.currPlayer().tileState = 0
             
             if playerRoll > 4
@@ -484,7 +484,7 @@ class @Pokebooze
           game.currPlayer().tileState = 1
           @helpers.rollAgain game, roll
         logic: (game, playerRoll) =>
-          if game.currPlayer().tileState == 1
+          if game.currPlayer().tileState is 1
             game.currPlayer().tileState = 0
 
             if playerRoll == 1
