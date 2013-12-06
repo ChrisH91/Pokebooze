@@ -51,8 +51,9 @@ class @Game
   playerSelectionDialogue: (callback) =>
     $(".select_player").prop "disabled", false
     $(".select_player").removeClass("disabled")
-    $("#player-select-" + @currPlayerIndex).prop "disabled", true
-    $("#player-select-" + @currPlayerIndex).addClass("disabled")
+    if @players.length > 1 # otherwise we get stuck!
+      $("#player-select-" + @currPlayerIndex).prop "disabled", true
+      $("#player-select-" + @currPlayerIndex).addClass("disabled")
 
     $(".choose-player").show()
     $(".select_player").unbind "click"
