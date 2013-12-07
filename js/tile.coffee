@@ -44,6 +44,14 @@ class @RollAgainTile extends @Tile
   landLogic: (roll) ->
     @_rollAgain()
 
+class @RollAgainHereTile extends @RollAgainTile
+  leaveLogic: (playerRoll) =>
+    if @game.currPlayer().tileState is 1
+      @game.currPlayer().tileState = 0
+      @_defaultLandLogic playerRoll
+    else
+      super playerRoll
+
 class @ZubatTile extends @Tile
   leaveLogic: (playerRoll) =>
     if playerRoll isnt 1 and playerRoll isnt 2
@@ -58,17 +66,6 @@ class @TentacoolTile extends @Tile
       console.log "Move"
       super # Need roll?
     @_doNothing
-
-class @PewterGymTile extends @Tile
-  landLogic: (roll) =>
-    @game.currPlayer().tileState = 1
-    @helpers.rollAgain roll
-  leaveLogic: (playerRoll) =>
-    if @game.currPlayer().tileState is 1
-      @game.currPlayer().tileState = 0
-      @_defaultLandLogic playerRoll
-    else
-      super playerRoll
 
 class @AbraTile extends @RollAgainTile
   leaveLogic: (playerRoll) =>
@@ -89,17 +86,6 @@ class @OddishTile extends @Tile
       if Math.abs(noSpaces) > 0 and Math.abs(noSpaces) <= 2
         @game.movePlayer player, noSpaces, () =>
     super roll
-
-class @FarfetchTile extends @RollAgainTile
-  landLogic: (roll) =>
-    @game.currPlayer().tileState = 1
-    super roll
-  leaveLogic: (playerRoll) =>
-    if @game.currPlayer().tileState is 1
-      @game.currPlayer().tileState = 0
-      @_defaultLandLogic playerRoll
-    else
-      super playerRoll
 
 class @VermillionGymTile extends @RollAgainTile
   landLogic: (roll) =>
@@ -187,17 +173,6 @@ class @PokeFluteTile extends @Tile
     @game.currPlayer().pokeFlute = true
     super roll
 
-class @SaffronGymTile extends @RollAgainTile
-  landLogic: (roll) =>
-    @game.currPlayer().tileState = 1
-    super roll
-  leaveLogic: (playerRoll) =>
-    if @game.currPlayer().tileState is 1
-      @game.currPlayer().tileState = 0
-      @_defaultLandLogic playerRoll
-    else
-      super playerRoll
-
 class @SnorlaxTile extends @Tile
   landLogic: (roll) =>
     if not @game.currPlayer().pokeFlute
@@ -277,7 +252,7 @@ class @CinnabarGymTile extends @RollAgainTile
         @game.currPlayer().tileState = 0
         @_defaultLandLogic playerRoll
       else
-        super roll
+        super playerRoll
     else
       super playerRoll
 
@@ -286,17 +261,6 @@ class @MoveBackDoubleTile extends @RollAgainTile
     noSpaces = playerRoll * -2
     @game.movePlayer @game.currPlayer(), noSpaces, () =>
       @game.currTile().landLogic noSpaces
-
-class @GolbatTile extends @RollAgainTile
-  landLogic: (roll) =>
-    @game.currPlayer().tileState = 1
-    super roll
-  leaveLogic: (playerRoll) =>
-    if @game.currPlayer().tileState is 1
-      @game.currPlayer().tileState = 0
-      @_defaultLandLogic playerRoll
-    else
-      super playerRoll
 
 class @FinalTile extends @Tile
   landLogic: (game, roll) =>

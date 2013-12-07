@@ -151,7 +151,7 @@ class @Pokebooze
         x: 0.11333333333333333
         y: 0.2775
         forceStop: true
-        klass: PewterGymTile
+        klass: RollAgainHereTile
     }
     {
         x: 0.15833333333333333
@@ -248,7 +248,7 @@ class @Pokebooze
     {
         x: 0.7066666666666667
         y: 0.885
-        klass: FarfetchTile
+        klass: RollAgainHereTile
     }
     # Vermillion Gym
     {
@@ -430,7 +430,7 @@ class @Pokebooze
         x: 0.2816666666666667
         y: 0.7558333333333334
         forceStop: true
-        klass: SaffronGymTile
+        klass: RollAgainHereTile
     }
     # Doduo
     {
@@ -623,7 +623,7 @@ class @Pokebooze
     {
         x: 0.7225
         y: 0.3125
-        klass: RollAgainTile
+        klass: RollAgainHereTile
     }
     {
         x: 0.6841666666666667
@@ -664,7 +664,7 @@ class @Pokebooze
     {
         x: 0.31416666666666665
         y: 0.2683333333333333
-        klass: GolbatTile
+        klass: RollAgainHereTile
     }
     {
         x: 0.2725
@@ -742,7 +742,7 @@ class @Pokebooze
     {
         x: 0.26416666666666666
         y: 0.4525
-        klass: RollAgainTile
+        klass: RollAgainHereTile
     }
     {
         x: 0.29833333333333334
