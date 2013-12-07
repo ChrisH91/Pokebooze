@@ -267,17 +267,6 @@ class @TentacruelTile extends @Tile
       ++iterator
     super roll
 
-class @OmastarTile extends @RollAgainTile
-  landLogic: (roll) =>
-    @game.currPlayer().tileState = 1
-    super roll
-  leaveLogic: (playerRoll) =>
-    if @game.currPlayer().tileState is 1
-      @game.currPlayer().tileState = 0
-      @_defaultLandLogic playerRoll
-    else
-      super playerRoll
-
 class @CinnabarGymTile extends @RollAgainTile
   landLogic: (roll) =>
     @game.currPlayer().tileState = 1
@@ -292,30 +281,13 @@ class @CinnabarGymTile extends @RollAgainTile
     else
       super playerRoll
 
-class @MagnetonTile extends @RollAgainTile
+class @MoveBackDoubleTile extends @RollAgainTile
   leaveLogic: (playerRoll) =>
     noSpaces = playerRoll * -2
     @game.movePlayer @game.currPlayer(), noSpaces, () =>
       @game.currTile().landLogic noSpaces
 
 class @GolbatTile extends @RollAgainTile
-  landLogic: (roll) =>
-    @game.currPlayer().tileState = 1
-    super roll
-  leaveLogic: (playerRoll) =>
-    if @game.currPlayer().tileState is 1
-      @game.currPlayer().tileState = 0
-      @_defaultLandLogic playerRoll
-    else
-      super playerRoll
-
-class @SeakingTile extends @RollAgainTile
-  leaveLogic: (playerRoll) =>
-    noSpaces = playerRoll * -2
-    @game.movePlayer @game.currPlayer(), noSpaces, () =>
-      @game.currTile().landLogic noSpaces
-
-class @GravelerTile extends @RollAgainTile
   landLogic: (roll) =>
     @game.currPlayer().tileState = 1
     super roll

@@ -623,7 +623,7 @@ class @Pokebooze
     {
         x: 0.7225
         y: 0.3125
-        klass: OmastarTile
+        klass: RollAgainTile
     }
     {
         x: 0.6841666666666667
@@ -648,7 +648,7 @@ class @Pokebooze
     {
         x: 0.4716666666666667
         y: 0.2025
-        klass: MagnetonTile
+        klass: MoveBackDoubleTile
     }
     {
         x: 0.41833333333333333
@@ -708,7 +708,7 @@ class @Pokebooze
     {
         x: 0.365
         y: 0.7466666666666667
-        klass: SeakingTile
+        klass: MoveBackDoubleTile
     }
     {
         x: 0.4191666666666667
@@ -742,7 +742,7 @@ class @Pokebooze
     {
         x: 0.26416666666666666
         y: 0.4525
-        klass: GravelerTile
+        klass: RollAgainTile
     }
     {
         x: 0.29833333333333334
