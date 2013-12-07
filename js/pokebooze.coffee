@@ -73,12 +73,7 @@ class @Pokebooze
     plotter = new Plotter $("#table"), @stage
 
   buildTiles: ->
-    for tileBase in Pokebooze.tileCoords
-      tileBase.stop = false unless tileBase.stop?
-      tileBase.landLogic = Pokebooze.helpers.defaultLandLogic unless tileBase.landLogic?
-      tileBase.logic = Pokebooze.helpers.default unless tileBase.logic?
-
-    @game.board.build(Pokebooze.tileCoords)
+    @game.board.build(Pokebooze.tileCoords, @game)
 
   initializePlayers: (opts = {resuming: false}) ->
     playersList = $('.players')
@@ -99,45 +94,6 @@ class @Pokebooze
     @camera.rotateToPoint($.extend({},@game.board.tileRotation(0),{duration: 0.0000001, easing: null}), =>
       @camera.zoomToPoint($.extend({},@game.board.tilePosition(0),{duration: 0.0000001, easing: null})))
 
-  @helpers = 
-    # Logic
-    default: (game, playerRoll) ->
-      game.movePlayer game.currPlayer(), playerRoll, () =>
-        game.board.tiles[game.currPlayer().position].landLogic game, playerRoll
-
-    zubat: (game, playerRoll) =>
-      if playerRoll isnt 1 and playerRoll isnt 2
-        @helpers.default game, playerRoll
-      else
-        @helpers.doNothing game
-
-    tentacool: (game, playerRoll) =>
-      console.log "Tentacool"
-      if playerRoll isnt 1 and playerRoll isnt 6
-        console.log "Move"
-        @helpers.default game
-      @helpers.doNothing game
-
-    doNothing: (game) ->
-      game.ui.flash "#{game.currPlayer().name} is Stuck!", "", 1000
-      game.lookAtPlayer(game.currPlayer())
-      game.nextPlayer()
-      game.ui.enableRoll()
-
-    # Land Logic
-    defaultLandLogic: (game, roll) ->
-      game.nextPlayer()
-      game.ui.enableRoll()
-
-    rollAgain: (game, roll) ->
-      game.ui.flash "Roll Again"
-      game.ui.enableRoll()
-
-    missTurn: (game, roll) =>
-      game.currPlayer().missTurn = 1
-      @helpers.defaultLandLogic game, roll
-
-
   @tileCoords = [
     {
         x: 0.45666666666666667
@@ -146,48 +102,32 @@ class @Pokebooze
     # Ratatta
     {
         x: 0.3775
-        y: 0.9175
-        landLogic: (game, roll) =>
-          if roll == 1
-            game.currPlayer().tileState = 1
-            @helpers.rollAgain game
-          else
-            @helpers.defaultLandLogic game, roll
-
-        logic: (game, playerRoll) =>
-          if game.currPlayer().tileState == 1
-            game.currPlayer().tileState = 0
-            @helpers.defaultLandLogic game, playerRoll
-          else
-            @helpers.default game, playerRoll
+        y: 0.9175 
+        klass: RollAgainTile
     }
     # Caterpie
     {
         x: 0.29333333333333333
         y: 0.8816666666666667
-        landLogic: @helpers.missTurn
-        logic: @helpers.default
+        klass: MissTurnTile
     }
     #Pidgey
     {
         x: 0.22416666666666665
         y: 0.8425
-        landLogic: @helpers.rollAgain
-        logic: @helpers.default
+        klass: RollAgainTile
     }
     # Weedle
     {
         x: 0.16083333333333333
         y: 0.7808333333333334
-        landLogic: @helpers.missTurn
-        logic: @helpers.default
+        klass: MissTurnTile
     }
     # Metapod/Kakuna
     {
         x: 0.11416666666666667
         y: 0.7116666666666667
-        landLogic: @helpers.missTurn
-        logic: @helpers.default
+        klass: MissTurnTile
     }
     {
         x: 0.07916666666666666
@@ -200,8 +140,7 @@ class @Pokebooze
     {
         x: 0.059166666666666666
         y: 0.45666666666666667
-        landLogic: @helpers.rollAgain
-        logic: @helpers.default
+        klass: RollAgainTile
     }
     {
         x: 0.07666666666666666
@@ -211,16 +150,8 @@ class @Pokebooze
     {
         x: 0.11333333333333333
         y: 0.2775
-        stop: true
-        landLogic: (game, roll) =>
-          game.currPlayer().tileState = 1
-          @helpers.rollAgain game, roll
-        logic: (game, playerRoll) =>
-          if game.currPlayer().tileState is 1
-            game.currPlayer().tileState = 0
-            @helpers.defaultLandLogic game, playerRoll
-          else
-            @helpers.default game, playerRoll
+        forceStop: true
+        klass: PewterGymTile
     }
     {
         x: 0.15833333333333333
@@ -230,8 +161,8 @@ class @Pokebooze
     {
         x: 0.21916666666666668
         y: 0.15666666666666668
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.zubat
+        
+        klass: ZubatTile
     }
     {
         x: 0.29083333333333333
@@ -241,8 +172,8 @@ class @Pokebooze
     {
         x: 0.37333333333333335
         y: 0.0725
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.zubat            
+        
+        klass: ZubatTile            
     }
     {
         x: 0.4558333333333333
@@ -269,44 +200,25 @@ class @Pokebooze
     {
         x: 0.8375
         y: 0.21916666666666668
-        stop: true
+        forceStop: true
     }
     # Bellsprout
     {
         x: 0.8841666666666667
         y: 0.2833333333333333
-        landLogic: @helpers.missTurn
-        logic: @helpers.default
+        klass: MissTurnTile
     }
     # Abra
     {
         x: 0.9166666666666666
         y: 0.3641666666666667
-        landLogic: @helpers.rollAgain
-        logic: (game, playerRoll) =>
-          if playerRoll % 2 == 0
-            game.movePlayer game.currPlayer(), 2, () =>
-              game.board.tiles[game.currPlayer().position].landLogic game, 2
-          else
-            game.movePlayer game.currPlayer(), -2, () =>
-              game.board.tiles[game.currPlayer().position].landLogic game, -2
+        klass: AbraTile
     }
     # Oddish
     {
         x: 0.9366666666666666
         y: 0.4533333333333333
-        stop: false 
-        landLogic: (game, roll) =>
-          currentTile = game.currPlayer().position
-          playerMoveQueue = []
-
-          for player in game.players
-            noSpaces = currentTile - player.position
-            if Math.abs(noSpaces) > 0 and Math.abs(noSpaces) <= 2
-              game.movePlayer player, noSpaces, () =>
-          @helpers.defaultLandLogic game, roll
-
-        logic: @helpers.default
+        klass: OddishTile
     }
     {
         x: 0.9375
@@ -316,7 +228,7 @@ class @Pokebooze
     {
         x: 0.9175
         y: 0.6366666666666667
-        stop: true
+        forceStop: true
     }
     {
         x: 0.8841666666666667
@@ -330,41 +242,20 @@ class @Pokebooze
     {
         x: 0.7775
         y: 0.8358333333333333
-        landLogic: @helpers.missTurn
-        logic: @helpers.default
+        klass: MissTurnTile
     }
     # Farfetch'd
     {
         x: 0.7066666666666667
         y: 0.885
-        landLogic: (game, roll) =>
-            game.currPlayer().tileState = 1
-            @helpers.rollAgain game, roll
-        logic: (game, playerRoll) =>
-            if game.currPlayer().tileState == 1
-                game.currPlayer().tileState = 0
-                @helpers.defaultLandLogic game, playerRoll
-            else
-                @helpers.default game, playerRoll
+        klass: FarfetchTile
     }
     # Vermillion Gym
     {
         x: 0.6191666666666666
         y: 0.92
-        stop: true
-        landLogic: (game, roll) =>
-          game.currPlayer().tileState = 1
-          @helpers.rollAgain game, roll
-        logic: (game, playerRoll) =>
-          if game.currPlayer().tileState == 1
-            game.currPlayer().tileState = 0
-
-            if playerRoll % 2 == 0
-              game.currPlayer().missTurn = 1
-
-            @helpers.defaultLandLogic game, playerRoll
-          else
-            @helpers.default game, playerRoll
+        forceStop: true
+        klass: VermillionGymTile
     }
     {
         x: 0.5425
@@ -374,16 +265,7 @@ class @Pokebooze
     {
         x: 0.5358333333333334
         y: 0.8875
-        landLogic: (game, roll) =>
-            game.ssAnneDialogue (option) =>
-                if option is 1
-                    game.currPlayer().missTurn = 1
-                else if option is 2
-                    game.currPlayer().missTurn = 2
-                @helpers.defaultLandLogic game, roll
-
-
-        logic: @helpers.default
+        klass: SSAnneTile
     }
     {
         x: 0.6091666666666666
@@ -397,8 +279,7 @@ class @Pokebooze
     {
         x: 0.7475
         y: 0.7983333333333333
-        landLogic: @helpers.missTurn
-        logic: @helpers.default
+        klass: MissTurnTile
     }
     {
         x: 0.8008333333333333
@@ -408,12 +289,7 @@ class @Pokebooze
     {
         x: 0.845
         y: 0.685
-        landLogic: @helpers.rollAgain     
-        logic: (game, playerRoll) =>
-          noSpaces = playerRoll * -1
-          console.log noSpaces
-          game.movePlayer game.currPlayer(), noSpaces, () =>
-            game.board.tiles[game.currPlayer().position].landLogic game, noSpaces
+        klass: MagnemiteTile
     }
     {
         x: 0.87
@@ -427,10 +303,7 @@ class @Pokebooze
     {
         x: 0.8908333333333334
         y: 0.4583333333333333
-        landLogic: (game, roll) =>
-          game.currPlayer().missTurn = 2
-          @helpers.defaultLandLogic game, roll          
-        logic: @helpers.default
+        klass: CeladonTile
     }
     {
         x: 0.8725
@@ -440,17 +313,7 @@ class @Pokebooze
     {
         x: 0.8466666666666667
         y: 0.3016666666666667
-        landLogic: (game, roll) =>
-          game.currPlayer().tileState = 1
-          @helpers.rollAgain game, roll
-        logic: (game, playerRoll) =>
-          if game.currPlayer().tileState is 1
-            game.currPlayer().tileState = 0
-            if playerRoll isnt 3 and playerRoll isnt 5
-              game.currPlayer().missTurn = 2
-            @helpers.defaultLandLogic game, playerRoll
-          else
-              @helpers.default game, playerRoll
+        klass: GameCornerTile
     }
     {
         x: 0.8033333333333333
@@ -461,45 +324,20 @@ class @Pokebooze
     {
         x: 0.7525
         y: 0.18916666666666668
-        stop: true
-        landLogic: (game, roll) =>
-          game.currPlayer().tileState = 1
-          @helpers.rollAgain game, roll
-        logic: (game, playerRoll) =>
-          if game.currPlayer().tileState is 1
-            game.currPlayer().tileState = 0
-            
-            if playerRoll > 4
-              game.currPlayer().missTurn = 1
-
-            @helpers.defaultLandLogic game, playerRoll
-          else
-            @helpers.default game, playerRoll
+        forceStop: true
+        klass: CeladonGymTile
     }
     # Team Rocket Hideout
     {
         x: 0.6825
         y: 0.14583333333333334
-        landLogic: (game, roll) =>
-          game.currPlayer().tileState = 1
-          @helpers.rollAgain game, roll
-        logic: (game, playerRoll) =>
-          if game.currPlayer().tileState is 1
-            game.currPlayer().tileState = 0
-
-            if playerRoll == 1
-              game.currPlayer().missTurn = 3
-
-            @helpers.defaultLandLogic game, playerRoll
-          else
-            @helpers.default game
+        klass: RocketHideoutTile
     }
     # Rare Candy
     {
         x: 0.6083333333333333
         y: 0.115
-        landLogic: @helpers.rollAgain
-        logic: @helpers.default
+        klass: RollAgainTile
     }
     {
         x: 0.5341666666666667
@@ -517,12 +355,7 @@ class @Pokebooze
     {
         x: 0.31083333333333335
         y: 0.14833333333333334
-        landLogic: @helpers.rollAgain
-        logic: (game, playerRoll) =>
-          noSpaces = playerRoll * -1
-
-          game.movePlayer game.currPlayer(), noSpaces, () =>
-            game.board.tiles[game.currPlayer().position].landLogic game, noSpaces
+        klass: GastlyTile
     }
     {
         x: 0.24583333333333332
@@ -547,11 +380,8 @@ class @Pokebooze
     # Pokeflute
     {
         x: 0.10666666666666667
-        y: 0.54
-        landLogic: (game, roll) =>
-          game.currPlayer().pokeFlute = true
-          @helpers.defaultLandLogic game, roll
-        logic: @helpers.default
+        y: 0.54    
+        klass: PokeFluteTile
     }
     {
         x: 0.12166666666666667
@@ -577,7 +407,7 @@ class @Pokebooze
     {
         x: 0.39
         y: 0.8733333333333333
-        stop: true
+        forceStop: true
     }
     {
         x: 0.4658333333333333
@@ -599,46 +429,26 @@ class @Pokebooze
     {
         x: 0.2816666666666667
         y: 0.7558333333333334
-        stop: true
-        landLogic: (game, roll) =>
-          game.currPlayer().tileState = 1
-          @helpers.rollAgain game, roll
-        logic: (game, playerRoll) =>
-          if game.currPlayer().tileState == 1
-            game.currPlayer().tileState = 0
-            
-            @helpers.defaultLandLogic game, playerRoll
-          else
-            @helpers.default game, playerRoll
+        forceStop: true
+        klass: SaffronGymTile
     }
     # Doduo
     {
         x: 0.235
         y: 0.7141666666666666
-        landLogic: @helpers.rollAgain
-        logic: @helpers.default
+        klass: RollAgainTile
     }
     # Snorlax
     {
         x: 0.19666666666666666
         y: 0.6616666666666666
-        landLogic: (game, roll) =>
-          if not game.currPlayer().pokeFlute
-            game.currPlayer().missTurn = 3
-          @helpers.defaultLandLogic game, roll
-
-        logic: @helpers.default
+        klass: SnorlaxTile       
     }
     # Weird black and white Ash on bike
     {
         x: 0.1675
         y: 0.5975
-        landLogic: @helpers.defaultLandLogic
-        logic: (game, playerRoll) =>
-          noSpaces = playerRoll * 2
-
-          game.movePlayer game.currPlayer(), noSpaces, () =>
-            game.board.tiles[game.currPlayer().position].landLogic game, noSpaces
+        klass: BikeTile
     }
     # Fearow (Should this mean moves?)
     {
@@ -657,10 +467,7 @@ class @Pokebooze
     {
         x: 0.19583333333333333
         y: 0.325
-        landLogic: (game, roll) =>
-          game.currPlayer().missTurn = 2
-          @helpers.defaultLandLogic game, roll
-        logic: @helpers.default
+        klass: WeepingBellTile        
     }
     {
         x: 0.23166666666666666
@@ -687,26 +494,10 @@ class @Pokebooze
         y: 0.15166666666666667
     }
     # Shelldar
-    # Slowbro is 38 spaces ahead
     {
         x: 0.5983333333333334
         y: 0.165
-        landLogic: (game, roll) =>
-          slowBroSpace = game.currPlayer().position + 38
-          shouldMove = false
-
-          for player in game.players
-            if player.position >= slowBroSpace
-              shouldMove = true
-
-          if shouldMove
-            tilesToMove = slowBroSpace - game.currPlayer().position
-            game.movePlayer game.currPlayer(), tilesToMove, () =>
-              game.board.tiles[game.currPlayer().position].landLogic game, tilesToMove
-          else
-            @helpers.defaultLandLogic game, roll
-
-        logic: @helpers.default
+        klass: ShelldarTile
     }
     {
         x: 0.66
@@ -716,8 +507,7 @@ class @Pokebooze
     {
         x: 0.7166666666666667
         y: 0.23166666666666666
-        landLogic: @helpers.rollAgain
-        logic: @helpers.default
+        klass: RollAgainTile
     }
     {
         x: 0.765
@@ -727,17 +517,13 @@ class @Pokebooze
     {
         x: 0.8008333333333333
         y: 0.3383333333333333
-        stop: true
+        forceStop: true
     }
     # Safari Zone
     {
         x: 0.8258333333333333
         y: 0.3958333333333333
-        landLogic: (game, roll) =>
-          game.playerSelectionDialogue (player) =>
-            game.players[player].missTurn += 1
-            @helpers.defaultLandLogic game, roll
-        logic: @helpers.default
+        klass: OtherMissTurnTile        
     }
     {
         x: 0.8391666666666666
@@ -755,11 +541,7 @@ class @Pokebooze
     {
         x: 0.7975
         y: 0.6633333333333333
-        landLogic: (game, roll) =>          
-            game.playerSelectionDialogue (player) =>
-                game.players[player].missTurn += 1
-                @helpers.defaultLandLogic game, roll  
-        logic: @helpers.default
+        klass: ChanseyTile
     }
     {
         x: 0.7591666666666667
@@ -773,23 +555,13 @@ class @Pokebooze
     {
         x: 0.6558333333333334
         y: 0.7933333333333333
-        landLogic: (game, roll) =>
-          game.playerSelectionDialogue (player) =>
-            game.players[player].missTurn += 1
-            @helpers.defaultLandLogic game, roll            
-        logic: @helpers.default
+        klass: OtherMissTurnTile
     }
     # Kanghaskan
     {
         x: 0.5958333333333333
         y: 0.8208333333333333
-        landLogic: (game, roll) =>
-            game.playerSelectionDialogue (player) =>
-                game.roll (roll) =>
-                    noSpaces = roll * -1
-                    game.movePlayer game.players[player], noSpaces, () =>
-                        @helpers.defaultLandLogic game, roll 
-        logic: @helpers.default
+        klass: KanghaskanTile        
     }
     {
         x: 0.53
@@ -799,15 +571,13 @@ class @Pokebooze
     {
         x: 0.525
         y: 0.7816666666666666
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.tentacool
+        klass: TentacoolTile
     }
     # Raticate
     {
         x: 0.5766666666666667
         y: 0.7733333333333333
-        landLogic: @helpers.rollAgain
-        logic: @helpers.default
+        klass: RollAgainTile
     }
     {
         x: 0.6308333333333334
@@ -817,26 +587,13 @@ class @Pokebooze
     {
         x: 0.6775
         y: 0.7191666666666666
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.tentacool
+        klass: TentacoolTile
     }
     # Tentacruel
     {
         x: 0.7208333333333333
         y: 0.6816666666666666
-        landLogic: (game, roll) =>
-            # Find out who goes next
-            iterator = (game.currPlayerIndex + 1) % game.players.length
-            while true
-                if game.players[iterator].missTurn <= 0
-                    game.players[iterator].roleMultiplier = .5
-                    break
-
-                ++iterator
-            @helpers.defaultLandLogic game, roll
-
-
-        logic: @helpers.default
+        klass: TentacruelTile
     }
     {
         x: 0.7508333333333334
@@ -866,15 +623,7 @@ class @Pokebooze
     {
         x: 0.7225
         y: 0.3125
-        landLogic: (game, roll) =>
-          game.currPlayer().tileState = 1
-          @helpers.rollAgain game, roll
-        logic: (game, playerRoll) =>
-          if game.currPlayer().tileState is 1
-            game.currPlayer().tileState = 0
-            @helpers.defaultLandLogic game, playerRoll
-          else
-            @helpers.default game
+        klass: OmastarTile
     }
     {
         x: 0.6841666666666667
@@ -884,19 +633,8 @@ class @Pokebooze
     {
         x: 0.6333333333333333
         y: 0.23833333333333334
-        stop: true
-        landLogic: (game, roll) =>
-          game.currPlayer().tileState = 1
-          @helpers.rollAgain game, roll
-        logic: (game, playerRoll) =>
-          if game.currPlayer().tileState is 1
-            if playerRoll % 2 isnt 0
-              game.currPlayer().tileState = 0
-              @helpers.defaultLandLogic game, playerRoll
-            else
-              @helpers.rollAgain game, roll
-          else
-            @helpers.default game, playerRoll
+        forceStop: true
+        klass: CinnabarGymTile
     }
     {
         x: 0.5816666666666667
@@ -910,12 +648,7 @@ class @Pokebooze
     {
         x: 0.4716666666666667
         y: 0.2025
-        landLogic: @helpers.rollAgain
-        logic: (game, playerRoll) =>
-          noSpaces = playerRoll * -2
-
-          game.movePlayer game.currPlayer(), noSpaces, () =>
-            game.board.tiles[game.currPlayer().position].landLogic game, noSpaces
+        klass: MagnetonTile
     }
     {
         x: 0.41833333333333333
@@ -925,22 +658,13 @@ class @Pokebooze
     {
         x: 0.3616666666666667
         y: 0.23583333333333334
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.tentacool
+        klass: TentacoolTile
     }
     # Golbat
     {
         x: 0.31416666666666665
         y: 0.2683333333333333
-        landLogic: (game, roll) =>
-          game.currPlayer().tileState = 1
-          @helpers.rollAgain game, roll
-        logic: (game, playerRoll) =>
-          if game.currPlayer().tileState is 1
-            game.currPlayer().tileState = 0
-            @helpers.defaultLandLogic game, playerRoll
-          else
-            @helpers.default game, playerRoll
+        klass: GolbatTile
     }
     {
         x: 0.2725
@@ -974,7 +698,7 @@ class @Pokebooze
     {
         x: 0.2758333333333333
         y: 0.6816666666666666
-        stop: true
+        forceStop: true
     }
     {
         x: 0.3175
@@ -984,12 +708,7 @@ class @Pokebooze
     {
         x: 0.365
         y: 0.7466666666666667
-        landLogic: @helpers.rollAgain
-        logic: (game, playerRoll) =>
-          noSpaces = playerRoll * -2
-
-          game.movePlayer game.currPlayer(), noSpaces, () =>
-            game.board.tiles[game.currPlayer().position].landLogic game, noSpaces
+        klass: SeakingTile
     }
     {
         x: 0.4191666666666667
@@ -1007,8 +726,7 @@ class @Pokebooze
     {
         x: 0.3675
         y: 0.6991666666666667
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.zubat
+        klass: ZubatTile
     }
     {
         x: 0.30333333333333334
@@ -1018,22 +736,13 @@ class @Pokebooze
     {
         x: 0.2658333333333333
         y: 0.5483333333333333
-        landLogic: @helpers.defaultLandLogic
-        logic: @helpers.zubat
+        klass: ZubatTile
     }
     # Graveler
     {
         x: 0.26416666666666666
         y: 0.4525
-        landLogic: (game, roll) =>
-          game.currPlayer().tileState = 1
-          @helpers.rollAgain game, roll
-        logic: (game, playerRoll) =>
-          if game.currPlayer().tileState is 1
-            game.currPlayer().tileState = 0
-            @helpers.defaultLandLogic game, playerRoll
-          else
-            @helpers.default game, playerRoll
+        klass: GravelerTile
     }
     {
         x: 0.29833333333333334
@@ -1048,31 +757,31 @@ class @Pokebooze
     {
         x: 0.45416666666666666
         y: 0.26
-        stop: true
+        forceStop: true
     }
     # Bruno
     {
         x: 0.5433333333333333
         y: 0.26166666666666666
-        stop: true
+        forceStop: true
     }
     # Agatha
     {
         x: 0.6283333333333333
         y: 0.29583333333333334
-        stop: true
+        forceStop: true
     }
     # Lance
     {
         x: 0.6958333333333333
         y: 0.3641666666666667
-        stop: true
+        forceStop: true
     }
     # Rival
     {
         x: 0.7341666666666666
         y: 0.4475
-        stop: true
+        forceStop: true
     }
     {
         x: 0.7333333333333333
@@ -1099,8 +808,7 @@ class @Pokebooze
     {
         x: 0.5841666666666666
         y: 0.625
-        landLogic: @helpers.rollAgain
-        logic: @helpers.default
+        klass: RollAgainTile
     }
     {
         x: 0.625
@@ -1160,8 +868,7 @@ class @Pokebooze
     {
         x: 0.4691666666666667
         y: 0.66
-        landLogic: (game, roll) =>
-          console.log "Last square"
-        logic: @helpers.default
+        forceStop: true
+        klass: FinalTile        
     }
   ]

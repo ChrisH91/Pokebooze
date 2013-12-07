@@ -8,14 +8,12 @@ class @Board
     @tableWidth = window.innerWidth
     @tableHeight = window.innerHeight
 
-  build: (tileCoords) ->
+  build: (tileCoords, game) ->
     for tileCoord in tileCoords
-      @tiles.push new Tile(
-        tileCoord.x,
-        tileCoord.y,
-        tileCoord.stop,
-        tileCoord.logic,
-        tileCoord.landLogic
+      tileBase = $.extend({}, @_tileDefaults(), tileCoord)
+      @tiles.push new tileBase.klass(
+        tileBase,
+        game
       )
 
   tileRotation: (tileIndex) ->
@@ -57,3 +55,8 @@ class @Board
       radius: @playerSize
     }
 
+  _tileDefaults: ->
+    {
+      klass: Tile
+      forceStop: false
+    }

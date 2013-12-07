@@ -11,6 +11,9 @@ class @Game
   currPlayer: ->
     @players[@currPlayerIndex]
 
+  currTile: =>
+    @board.tiles[@currPlayer().position]
+
   lookAtPlayer: (player, callback) =>
     @camera.rotateToPoint(@board.tileRotation(player.position))
     @camera.zoomToPoint(@board.tilePosition(player.position), callback)
@@ -39,7 +42,7 @@ class @Game
       y: @board.tiles[player.position].y * @board.boardWidth + randomness
       duration: 0.3
       onFinish: =>
-        if @board.tiles[player.position].stop 
+        if @board.tiles[player.position].forceStop 
           steps = 0
         else
           steps = if steps > 0 then steps - 1 else steps + 1
@@ -103,4 +106,4 @@ class @Game
     else
       @roll (playerRoll) =>
         Logger.log "Firing logic for tile #{@currPlayer().position} with roll #{playerRoll}"
-        @board.tiles[@currPlayer().position].logic this, playerRoll
+        @board.tiles[@currPlayer().position].leaveLogic playerRoll

@@ -22,7 +22,21 @@ class App < Sinatra::Base
 
     # The second parameter defines where the compressed version will be served.
     # (Note: that parameter is optional, AssetPack will figure it out.)
-    js :app, ['/js/*.js']
+    js :app, [
+      '/js/kinetic-v4.7.4.min.js',
+      '/js/tile.js',
+      '/js/app.js',
+      '/js/board.js',
+      '/js/camera.js',
+      '/js/game.js',
+      '/js/logger.js',
+      '/js/music.js',
+      '/js/painter.js',
+      '/js/player.js',
+      '/js/plotter.js',
+      '/js/pokebooze.js',
+      '/js/ui.js',
+    ]
 
     css :application, '/css/application.css', ['/css/screen.css']
 
