@@ -45,6 +45,9 @@ class @RollAgainTile extends @Tile
     @_rollAgain()
 
 class @RollAgainHereTile extends @RollAgainTile
+  landLogic: (roll) ->
+    @game.currPlayer().tileState = 1
+    super roll
   leaveLogic: (playerRoll) =>
     if @game.currPlayer().tileState is 1
       @game.currPlayer().tileState = 0
