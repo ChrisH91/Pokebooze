@@ -103,7 +103,7 @@ class @Pokebooze
     {
         x: 0.3775
         y: 0.9175 
-        klass: RollAgainTile
+        klass: RollAgainHereTile
     }
     # Caterpie
     {
@@ -115,7 +115,7 @@ class @Pokebooze
     {
         x: 0.22416666666666665
         y: 0.8425
-        klass: RollAgainTile
+        klass: RollAgainHereTile
     }
     # Weedle
     {
