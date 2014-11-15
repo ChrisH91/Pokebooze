@@ -29,7 +29,7 @@ class @Tile
   _drink: () ->
     Music.playClink()
 
-  _doNothing: ->
+  _doNothing: () ->
     @game.ui.flash "#{@game.currPlayer().name} is Stuck!", "", 1000
     @game.lookAtPlayer(@game.currPlayer())
     @game.nextPlayer()
@@ -57,10 +57,12 @@ class @RollAgainHereTile extends @RollAgainTile
 
 class @ZubatTile extends @Tile
   leaveLogic: (playerRoll) =>
-    if playerRoll isnt 1 and playerRoll isnt 2
+    if (playerRoll isnt 1 and playerRoll isnt 2) or @game.currPlayer().stuckFor isnt 0
+      @game.currPlayer().stuckFor = 0
       super playerRoll
     else
-      @_doNothing
+      @game.currPlayer().stuckFor++
+      @_doNothing()
 
 class @TentacoolTile extends @Tile
   leaveLogic: (playerRoll) =>
@@ -68,7 +70,7 @@ class @TentacoolTile extends @Tile
     if playerRoll isnt 1 and playerRoll isnt 6
       console.log "Move"
       super # Need roll?
-    @_doNothing
+    @_doNothing()
 
 class @AbraTile extends @RollAgainTile
   leaveLogic: (playerRoll) =>
