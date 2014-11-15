@@ -70,7 +70,8 @@ class @TentacoolTile extends @Tile
     if playerRoll isnt 1 and playerRoll isnt 6
       console.log "Move"
       super # Need roll?
-    @_doNothing()
+    else
+      @_doNothing()
 
 class @AbraTile extends @RollAgainTile
   leaveLogic: (playerRoll) =>
