@@ -1,5 +1,6 @@
 class @Game
   @RIGGED_ROLL = null
+  @SKIP_GYMS = false
   constructor: (@ui) -> 
     @players = []
     @currPlayerIndex = 0
@@ -42,7 +43,7 @@ class @Game
       y: @board.tiles[player.position].y * @board.boardWidth + randomness
       duration: 0.3
       onFinish: =>
-        if @board.tiles[player.position].forceStop 
+        if @board.tiles[player.position].forceStop and !Game.SKIP_GYMS
           steps = 0
         else
           steps = if steps > 0 then steps - 1 else steps + 1
