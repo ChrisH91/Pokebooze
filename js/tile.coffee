@@ -229,6 +229,18 @@ class @ChanseyTile extends @OtherMissTurnTile
     super
     @missTurns = 2
 
+class @HypnoTile extends @RollAgainTile
+  landLogic: (roll) =>
+    # Roll Die
+    @_rollAgain()
+    # If even make a player miss 3 turns, odd miss 3 turns
+    if playerRoll  % 2 = 0
+      @game.playerSelectionDialogue (player) =>
+        @game.players[player].missTurn += 3
+    else
+      @game.currPlayer().missTurn += 3
+    super roll
+      
 class @KanghaskanTile extends @Tile
   landLogic: (roll) =>
     @game.playerSelectionDialogue (player) =>

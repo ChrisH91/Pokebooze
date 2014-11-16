@@ -827,6 +827,7 @@ class @Pokebooze
     {
         x: 0.5491666666666667
         y: 0.7283333333333334
+        klass: HypnoTile
     }
     # 144 
     {
