@@ -95,58 +95,63 @@ class @Pokebooze
       @camera.zoomToPoint($.extend({},@game.board.tilePosition(0),{duration: 0.0000001, easing: null})))
 
   @tileCoords = [
+  	# 0
     {
         x: 0.45666666666666667
         y: 0.9358333333333333
     }
-    # Ratatta
+    # 1 - Ratatta
     {
         x: 0.3775
         y: 0.9175 
         klass: RollAgainHereTile
     }
-    # Caterpie
+    # 2 - Caterpie
     {
         x: 0.29333333333333333
         y: 0.8816666666666667
         klass: MissTurnTile
     }
-    #Pidgey
+    # 3 - Pidgey
     {
         x: 0.22416666666666665
         y: 0.8425
         klass: RollAgainHereTile
     }
-    # Weedle
+    # 4 - Weedle
     {
         x: 0.16083333333333333
         y: 0.7808333333333334
         klass: MissTurnTile
     }
-    # Metapod/Kakuna
+    # 5 - Metapod/Kakuna
     {
         x: 0.11416666666666667
         y: 0.7116666666666667
         klass: MissTurnTile
     }
+    # 6 - Nidoran
     {
         x: 0.07916666666666666
         y: 0.635
     }
+    # 7 - Beedrill
     {
         x: 0.06
         y: 0.5425
     }
+    # 8
     {
         x: 0.059166666666666666
         y: 0.45666666666666667
         klass: RollAgainTile
     }
+    # 9
     {
         x: 0.07666666666666666
         y: 0.37
     }
-    # Pewter Gym
+    # 10 Pewter Gym
     {
         x: 0.11333333333333333
         y: 0.2775
@@ -513,7 +518,7 @@ class @Pokebooze
         x: 0.765
         y: 0.28
     }
-    # Fuschia Gym
+    # 85 - Fuschia Gym
     {
         x: 0.8008333333333333
         y: 0.3383333333333333
@@ -607,222 +612,250 @@ class @Pokebooze
         x: 0.7841666666666667
         y: 0.5266666666666666
     }
+    # 104 - Kabuto
     {
         x: 0.785
         y: 0.4708333333333333
     }
+    # 105 - Omanyte
     {
         x: 0.7766666666666666
         y: 0.41083333333333333
     }
+    # 106 - Aerodactyl
     {
         x: 0.7533333333333333
         y: 0.3566666666666667
     }
-    # Omastar
+    # 107 - Omastar
     {
         x: 0.7225
         y: 0.3125
         klass: RollAgainHereTile
     }
+    # 108 - Kabutops
     {
         x: 0.6841666666666667
         y: 0.27166666666666667
     }
-    # Cinnabar Gym
+    # 109 - Cinnabar Gym
     {
         x: 0.6333333333333333
         y: 0.23833333333333334
         forceStop: true
         klass: CinnabarGymTile
     }
+    # 110
     {
         x: 0.5816666666666667
         y: 0.215
     }
+    # 111
     {
         x: 0.5266666666666666
         y: 0.205
     }
-    # Magneton Logic
+    # 112 - Magneton
     {
         x: 0.4716666666666667
         y: 0.2025
         klass: MoveBackDoubleTile
     }
+    # 113
     {
         x: 0.41833333333333333
         y: 0.21583333333333332
     }
-    # Tentacool
+    # 114 - Tentacool
     {
         x: 0.3616666666666667
         y: 0.23583333333333334
         klass: TentacoolTile
     }
-    # Golbat
+    # 115 - Golbat
     {
         x: 0.31416666666666665
         y: 0.2683333333333333
         klass: RollAgainHereTile
     }
+    # 116
     {
         x: 0.2725
         y: 0.3125
     }
+    # 117
     {
         x: 0.24416666666666667
         y: 0.35583333333333333
     }
+    # 118
     {
         x: 0.22083333333333333
         y: 0.41
     }
+    # 119
     {
         x: 0.20916666666666667
         y: 0.4683333333333333
     }
+    # 120
     {
         x: 0.20916666666666667
         y: 0.5233333333333333
     }
+    # 121
     {
         x: 0.225
         y: 0.5875
     }
+    # 122
     {
         x: 0.245
         y: 0.635
     }
-    # Viridian Gym
+    # 123 - Viridian Gym
     {
         x: 0.2758333333333333
         y: 0.6816666666666666
         forceStop: true
     }
+    # 124
     {
         x: 0.3175
         y: 0.7216666666666667
     }
-    # Seaking
+    # 125 - Seaking
     {
         x: 0.365
         y: 0.7466666666666667
         klass: MoveBackDoubleTile
     }
+    # 126
     {
         x: 0.4191666666666667
         y: 0.7741666666666667
     }
+    # 127
     {
         x: 0.47
         y: 0.7883333333333333
     }
+    # 128
     {
         x: 0.4508333333333333
         y: 0.7325
     }
-    # Zubat
+    # 129 - Zubat
     {
         x: 0.3675
         y: 0.6991666666666667
         klass: ZubatTile
     }
+    # 130
     {
         x: 0.30333333333333334
         y: 0.635
     }
-    # Zubat
+    # 131 - Zubat
     {
         x: 0.2658333333333333
         y: 0.5483333333333333
         klass: ZubatTile
     }
-    # Graveler
+    # 132 - Graveler
     {
         x: 0.26416666666666666
         y: 0.4525
         klass: RollAgainHereTile
     }
+    # 133
     {
         x: 0.29833333333333334
         y: 0.3625
     }
-    # Indigo Plateau
+    # 134 - Indigo Plateau
     {
         x: 0.36916666666666664
         y: 0.29583333333333334
     }
-    # Lorelei
+    # 135 - Lorelei
     {
         x: 0.45416666666666666
         y: 0.26
         forceStop: true
     }
-    # Bruno
+    # 136 - Bruno
     {
         x: 0.5433333333333333
         y: 0.26166666666666666
         forceStop: true
     }
-    # Agatha
+    # 137 - Agatha
     {
         x: 0.6283333333333333
         y: 0.29583333333333334
         forceStop: true
     }
-    # Lance
+    # 138 - Lance
     {
         x: 0.6958333333333333
         y: 0.3641666666666667
         forceStop: true
     }
-    # Rival
+    # 139 - Rival
     {
         x: 0.7341666666666666
         y: 0.4475
         forceStop: true
     }
+    # 140 -
     {
         x: 0.7333333333333333
         y: 0.5416666666666666
     }
+    # 141 - 
     {
         x: 0.6933333333333334
         y: 0.6316666666666667
     }
+    # 142 - 
     {
         x: 0.6291666666666667
         y: 0.6975
     }
-    # Hypno
+    # 143 - Hypno
     {
         x: 0.5491666666666667
         y: 0.7283333333333334
+        klass: HypnoTile
     }
+    # 144 
     {
         x: 0.5291666666666667
         y: 0.65
     }
-    # Rare Candy
+    # 145 - Rare Candy
     {
         x: 0.5841666666666666
         y: 0.625
         klass: RollAgainTile
     }
+    # 146
     {
         x: 0.625
         y: 0.5858333333333333
     }
+    # 147
     {
         x: 0.6558333333333334
         y: 0.5316666666666666
     }
-    # Exeggutor
+    # 148 - Exeggutor
     {
         x: 0.6616666666666666
         y: 0.465
     }
+    
     {
         x: 0.6383333333333333
         y: 0.4025

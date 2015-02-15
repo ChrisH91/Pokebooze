@@ -56,6 +56,7 @@ class @Player
       rollMultiplier: 1
       missTurn: 0
       tileState: 0
+      stuckFor: 0
       color: Player.COLORS[Player.PLAYER_COUNT]
       playerNumber: Player.PLAYER_COUNT
     }
